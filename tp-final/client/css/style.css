@@ -45,6 +45,9 @@ div p a i{
 #copyright {
     background-color: var(--negro);
 }
+#cardRegistro {
+    padding-top: 0 !important;
+}
 .carousel-indicators [data-bs-target] {
     background-clip: border-box !important;
     border-top: 0px solid transparent;

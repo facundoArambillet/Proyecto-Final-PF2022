@@ -12,14 +12,15 @@ btnRegistro.addEventListener("click", async () => {
     let validacionContrasenia = /[\w-.@]{8,20}/; // BUSCAR MEJOR PORQUE NO ME VALIDA EL PUNTO MAXIMO
 
     if (validacionEmail.test(inputEmail.value) && validacionContrasenia.test(inputContrasenia.value) && inputContrasenia.value === inputConfirmacion.value) {
-        let usuarioRepetido = "";
+        let usuarioRepetido;
 
         for (let i = 0; i < usuarios.length; i++) {
-            if (usuarios[i].nombre == inputEmail.value) {
+            if (usuarios[i].nombre === inputEmail.value) {
                 usuarioRepetido = inputEmail.value;
             }
         }
-        if (usuarioRepetido = "") {
+        
+        if (usuarioRepetido == undefined) {
             let usuario = {
                 "nombre": inputEmail.value,
                 "contrasenia": inputContrasenia.value,
@@ -42,6 +43,7 @@ btnRegistro.addEventListener("click", async () => {
             }
         }
         else {
+            
             console.log("Error el email ya existe")
         }
 

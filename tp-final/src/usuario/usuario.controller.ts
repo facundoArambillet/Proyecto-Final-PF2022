@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { JwtGuard } from './jwt.guard';
 import UsuarioDTO from './usuario.dto';
 import { Usuario } from './usuario.entity';
 import { UsuarioService } from './usuario.service';
@@ -7,6 +8,7 @@ import { UsuarioService } from './usuario.service';
 export class UsuarioController {
     constructor(private usuarioService : UsuarioService){}
 
+   // @UseGuards(JwtGuard)
     @Get()
     public getAll(): Promise<Usuario[]> {
         return this.usuarioService.getAll();
@@ -15,13 +17,17 @@ export class UsuarioController {
     public getAllRelaciones(@Param("orden") orden: string): Promise<Usuario[]> {
         return this.usuarioService.getAllRelaciones(orden);
     }
-    @Get(":id")
-    public getByID(@Param("id") id: number): Promise<Usuario> {
-        return this.usuarioService.getByID(id);
+    @Get(":email")
+    public getByID(@Param("email") email: string): Promise<Usuario> {
+        return this.usuarioService.getByEmail(email);
     }
     @Post()
     public addUsuario(@Body() usuario: UsuarioDTO): Promise<Usuario> {
         return this.usuarioService.addUsuario(usuario);
+    }
+    @Post("login")
+    public loginUsuario(@Body() usuario: UsuarioDTO) {
+        return this.usuarioService.loginUsuario(usuario)
     }
     @Put(":id")
     public updateUsuario(@Param("id") id: number, @Body() usuario: UsuarioDTO  ): Promise<boolean> {

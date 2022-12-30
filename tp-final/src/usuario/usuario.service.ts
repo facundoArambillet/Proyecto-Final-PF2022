@@ -1,5 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { hash, compare } from 'bcrypt';
+import { ignoreElements } from 'rxjs';
 
 import { Repository, FindOneOptions, FindManyOptions } from 'typeorm';
 import UsuarioDTO from './usuario.dto';
@@ -9,7 +12,8 @@ import { Usuario } from './usuario.entity';
 export class UsuarioService {
     private usuarios: Usuario[] = [];
 
-    constructor(@InjectRepository(Usuario) private readonly usuarioRepository: Repository<Usuario>) { }
+    constructor(@InjectRepository(Usuario) private readonly usuarioRepository: Repository<Usuario>,
+    private jwtService: JwtService) { }
 
     public async getAll(): Promise<Usuario[]> {
         this.usuarios = await this.usuarioRepository.find();
@@ -24,9 +28,9 @@ export class UsuarioService {
         return this.usuarios;
     }
 
-    public async getByID(id: number): Promise<Usuario> {
+    public async getByEmail(email: string): Promise<Usuario> {
         try {
-            let criterio: FindOneOptions = { where: { idUsuario: id } };
+            let criterio: FindOneOptions = { where: { nombre: email } };
             let usuario: Usuario = await this.usuarioRepository.findOne(criterio);
             if (usuario) {
                 return usuario;
@@ -35,7 +39,7 @@ export class UsuarioService {
                 throw new Error("El usuario no se encuentra");
             }
         } catch (error) {
-            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la busqueda de usuario ${id}: ${error}` },
+            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la busqueda de usuario ${email}: ${error}` },
                 HttpStatus.NOT_FOUND);
         }
 
@@ -46,7 +50,9 @@ export class UsuarioService {
         try {
             if (usuarioDTO) {
                 if (usuarioDTO.nombre && usuarioDTO.contrasenia && usuarioDTO.rolIdRol) {
+                    usuarioDTO.contrasenia = await hash(usuarioDTO.contrasenia,10)
                     let usuario = await this.usuarioRepository.save(new Usuario(usuarioDTO.nombre, usuarioDTO.contrasenia, usuarioDTO.rolIdRol));
+                    
                     return usuario;
                 }
                 else {
@@ -62,6 +68,48 @@ export class UsuarioService {
         }
     }
 
+    public async loginUsuario(usuarioDTO: UsuarioDTO) {
+        try {
+            if(usuarioDTO) {
+                if (usuarioDTO.nombre && usuarioDTO.contrasenia) {
+                    let criterio: FindOneOptions = { where: { nombre: usuarioDTO.nombre } };
+                    let usuario: Usuario = await this.usuarioRepository.findOne(criterio);
+                    if(usuario) {
+                        let verificacionContrasenia = await compare(usuarioDTO.contrasenia, usuario.getContrasenia())
+                        if(verificacionContrasenia) {
+                            let payload = {
+                                "id": usuario.getID(),
+                                "nombre": usuario.getNombre()
+                            }
+                            let token = this.jwtService.sign(payload)
+                            let data = {
+                                usuario: usuario,
+                                token,
+                            }
+                            return data ;
+                        }
+                        else {
+                            throw new Error("Contraseña invalida");
+                        }
+
+                    }
+                    else {
+                        throw new Error("Usuario no encontrado");
+                    }
+                }
+                else {
+                    throw new Error("Datos de usuario invalidos");
+                }
+            }
+            else {
+                throw new Error("Usuario invalido");
+            }
+
+        } catch (error) {
+            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la busqueda de usuario ${usuarioDTO.nombre}: ${error}` },
+            HttpStatus.NOT_FOUND);
+        }
+    }
     public async updateUsuario(id: number, usuarioDTO: UsuarioDTO): Promise<boolean> {
         try {
             if (id && usuarioDTO) {

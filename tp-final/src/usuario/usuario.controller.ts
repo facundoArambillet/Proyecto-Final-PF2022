@@ -8,7 +8,7 @@ import { UsuarioService } from './usuario.service';
 export class UsuarioController {
     constructor(private usuarioService : UsuarioService){}
 
-   // @UseGuards(JwtGuard)
+   //@UseGuards(JwtGuard)
     @Get()
     public getAll(): Promise<Usuario[]> {
         return this.usuarioService.getAll();

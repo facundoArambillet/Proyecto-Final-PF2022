@@ -21,7 +21,22 @@ logueo.addEventListener("click", async () => {
     if (respuesta.ok) {
         let json = await respuesta.json();
         console.log(json)
+        let datos = {
+            "nombre": json.usuario.nombre,
+            "token": json.token
+        }
+        console.log(datos);
+        window.sessionStorage.setItem("loginOk", true);
+        window.sessionStorage.setItem('ingreso', datos);
+        console.log(window.sessionStorage.getItem("loginOk") )
+        window.location.href = './index.html';
         console.log("Sesion iniciada correctamente");
+    }
+    else  {
+        window.sessionStorage.setItem("loginOk", false);
+        window.sessionStorage.setItem('ingreso', '');
+        //console.clear() BUSCAR COMO HACER PARA QUE NO ME APAREZCAN EL ERROR DEL POST
+        swal.fire("Email o Contraseña invalidos");
     }
 
 })

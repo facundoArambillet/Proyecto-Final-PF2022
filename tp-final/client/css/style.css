@@ -27,13 +27,17 @@ div p a i{
 .section .card {
     margin-bottom: 5%;
 }
+.oculto {
+    display: none;
+}
 .block {
     padding: 5%;
-    background-color: var(--negro);
+    background-color: black
 }
-#presentation {
-    margin-top: 15%;
+.background {
+    background-color: black
 }
+
 #footer {
     background-color: var(--grisOscuro);
     padding-top: 3%;
@@ -42,13 +46,11 @@ div p a i{
 #footer div div {
     margin-bottom: 2%;
 }
-#copyright {
-    background-color: var(--negro);
-}
+
 #cardRegistro {
     padding-top: 0 !important;
 }
-.carousel-indicators [data-bs-target] {
+/* .carousel-indicators [data-bs-target] {
     background-clip: border-box !important;
     border-top: 0px solid transparent;
     height: 2px;
@@ -66,14 +68,14 @@ div p a i{
     }
 
 }
-/*
-@media (min-width: 1050px) {
+ ESTO ESTABA COMENTADO
+ @media (min-width: 1050px) {
     .carousel-item img{
         height: 95vh !important;
     }
 
-}
-*/
+} 
+
 @media (max-width: 991px) {
     .carrusel {
         -webkit-perspective: 300px !important;
@@ -258,4 +260,4 @@ div p a i{
 
 .caixa__card.cc__8 {
     background: linear-gradient(-229deg, #1472ff, #A8EB12);
-}
+} */

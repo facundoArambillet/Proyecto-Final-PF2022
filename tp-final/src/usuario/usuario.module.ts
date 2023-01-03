@@ -20,7 +20,7 @@ import { UsuarioService } from './usuario.service';
     ),
     JwtModule.register({
       secret: jwtConstanst.secret,
-      signOptions: { expiresIn: '20h' },
+      signOptions: { expiresIn: '24h' },
     })
   ],
   

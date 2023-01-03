@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'src/usuario/jwt.guard';
 import MaterialDTO from './material.dto';
 import { Material } from './material.entity';
 import { MaterialService } from './material.service';
@@ -11,6 +12,7 @@ export class MaterialController {
     public getAll(): Promise<Material[]> {
         return this.materialService.getAll();
     }
+    //@UseGuards(JwtGuard)
     @Get("tipo-material/:id")
     public getAllRelaciones(@Param("id") id: number): Promise<Material[]> {
         return this.materialService.getAllRelaciones(id)

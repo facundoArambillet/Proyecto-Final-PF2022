@@ -1,0 +1,26 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    transition: .4s;
+    box-sizing: border-box;
+    outline: none;
+  }
+  .saturn {
+    background-color: #1e1f26;
+    height: 100vh;
+  }
+  .saturn-item img{
+    height: 100vh;
+  }
+  .saturn i.fa {
+    font-size: 30px;
+  }
+  .saturn i.fa:hover {
+    font-size: 40px;
+  }
+  .saturn-item.prev-item {
+    transform: perspective(500px) rotateY(-15deg) scale(0.75);
+  }
+  .saturn-item.next-item {
+    transform: perspective(500px) rotateY(15deg) scale(0.75);
+  }

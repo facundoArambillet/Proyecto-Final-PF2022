@@ -1,0 +1,27 @@
+.carousel-3d-slide{
+    height:unset !important;
+  }
+  
+  .carousel-3d-slide{
+        box-shadow: 0 6px 6px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  }
+  .prev[data-v-05517ad0]{
+    left: 244px !important;
+      top: 0px  !important;
+  }
+  .next[data-v-05517ad0]{
+    right: 225px !important;
+      top: 0px  !important;
+  }
+  .Next slide span{
+    font-size:20px;
+  }
+  .carousel-3d-container .next span{
+    font-size:40px;
+  }
+  .carousel-3d-container .prev  span{
+    font-size:40px;
+  }
+  .carousel-3d-slide{
+      width:400px !important;
+  }

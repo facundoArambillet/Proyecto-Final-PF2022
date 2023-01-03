@@ -9,9 +9,9 @@ btnRegistro.addEventListener("click", async () => {
 
     let inputEmail = document.querySelector("#email");
     let validacionEmail = /([a-zA-Z0-9])+@([a-zA-Z])+\.[com]/;
-    let validacionContrasenia = /[\w-.@]{8,20}/; // BUSCAR MEJOR PORQUE NO ME VALIDA EL PUNTO MAXIMO
+    let validacionContrasenia = /[\w-.@]{8}/; // BUSCAR MEJOR PORQUE NO ME VALIDA EL PUNTO MAXIMO
 
-    if (validacionEmail.test(inputEmail.value) && validacionContrasenia.test(inputContrasenia.value) && inputContrasenia.value === inputConfirmacion.value) {
+    if (validacionEmail.test(inputEmail.value) && validacionContrasenia.test(inputContrasenia.value) && inputContrasenia.value.length < 20 && inputContrasenia.value === inputConfirmacion.value) {
         let usuarioRepetido;
 
         for (let i = 0; i < usuarios.length; i++) {
@@ -39,23 +39,23 @@ btnRegistro.addEventListener("click", async () => {
                 console.log("Usuario Creado");
             }
             else {
-                console.log("Error en la creacion")
+                console.log("Error en la creacion");
             }
         }
         else {
             
-            console.log("Error el email ya existe")
+            console.log("Error el email ya existe");
         }
 
     }
     else if (!validacionEmail.test(inputEmail.value)) {
-        console.log("Formato de correo invalido");
+        swal.fire("Email invalido");
     }
-    else if (!validacionContrasenia.test(inputContrasenia.value)) {
-        console.log("Formato de contraseña invalido");
+    else if (!validacionContrasenia.test(inputContrasenia.value) || inputContrasenia.value.length > 20 ) {
+        swal.fire("Formato de contraseña invalido");
     }
     else if (inputContrasenia.value != inputConfirmacion.value) {
-        console.log("Las contraseñas no coinciden");
+        swal.fire("Las contraseñas no coinciden");
     }
 
 

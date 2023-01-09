@@ -90,7 +90,11 @@ async function crearCardsMateriales() {
 
 async function crearOptions(id, selectMateriales, inputIndiceE, inputIndiceLambda, inputIndiceR, inputCantidad, inputPrecio, optionNone) {
 
-    let respuesta = await fetch(`material/tipo-material/${id}`);
+    let respuesta = await fetch(`material/tipo-material/${id}`, {
+        headers: {
+            "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+        }
+    });
     if (respuesta.ok) {
         let materiales = await respuesta.json();
 

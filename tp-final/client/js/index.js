@@ -1,9 +1,15 @@
+
 function ocultar () {
     if(window.sessionStorage.getItem("loginOk") == "true") {
         let oculto = document.querySelectorAll(".login");
+        let perfil = document.querySelector("#perfil");
+
         for(let i = 0; i < oculto.length; i++) {
             oculto[i].style.display = "none";
         }
+
+        perfil.firstElementChild.innerText = window.sessionStorage.nombre;
+        perfil.style.display = "";
     }
 }
 ocultar();

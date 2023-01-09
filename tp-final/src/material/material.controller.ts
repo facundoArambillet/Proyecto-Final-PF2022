@@ -12,7 +12,7 @@ export class MaterialController {
     public getAll(): Promise<Material[]> {
         return this.materialService.getAll();
     }
-    //@UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
     @Get("tipo-material/:id")
     public getAllRelaciones(@Param("id") id: number): Promise<Material[]> {
         return this.materialService.getAllRelaciones(id)

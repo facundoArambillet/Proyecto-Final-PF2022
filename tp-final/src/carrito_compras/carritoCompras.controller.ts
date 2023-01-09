@@ -13,9 +13,9 @@ export class CarritoComprasController {
         return this.carritoComprasService.getAll();
     }
     
-    @Get("all/:orden")
-    public getAllRelaciones(@Param("orden") orden: string): Promise<CarritoCompras[]> {
-        return this.carritoComprasService.getAllRelaciones(orden);
+    @Get("all/:id")
+    public getAllRelaciones(@Param("id") id: number): Promise<CarritoCompras[]> {
+        return this.carritoComprasService.getAllRelaciones(id);
     }
     
     @Get(":id")

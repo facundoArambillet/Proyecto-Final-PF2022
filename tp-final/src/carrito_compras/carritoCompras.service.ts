@@ -20,9 +20,9 @@ export class CarritoComprasService {
     }
 
     
-    public async getAllRelaciones(orden : string): Promise<CarritoCompras[]> {
-        let criterio: FindManyOptions = { relations: ['usuario','muro'], order : {
-            idCarritoDeCompras : orden
+    public async getAllRelaciones(id : number): Promise<CarritoCompras[]> {
+        let criterio: FindManyOptions = { relations: ['usuario','muros'], where : {
+            idCarritoDeCompras : id
         }}
         this.carritosCompras = await this.carritoComprasRepository.find(criterio);
         return this.carritosCompras;

@@ -5,8 +5,7 @@ let inputContrasenia = document.querySelector("#contrasenia");
 let confirmacionPassword = document.querySelector("#confirmacionPassword");
 let inputConfirmacion = document.querySelector("#confirmacionContrasenia");
 let usuarios = [];
-btnRegistro.addEventListener("click", async () => {
-
+async function registrar() {
     let inputEmail = document.querySelector("#email");
     let validacionEmail = /([a-zA-Z0-9])+@([a-zA-Z])+\.[com]/;
     let validacionContrasenia = /[\w-.@]{8}/; // BUSCAR MEJOR PORQUE NO ME VALIDA EL PUNTO MAXIMO
@@ -44,7 +43,7 @@ btnRegistro.addEventListener("click", async () => {
         }
         else {
             
-            console.log("Error el email ya existe");
+            swal.fire("El email ya existe");
         }
 
     }
@@ -58,8 +57,13 @@ btnRegistro.addEventListener("click", async () => {
         swal.fire("Las contraseñas no coinciden");
     }
 
-
-})
+}
+btnRegistro.addEventListener("click", registrar);
+// window.onkeydown = function (event){ // SI LO ACTIVO ACA NO ME DEJA USAR LAS ALERTAS DE SWAL
+//     if (event.keyCode == '13'){
+//         registrar();
+//     }
+//  }
 
 async function loadUsuarios() {
     usuarios = [];

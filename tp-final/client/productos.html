@@ -15,7 +15,7 @@
 
 <body>
     <nav class="navbar  navbar-expand-lg  navbar-dark background">
-        <div class="container-fluid col-4" style="margin-left: 0;">
+        <div class="container-fluid col-4" id="logo">
             <a class="navbar-brand" href="./index.html"><img src="./logo/logoNav.PNG" alt="" width="300px"></a>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
@@ -49,6 +49,9 @@
                 <li class="nav-item login">
                     <a class="nav-link active" href="./logueo.html">Loguearse</a>
                 </li>
+                <li class="nav-item" style="display: none;" id="perfil">
+                    <a class="nav-link active"></a>
+                  </li>
             </ul>
         </div>
     </nav>
@@ -82,16 +85,16 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <input type="number" value="1" min="1" style="width: 100px;">
+                        <input type="number" value="1" min="1" style="width: 100px;" pattern="^[1-9]\d*$"/>
                     </div>
                     <div class="col">
-                        <p>Stock: 300</p>
+                        <p id="stock"></p>
                     </div>
 
 
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-outline-secondary" type="button">Agregar al carrito</button>
+                    <button class="btn btn-outline-secondary" type="button" id="btnCarritoAgregar">Agregar al carrito</button>
                   </div>
             </div>
 

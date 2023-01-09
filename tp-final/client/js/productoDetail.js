@@ -12,15 +12,17 @@ function processParams() {
 }
 processParams();
 
-function loadDateMuro() {
+function loadDataMuro() {
     let titulo = document.querySelector("#nombreMuro");
     let descripcion = document.querySelector("#descripcionMuro");
     let precio = document.querySelector("#precioMuro");
+    let stock = document.querySelector("#stock");
     let imagen = document.querySelector("#imagen");
 
     titulo.innerHTML = muro.nombre;
     descripcion.innerHTML = muro.descripcion;
     precio.innerHTML =`$ ${muro.precio} c/u`;
+    stock.innerHTML = `Stock: ${muro.cantidad}`;
     imagen.setAttribute("src",muro.imagen);
 }
 
@@ -33,6 +35,6 @@ async function loadMuros() {
         let json = await respuesta.json();
         muro = json;
     }
-    loadDateMuro();
+    loadDataMuro();
 }
 loadMuros();

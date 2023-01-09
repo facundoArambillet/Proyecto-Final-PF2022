@@ -37,7 +37,9 @@ div p a i{
 .background {
     background-color: black
 }
-
+#logo {
+    margin-left: 0;
+}
 #footer {
     background-color: var(--grisOscuro);
     padding-top: 3%;
@@ -49,6 +51,17 @@ div p a i{
 
 #cardRegistro {
     padding-top: 0 !important;
+} 
+/* @media (max-width: 992px) { DESCOMENTAR SI SE AGRANDA EL CARRITO
+    #lista {
+        align-items: flex-start !important;
+    }
+}     */
+@media (max-width: 470px) {
+#logo a img {
+    width: 220px;
+}
+
 }
 /* .carousel-indicators [data-bs-target] {
     background-clip: border-box !important;

@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash, compare } from 'bcrypt';
-import { ignoreElements } from 'rxjs';
+
 
 import { Repository, FindOneOptions, FindManyOptions } from 'typeorm';
 import UsuarioDTO from './usuario.dto';
@@ -50,7 +50,7 @@ export class UsuarioService {
         try {
             if (usuarioDTO) {
                 if (usuarioDTO.nombre && usuarioDTO.contrasenia && usuarioDTO.rolIdRol) {
-                    usuarioDTO.contrasenia = await hash(usuarioDTO.contrasenia,10)
+                    usuarioDTO.contrasenia = await hash(usuarioDTO.contrasenia,10) // ENCRIPTACION DE CONTRASEÑA
                     let usuario = await this.usuarioRepository.save(new Usuario(usuarioDTO.nombre, usuarioDTO.contrasenia, usuarioDTO.rolIdRol));
                     
                     return usuario;
@@ -79,9 +79,11 @@ export class UsuarioService {
                         if(verificacionContrasenia) {
                             let payload = {
                                 "id": usuario.getID(),
-                                "nombre": usuario.getNombre()
+                                "nombre": usuario.getNombre(),
+                                "rol": usuario.getRol()
                             }
-                            let token = this.jwtService.sign(payload)
+                            let token = this.jwtService.sign(payload);
+                            
                             let data = {
                                 usuario: usuario,
                                 token,
@@ -110,6 +112,9 @@ export class UsuarioService {
             HttpStatus.NOT_FOUND);
         }
     }
+    // public async decodificarToken(usuario : any) {
+    //    return this.jwtService.decode(usuario.token: string, options: DecodeOptions)
+    // }
     public async updateUsuario(id: number, usuarioDTO: UsuarioDTO): Promise<boolean> {
         try {
             if (id && usuarioDTO) {

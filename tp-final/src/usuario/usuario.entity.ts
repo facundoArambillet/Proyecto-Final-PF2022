@@ -51,6 +51,9 @@ export class Usuario {
     public getContrasenia(): string {
         return this.contrasenia;
     }
+    public getRol(): number {
+        return this.rolIdRol;
+    }
     public setNombre(nuevoNombre: string) {
         this.nombre = nuevoNombre;
     }

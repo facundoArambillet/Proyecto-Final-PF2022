@@ -41,8 +41,8 @@ export class Muro {
     @JoinColumn()
     public detalleFacturas: DetalleFactura[];
 
-    @ManyToMany(type => CarritoCompras,
-        carritoCompras => carritoCompras.muros)
+    @OneToMany(type => CarritoCompras,
+        carritoCompras => carritoCompras.muro)
     @JoinColumn()
     public carritosCompras: CarritoCompras[];
 

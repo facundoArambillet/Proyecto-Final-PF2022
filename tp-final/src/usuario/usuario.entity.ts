@@ -2,7 +2,7 @@ import { CarritoCompras } from "src/carrito_compras/carritoCompras.entity";
 import { Factura } from "src/factura/factura.entity";
 import { Muro } from "src/muro/muro.entity";
 import Rol from "src/rol/rol.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("usuario")
 export class Usuario {
@@ -15,7 +15,7 @@ export class Usuario {
     private contrasenia : string;
     @Column()
     private rolIdRol: number;
-    
+
     @OneToMany(type => Muro,
         muro => muro.usuario)
     @JoinColumn()

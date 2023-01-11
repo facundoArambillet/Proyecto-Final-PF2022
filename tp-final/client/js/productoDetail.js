@@ -1,5 +1,8 @@
+
 let params = [];
-let muro;
+let btnAgregar = document.querySelector("#btnCarritoAgregar");
+let muro, item;
+let carrito = [];
 
 function processParams() {
     let paramstr = window.location.search.substr(1);
@@ -26,12 +29,17 @@ function loadDataMuro() {
     imagen.setAttribute("src",muro.imagen);
 }
 
+btnAgregar.addEventListener("click", async () => {
+
+
+})
+
+
 async function loadMuros() {
     muro = [];
     let respuesta = await fetch(`/muro/relacion/id/${params.idMuro}`)
-    console.log(respuesta)
+
     if (respuesta.ok) {
-        console.log("Entro")
         let json = await respuesta.json();
         muro = json;
     }

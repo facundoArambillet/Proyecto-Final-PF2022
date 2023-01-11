@@ -4,22 +4,17 @@ let password = document.querySelector("#password");
 let inputContrasenia = document.querySelector("#contrasenia");
 let confirmacionPassword = document.querySelector("#confirmacionPassword");
 let inputConfirmacion = document.querySelector("#confirmacionContrasenia");
-let usuarios = [];
 async function registrar() {
     let inputEmail = document.querySelector("#email");
     let validacionEmail = /([a-zA-Z0-9])+@([a-zA-Z])+\.[com]/;
     let validacionContrasenia = /[\w-.@]{8}/; // BUSCAR MEJOR PORQUE NO ME VALIDA EL PUNTO MAXIMO
 
     if (validacionEmail.test(inputEmail.value) && validacionContrasenia.test(inputContrasenia.value) && inputContrasenia.value.length < 20 && inputContrasenia.value === inputConfirmacion.value) {
-        let usuarioRepetido;
+        let usuarioRepetido = await fetch(`/usuario/${inputEmail.value}`)
 
-        for (let i = 0; i < usuarios.length; i++) {
-            if (usuarios[i].nombre === inputEmail.value) {
-                usuarioRepetido = inputEmail.value;
-            }
-        }
+        console.log(usuarioRepetido.ok)
         
-        if (usuarioRepetido == undefined) {
+        if (!usuarioRepetido.ok) {
             let usuario = {
                 "nombre": inputEmail.value,
                 "contrasenia": inputContrasenia.value,
@@ -33,9 +28,23 @@ async function registrar() {
                 body: JSON.stringify(usuario)
             });
             if (respuesta.ok) {
-                usuarios.push(usuario);
-                loadUsuarios();
-                console.log("Usuario Creado");
+                let response = await fetch("usuario/login", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(usuario)
+                })
+                if(response.ok) {
+                    let json = await respuesta.json(); 
+                    console.log(json)
+                    window.sessionStorage.setItem("loginOk", true);
+                    window.sessionStorage.setItem("idUsuario", json.idUsuario);
+                    window.sessionStorage.setItem("nombre", json.nombre);
+                    window.sessionStorage.setItem("token", json.token);
+                    window.location.href = './index.html';
+                }
+
             }
             else {
                 console.log("Error en la creacion");
@@ -64,16 +73,6 @@ btnRegistro.addEventListener("click", registrar);
 //         registrar();
 //     }
 //  }
-
-async function loadUsuarios() {
-    usuarios = [];
-    let respuesta = await fetch("/usuario");
-    if (respuesta.ok) {
-        let json = await respuesta.json();
-        usuarios = json;
-    }
-}
-loadUsuarios();
 
 
 

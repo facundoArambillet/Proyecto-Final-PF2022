@@ -1,6 +1,6 @@
 import { Muro } from "src/muro/muro.entity";
 import { Usuario } from "src/usuario/usuario.entity";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("carritodecompras")
 export class CarritoCompras {
@@ -10,21 +10,27 @@ export class CarritoCompras {
     @Column()
     private precioTotal : number;
     @Column()
+    private cantidad : number;
+    @Column()
     private usuarioIdUsuario : number;
+    @Column()
+    private muroIdMuro : number;
 
     @ManyToOne(type => Usuario,
         usuario => usuario.carritosCompras)
     @JoinColumn()
     public usuario: Usuario;
 
-    @ManyToMany(type => Muro,
+    @ManyToOne(type => Muro,
         muro => muro.carritosCompras)
     @JoinTable()
-    public muros: Muro[];
+    public muro: Muro;
 
-    constructor( precioTotal: number, idUsuario: number) {
+    constructor( precioTotal: number,cantidad: number, idUsuario: number , idMuro : number) {
         this.precioTotal = precioTotal;
+        this.cantidad = cantidad;
         this.usuarioIdUsuario = idUsuario;
+        this.muroIdMuro = idMuro;
     }
 
     public getID(): number {
@@ -33,6 +39,11 @@ export class CarritoCompras {
 
     public getPrecioTotal(): number {
         return this.precioTotal;
+    }
+
+
+    public setCantidad(nuevaCantidad: number): void {
+        this.cantidad = nuevaCantidad;
     }
 
 }

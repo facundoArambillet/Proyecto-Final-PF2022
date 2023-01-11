@@ -1,6 +1,7 @@
 
 export default class CarritoComprasDTO {
     readonly precioTotal: number;
+    readonly cantidad: number;
     readonly usuarioIdUsuario: number;
-    readonly idsMuros: number[];
+    readonly muroIdMuro: number;
 }

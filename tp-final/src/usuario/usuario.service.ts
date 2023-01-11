@@ -21,7 +21,7 @@ export class UsuarioService {
     }
 
     public async getAllRelaciones(orden : string): Promise<Usuario[]> {
-        let criterio: FindManyOptions = {relations: ["muros","facturas","rol"], order : {
+        let criterio: FindManyOptions = {relations: ["muros","facturas","rol","carritosCompras"], order : {
             idUsuario : orden
         }}
         this.usuarios = await this.usuarioRepository.find(criterio);

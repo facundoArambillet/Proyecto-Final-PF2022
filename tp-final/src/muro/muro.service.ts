@@ -18,7 +18,7 @@ export class MuroService {
     }
 
     public async getAllRelaciones(orden : string): Promise<Muro[]> {
-        let criterio : FindManyOptions = {relations : ["usuario","materiales"], order : {
+        let criterio : FindManyOptions = {relations : ["usuario","materiales","carritosCompras"], order : {
             idMuro : orden
         }};
         this.muros = await this.muroRepository.find(criterio);
@@ -70,7 +70,7 @@ export class MuroService {
 
     public async getByIDRelaciones(id: number): Promise<Muro> {
         try {
-            let criterio: FindOneOptions = { where: { idMuro: id }, relations : ["usuario","materiales"] };
+            let criterio: FindOneOptions = { where: { idMuro: id }, relations : ["materiales"] };
             let muro: Muro = await this.muroRepository.findOne(criterio);
             if (muro) {
                 return muro;

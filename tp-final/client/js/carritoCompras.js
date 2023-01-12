@@ -2,6 +2,7 @@ let cardItems = document.querySelector("#cardItems");
 let carrito;
 let btnsBorrar = [];
 function crearCardsItems() {
+    let precioTotal = 0;
     let items = carrito;
     console.log(items)
     for (let i = 0; i < items.length; i++) {
@@ -45,6 +46,9 @@ function crearCardsItems() {
         btnBorrar.appendChild(imagenTarro);
         btnsBorrar.push(t);
 
+        precioTotal += items[i].muro.precio * items[i].cantidad;
+        console.log(precioTotal)
+
         divImg.appendChild(img);
         divPrecio.appendChild(parrafoPrecio);
         divCantidad.appendChild(parrafoCantidad);
@@ -60,6 +64,8 @@ function crearCardsItems() {
         cardItems.appendChild(divRow);
     }
     borrarCarrito(".btnBorrar");
+    let valorPrecioTotal = document.querySelector("#precioTotal");
+    valorPrecioTotal.innerText = `$ ${precioTotal}`;
 }
 async function borrarCarrito(clase) {
     carrito = [];
@@ -80,7 +86,10 @@ async function borrarCarrito(clase) {
                     if (respuesta.ok) {
                         let divPadre = document.querySelector("#cardItems");
                         let items = document.querySelectorAll(".items");
-                        divPadre.removeChild(items[i]);
+                        for(let j = 0; j < items.length; j++) {
+                            divPadre.removeChild(items[j]);
+                        }
+                        loadItems();
                         console.log("muro borrado");
                     }
                     else {

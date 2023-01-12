@@ -52,6 +52,12 @@ div p a i{
 #cardRegistro {
     padding-top: 0 !important;
 } 
+#descripcionProducto {
+    background-color: #F7F7F7;
+}
+#subtituloCarrito {
+    padding-top: 10%;
+}
 /* @media (max-width: 992px) { DESCOMENTAR SI SE AGRANDA EL CARRITO
     #lista {
         align-items: flex-start !important;

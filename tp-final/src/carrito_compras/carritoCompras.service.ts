@@ -76,9 +76,20 @@ export class CarritoComprasService {
 
             if (carritoDTO) {
                 if (carritoDTO.precioTotal && carritoDTO.usuarioIdUsuario && carritoDTO.muroIdMuro) {
-                    let carritoCompras = new CarritoCompras(carritoDTO.precioTotal, carritoDTO.cantidad, carritoDTO.usuarioIdUsuario, carritoDTO.muroIdMuro);
-                    await this.carritoComprasRepository.save(carritoCompras);
-                    return carritoCompras;
+                    let criterio : FindOneOptions = {where : {usuarioIdUsuario: carritoDTO.usuarioIdUsuario, muroIdMuro: carritoDTO.muroIdMuro }}
+                    let carrito = await this.carritoComprasRepository.findOne(criterio);
+                    if(carrito) {
+                        let nuevaCantidad = carrito.getCantidad();
+                        carrito.setCantidad((nuevaCantidad+1));
+                        await this.carritoComprasRepository.save(carrito);
+                        return carrito;
+                    }
+                    else {
+                        let carritoCompras = new CarritoCompras(carritoDTO.precioTotal, carritoDTO.cantidad, carritoDTO.usuarioIdUsuario, carritoDTO.muroIdMuro);
+                        await this.carritoComprasRepository.save(carritoCompras);
+                        return carritoCompras;
+                    }
+
                 }
                 else {
                     throw new Error("Datos del carrito de compras invalidos");

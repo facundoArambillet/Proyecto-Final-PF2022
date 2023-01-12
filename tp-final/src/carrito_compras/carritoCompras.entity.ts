@@ -40,7 +40,9 @@ export class CarritoCompras {
     public getPrecioTotal(): number {
         return this.precioTotal;
     }
-
+    public getCantidad(): number {
+        return this.cantidad;
+    }
 
     public setCantidad(nuevaCantidad: number): void {
         this.cantidad = nuevaCantidad;

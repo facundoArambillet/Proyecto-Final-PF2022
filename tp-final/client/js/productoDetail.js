@@ -11,7 +11,7 @@ function processParams() {
         let tmparr = paramarr[i].split("=");
         params[tmparr[0]] = tmparr[1];
     }
-    
+
 }
 processParams();
 
@@ -24,13 +24,28 @@ function loadDataMuro() {
 
     titulo.innerHTML = muro.nombre;
     descripcion.innerHTML = muro.descripcion;
-    precio.innerHTML =`$ ${muro.precio} c/u`;
+    precio.innerHTML = `$ ${muro.precio} c/u`;
     stock.innerHTML = `Stock: ${muro.cantidad}`;
-    imagen.setAttribute("src",muro.imagen);
+    imagen.setAttribute("src", muro.imagen);
 }
 
 btnAgregar.addEventListener("click", async () => {
-
+    let carrito = {
+        "precioTotal": muro.precio,
+        "cantidad": 1,
+        "usuarioIdUsuario": window.sessionStorage.idUsuario,
+        "muroIdMuro":  params.idMuro
+    }
+    let respuesta = await fetch("/carrito-compras", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(carrito)
+    })
+    if(respuesta.ok) {
+        swal.fire("Muro agregado al carrito")
+    }
 
 })
 

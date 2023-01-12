@@ -4,6 +4,7 @@ let password = document.querySelector("#password");
 let inputContrasenia = document.querySelector("#contrasenia");
 let confirmacionPassword = document.querySelector("#confirmacionPassword");
 let inputConfirmacion = document.querySelector("#confirmacionContrasenia");
+let alerta;
 async function registrar() {
     let inputEmail = document.querySelector("#email");
     let validacionEmail = /([a-zA-Z0-9])+@([a-zA-Z])+\.[com]/;
@@ -13,7 +14,7 @@ async function registrar() {
         let usuarioRepetido = await fetch(`/usuario/${inputEmail.value}`)
 
         console.log(usuarioRepetido.ok)
-        
+
         if (!usuarioRepetido.ok) {
             let usuario = {
                 "nombre": inputEmail.value,
@@ -35,8 +36,8 @@ async function registrar() {
                     },
                     body: JSON.stringify(usuario)
                 })
-                if(response.ok) {
-                    let json = await respuesta.json(); 
+                if (response.ok) {
+                    let json = await respuesta.json();
                     console.log(json)
                     window.sessionStorage.setItem("loginOk", true);
                     window.sessionStorage.setItem("idUsuario", json.idUsuario);
@@ -51,28 +52,30 @@ async function registrar() {
             }
         }
         else {
-            
+
             swal.fire("El email ya existe");
         }
 
     }
     else if (!validacionEmail.test(inputEmail.value)) {
-        swal.fire("Email invalido");
+      await  swal.fire("Email invalido");
+        // alert("Email invalido")
+
     }
-    else if (!validacionContrasenia.test(inputContrasenia.value) || inputContrasenia.value.length > 20 ) {
-        swal.fire("Formato de contraseña invalido");
+    else if (!validacionContrasenia.test(inputContrasenia.value) || inputContrasenia.value.length > 20) {
+        await swal.fire("Formato de contraseña invalido");
     }
     else if (inputContrasenia.value != inputConfirmacion.value) {
-        swal.fire("Las contraseñas no coinciden");
+        await swal.fire("Las contraseñas no coinciden");
     }
 
 }
 btnRegistro.addEventListener("click", registrar);
-// window.onkeydown = function (event){ // SI LO ACTIVO ACA NO ME DEJA USAR LAS ALERTAS DE SWAL
-//     if (event.keyCode == '13'){
-//         registrar();
-//     }
-//  }
+window.onkeyup = function (event) {
+    if (event.keyCode == '13') {
+        registrar();
+    }
+}
 
 
 

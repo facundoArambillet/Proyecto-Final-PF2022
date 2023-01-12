@@ -30,22 +30,32 @@ function loadDataMuro() {
 }
 
 btnAgregar.addEventListener("click", async () => {
-    let carrito = {
-        "precioTotal": muro.precio,
-        "cantidad": 1,
-        "usuarioIdUsuario": window.sessionStorage.idUsuario,
-        "muroIdMuro":  params.idMuro
+    if(window.sessionStorage.token) {
+        let carrito = {
+            "precioTotal": muro.precio,
+            "cantidad": 1,
+            "usuarioIdUsuario": window.sessionStorage.idUsuario,
+            "muroIdMuro":  params.idMuro
+        }
+        let respuesta = await fetch("/carrito-compras", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(carrito)
+        })
+        if(respuesta.ok) {
+            swal.fire("Muro agregado al carrito")
+        }
     }
-    let respuesta = await fetch("/carrito-compras", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(carrito)
-    })
-    if(respuesta.ok) {
-        swal.fire("Muro agregado al carrito")
+    else {
+        let alerta =  await swal.fire("Primero debe loguearse");
+        if(alerta) {
+            window.location.href = './logueo.html';
+        }
+
     }
+
 
 })
 

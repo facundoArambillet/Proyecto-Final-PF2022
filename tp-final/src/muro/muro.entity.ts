@@ -1,6 +1,5 @@
-
 import { CarritoCompras } from "src/carrito_compras/carritoCompras.entity";
-import DetalleFactura from "src/detalle_factura/detallefactura.entity";
+import { Factura } from "src/factura/factura.entity";
 import { Material } from "src/material/material.entity";
 import { Usuario } from "src/usuario/usuario.entity";
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -27,19 +26,20 @@ export class Muro {
     @Column()
     private usuarioIdUsuario : number;
 
+
     @ManyToOne(type => Usuario,
         usuario => usuario.muros)
     @JoinColumn()
     public usuario: Usuario;
 
+    // @ManyToMany(type => Factura, factura => factura.muros)
+    // @JoinTable()
+    // public facturas : Factura[];
+
     @ManyToMany(type => Material, material => material.muros)
     @JoinTable()
     public materiales : Material[];
-
-    @OneToMany(type => DetalleFactura,
-        detalleFactura => detalleFactura.muro)
-    @JoinColumn()
-    public detalleFacturas: DetalleFactura[];
+    
 
     @OneToMany(type => CarritoCompras,
         carritoCompras => carritoCompras.muro)

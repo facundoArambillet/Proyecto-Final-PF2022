@@ -10,7 +10,6 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { TipoMaterialModule } from './tipo_material/tipo-material.module';
 import { FacturaModule } from './factura/factura.module';
 import { RolModule } from './rol/rol.module';
-import { DetallefacturaModule } from './detalle_factura/detallefactura.module';
 import { CarritoComprasModule } from './carrito_compras/carritoCompras.module';
 
 @Module({
@@ -35,7 +34,6 @@ import { CarritoComprasModule } from './carrito_compras/carritoCompras.module';
     TipoMaterialModule,
     FacturaModule,
     RolModule,
-    DetallefacturaModule,
     CarritoComprasModule,
   ],
   controllers: [AppController],

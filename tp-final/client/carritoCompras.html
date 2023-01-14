@@ -60,7 +60,7 @@
   <h1>Carrito De Compras</h1>
   <div class="container-fluid">
     <div class="row text-center">
-      <div class="col row " id="cardItems">
+      <div class="col-9 row " id="cardItems">
         <div class="row" style="margin-bottom: 3%;">
           <div class="col-4"> <span>Producto</span></div>
           <div class="col-3"> <span>Precio</span></div>
@@ -87,13 +87,28 @@
 
 
       </div>
-      <div class="col-3 text-start" id="descripcionProducto" style="padding: 40px 30px;;">
+      <div class="col-3 text-start" id="descripcionProducto" style="padding: 30px 30px;;">
         <div id="tituloCarrito">
-          <h5><strong>Total del Carrito</strong></h5>
+          <h5><strong>Resumen de la compra</strong></h5>
         </div>
-        <div id="subtituloCarrito">
-          <p><strong>Subtotal</strong></p>
-          <p id="precioTotal"></p>
+        <div class="row carrito infoCard">
+          <div class="col-6" id="subtotalCarrito">
+            <p>Subtotal</p>
+          </div>
+          <div class="col-6">
+            <p id="precioTotal"></p>
+          </div>
+        </div>
+        <div class="row carrito infoCard">
+          <div class="col-6" id="totalCarrito">
+            <p><strong>Total</strong></p>
+          </div>
+          <div class="col-6">
+            <p id="total"></p>
+          </div>
+        </div>
+        <div class="text-center carrito">
+          <button class="btn btn-outline-dark btn-lg px-5" type="submit" id="btnComprar">Finalizar Compra</button>
         </div>
       </div>
 

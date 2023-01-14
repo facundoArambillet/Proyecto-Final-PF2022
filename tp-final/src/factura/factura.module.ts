@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import DetalleFactura from 'src/detalle_factura/detallefactura.entity';
+import { Muro } from 'src/muro/muro.entity';
 import { Usuario } from 'src/usuario/usuario.entity';
 import { FacturaController } from './factura.controller';
 import { Factura } from './factura.entity';
@@ -10,7 +10,7 @@ import { FacturaService } from './factura.service';
   imports : [
     TypeOrmModule.forFeature(
       [
-        Factura,Usuario,DetalleFactura
+        Factura,Usuario,Muro
       ]
     )
   ],

@@ -1,6 +1,6 @@
-import DetalleFactura from "src/detalle_factura/detallefactura.entity";
+import { Muro } from "src/muro/muro.entity";
 import { Usuario } from "src/usuario/usuario.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("factura")
 export class Factura {
@@ -14,15 +14,16 @@ export class Factura {
     @Column()
     private usuarioIdUsuario: number;
 
+
     @ManyToOne(type => Usuario,
         usuario => usuario.facturas)
     @JoinColumn()
     public usuario: Usuario;
 
-    @OneToMany(type => DetalleFactura,
-        detalleFactura => detalleFactura.factura)
-    @JoinColumn()
-    public detalleFacturas: DetalleFactura[];
+    //NO ENTIENDO PORQUE TUVE QUE CAMBIAR LA SINTAXIS DE LA RELACION Y COMENTARLA EN MURO.ENTITY
+    @ManyToMany(() => Muro)
+    @JoinTable()
+    public muros : Muro[];
 
 
     constructor(fecha : Date, total: number, idUsuario: number) {
@@ -40,10 +41,13 @@ export class Factura {
     public getTotal(): number {
         return this.total;
     }
-    public setFecha(nuevaFecha: Date) {
+    public setFecha(nuevaFecha: Date): void {
         this.fecha = nuevaFecha;
     }
-    public setTotal(nuevoTotal: number) {
+    public setTotal(nuevoTotal: number): void {
         this.total = nuevoTotal;
+    }
+    public setMuros(nuevosMuros : Muro[]) {
+        this.muros = nuevosMuros;
     }
 }

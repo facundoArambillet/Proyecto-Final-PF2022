@@ -10,20 +10,22 @@ export class MuroService {
     private muros: Muro[] = [];
 
     constructor(@InjectRepository(Muro) private readonly muroRepository: Repository<Muro>,
-    @InjectRepository(Material) private readonly materialRepository: Repository<Material>) { }
+        @InjectRepository(Material) private readonly materialRepository: Repository<Material>) { }
 
     public async getAll(): Promise<Muro[]> {
         this.muros = await this.muroRepository.find();
         return this.muros;
     }
 
-    public async getAllRelaciones(orden : string): Promise<Muro[]> {
-        let criterio : FindManyOptions = {relations : ["usuario","materiales","carritosCompras"], order : {
-            idMuro : orden
-        }};
+    public async getAllRelaciones(orden: string): Promise<Muro[]> {
+        let criterio: FindManyOptions = {
+            relations: ["usuario", "materiales", "carritosCompras"], order: {
+                idMuro: orden
+            }
+        };
         this.muros = await this.muroRepository.find(criterio);
-        for(let i = 0; i < this.muros.length; i++) {
-            if(this.muros[i].materiales.length >= 1) {
+        for (let i = 0; i < this.muros.length; i++) {
+            if (this.muros[i].materiales.length >= 1) {
                 this.muros[i].calcularCoeficiente();
             }
         }
@@ -52,7 +54,7 @@ export class MuroService {
     */
     public async getByID(id: number): Promise<Muro> {
         try {
-            let criterio: FindOneOptions = { where: { idMuro: id },  };
+            let criterio: FindOneOptions = { where: { idMuro: id }, };
             let muro: Muro = await this.muroRepository.findOne(criterio);
             if (muro) {
                 return muro;
@@ -70,7 +72,7 @@ export class MuroService {
 
     public async getByIDRelaciones(id: number): Promise<Muro> {
         try {
-            let criterio: FindOneOptions = { where: { idMuro: id }, relations : ["materiales"] };
+            let criterio: FindOneOptions = { where: { idMuro: id }, relations: ["materiales"] };
             let muro: Muro = await this.muroRepository.findOne(criterio);
             if (muro) {
                 return muro;
@@ -90,12 +92,13 @@ export class MuroService {
         try {
             if (muroDTO) {                                                                       //CON ESTO NO ME PUEDEN CARGAR MUROS SIN MATERIALES
                 if (muroDTO.nombre && muroDTO.precio && muroDTO.cantidad && muroDTO.descripcion && muroDTO.idsMateriales) {
-                    let IdsMateriales: number[] =  muroDTO.idsMateriales;
+                    let IdsMateriales: number[] = muroDTO.idsMateriales;
                     let materiales = await this.materialRepository.findByIds(IdsMateriales)
-                    let muro = new Muro(muroDTO.nombre, muroDTO.precio, muroDTO.cantidad, 
-                        muroDTO.descripcion, muroDTO.usuarioIdUsuario,muroDTO.imagen);
-                        muro.setMateriales(materiales);
-                        await this.muroRepository.save(muro)
+                    let muro = new Muro(muroDTO.nombre, muroDTO.precio, muroDTO.cantidad,
+                        muroDTO.descripcion, muroDTO.usuarioIdUsuario, muroDTO.imagen);
+                    muro.setMateriales(materiales);
+                    console.log(muro)
+                    await this.muroRepository.save(muro)
 
                     return muro;
                 }
@@ -115,7 +118,7 @@ export class MuroService {
     public async updateMuro(id: number, muroDTO: MuroDTO): Promise<boolean> {
         try {
             if (id && muroDTO) {
-                if (muroDTO.nombre && muroDTO.precio && muroDTO.cantidad && muroDTO.imagen && muroDTO.descripcion && muroDTO.idsMateriales) {
+                if (muroDTO.nombre && muroDTO.precio && muroDTO.imagen && muroDTO.descripcion && muroDTO.idsMateriales) {
                     let criterio: FindOneOptions = { where: { idMuro: id } };
                     let muro: Muro = await this.muroRepository.findOne(criterio);
                     muro.setNombre(muroDTO.nombre);
@@ -139,6 +142,24 @@ export class MuroService {
         }
     }
 
+    public async updateCantidad(id: number, nuevaCantidad: any): Promise<boolean> {
+        try {
+            if (id && nuevaCantidad && nuevaCantidad.cantidad >= 0) {
+                let criterio: FindOneOptions = { where: { idMuro: id } };
+                let muro: Muro = await this.muroRepository.findOne(criterio);
+                muro.setCantidad(nuevaCantidad.cantidad)
+                muro = await this.muroRepository.save(muro);
+                return true;
+            }
+            else {
+                throw new Error("Datos de cantidad invalidos");
+            }
+        } catch (error) {
+            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la actualizacion de muro: ${error}` },
+                HttpStatus.NOT_FOUND)
+        }
+
+    }
     public async deleteMuro(id: number): Promise<boolean> {
         try {
             if (id) {
@@ -153,7 +174,7 @@ export class MuroService {
 
         } catch (error) {
             throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la eliminacion de muro: ${error}` },
-            HttpStatus.NOT_FOUND);
+                HttpStatus.NOT_FOUND);
         }
     }
 }

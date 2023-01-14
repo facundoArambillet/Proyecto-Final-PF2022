@@ -1,6 +1,4 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import DetalleFacturaDTO from 'src/detalle_factura/detallefactura.dto';
-import DetalleFactura from 'src/detalle_factura/detallefactura.entity';
 import CarritoComprasDTO from './carritoCompras.dto';
 import { CarritoCompras } from './carritoCompras.entity';
 import { CarritoComprasService } from './carritoCompras.service';

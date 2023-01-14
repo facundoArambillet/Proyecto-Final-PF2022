@@ -14,6 +14,10 @@ export class FacturaController {
     public getAllRelaciones(@Param("orden") orden: string): Promise<Factura[]> {
         return this.facturaService.getAllRelaciones(orden);
     }
+    @Get("all/id/:id")
+    public getByIDRelaciones(@Param("id") id: number): Promise<Factura> {
+        return this.facturaService.getByIDRelaciones(id);
+    }
     @Get(":id")
     public getByID(@Param("id") id: number): Promise<Factura> {
         return this.facturaService.getByID(id);

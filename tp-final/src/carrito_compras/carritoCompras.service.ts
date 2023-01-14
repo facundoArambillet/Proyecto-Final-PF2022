@@ -1,7 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import DetalleFacturaDTO from 'src/detalle_factura/detallefactura.dto';
-import DetalleFactura from 'src/detalle_factura/detallefactura.entity';
 import { Muro } from 'src/muro/muro.entity';
 import { Repository, FindManyOptions, FindOneOptions } from 'typeorm';
 import CarritoComprasDTO from './carritoCompras.dto';

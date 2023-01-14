@@ -54,9 +54,20 @@ div p a i{
 } 
 #descripcionProducto {
     background-color: #F7F7F7;
+    border: 2px #CCCCCC solid;
+    height: 350px;
 }
-#subtituloCarrito {
+.carrito {
     padding-top: 10%;
+}
+#subtotalCarrito {
+    color: rgb(92, 90, 90);
+}
+#totalCarrito {
+    font-size: 18px;
+}
+.infoCard {
+    border-bottom: 1px solid grey;
 }
 /* @media (max-width: 992px) { DESCOMENTAR SI SE AGRANDA EL CARRITO
     #lista {

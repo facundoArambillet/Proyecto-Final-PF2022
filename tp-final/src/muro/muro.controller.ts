@@ -31,6 +31,10 @@ export class MuroController {
     public updateMuro(@Param("id") id: number, @Body() muro: MuroDTO  ): Promise<boolean> {
         return this.muroService.updateMuro(id,muro);
     }
+    @Put("/stock/:id")
+    public updateCantidad(@Param("id") id: number, @Body() nuevaCantidad: number  ): Promise<boolean> {
+        return this.muroService.updateCantidad(id,nuevaCantidad);
+    }
     @Delete(":id")
     public deleteMuro(@Param("id") id: number): Promise<boolean> {
         return this.muroService.deleteMuro(id);

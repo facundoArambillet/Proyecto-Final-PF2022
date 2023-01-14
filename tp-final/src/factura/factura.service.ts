@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Muro } from 'src/muro/muro.entity';
 import { Repository, FindManyOptions, FindOneOptions } from 'typeorm';
 import FacturaDTO from './factura.dto';
 import { Factura } from './factura.entity';
@@ -8,7 +9,8 @@ import { Factura } from './factura.entity';
 export class FacturaService {
     private facturas: Factura[] = [];
 
-    constructor(@InjectRepository(Factura) private readonly facturaRepository: Repository<Factura>) { }
+    constructor(@InjectRepository(Factura) private readonly facturaRepository: Repository<Factura>,
+    @InjectRepository(Muro) private readonly muroRepository: Repository<Muro>) { }
 
     public async getAll(): Promise<Factura[]> {
         this.facturas = await this.facturaRepository.find();
@@ -16,7 +18,7 @@ export class FacturaService {
     }
 
     public async getAllRelaciones(orden : string): Promise<Factura[]> {
-        let criterio: FindManyOptions = { relations: ['usuario','detalleFacturas'], order : {
+        let criterio: FindManyOptions = { relations: ['usuario','muros'], order : {
             idFactura : orden
         }}
         this.facturas = await this.facturaRepository.find(criterio);
@@ -41,11 +43,36 @@ export class FacturaService {
 
     }
 
+    public async getByIDRelaciones(id: number): Promise<Factura> {
+        try {
+            let criterio: FindOneOptions = { relations: ['usuario','muros'], where: { idFactura: id } };
+            let factura: Factura = await this.facturaRepository.findOne(criterio);
+            if (factura) {
+                return factura;
+            }
+            else {
+                throw new Error("La factura no se encuentra");
+            }
+        } catch (error) {
+            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la busqueda de la factura ${id}: ${error}` },
+                HttpStatus.NOT_FOUND);
+        }
+
+
+    }
+
     public async addFactura(facturaDTO: FacturaDTO): Promise<Factura> {
         try {
             if (facturaDTO) {
-                if (facturaDTO.fecha && facturaDTO.total) {
-                    let factura = await this.facturaRepository.save(new Factura(facturaDTO.fecha, facturaDTO.total, facturaDTO.usuarioIdUsuario));
+                if (facturaDTO.fecha && facturaDTO.total && facturaDTO.idsMuros) {
+                    let IdsMuros: number[] = facturaDTO.idsMuros;
+                    let muros = await this.muroRepository.findByIds(IdsMuros);
+                    //console.log(muros)
+                    let factura = new Factura(facturaDTO.fecha, facturaDTO.total, facturaDTO.usuarioIdUsuario);
+                    // factura.muros = muros;
+                    factura.setMuros(muros) //CUANDO HAGO ESTO ME EMPIEZA A TIRAR ERROR
+                    await this.facturaRepository.save(factura);
+
                     return factura;
                 }
                 else {

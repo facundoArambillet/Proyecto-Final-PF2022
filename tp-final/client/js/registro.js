@@ -37,11 +37,10 @@ async function registrar() {
                     body: JSON.stringify(usuario)
                 })
                 if (response.ok) {
-                    let json = await respuesta.json();
-                    console.log(json)
+                    let json = await response.json();
                     window.sessionStorage.setItem("loginOk", true);
-                    window.sessionStorage.setItem("idUsuario", json.idUsuario);
-                    window.sessionStorage.setItem("nombre", json.nombre);
+                    window.sessionStorage.setItem("idUsuario", json.usuario.idUsuario);
+                    window.sessionStorage.setItem("nombre", json.usuario.nombre);
                     window.sessionStorage.setItem("token", json.token);
                     window.location.href = './index.html';
                 }

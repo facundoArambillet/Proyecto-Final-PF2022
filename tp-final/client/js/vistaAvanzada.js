@@ -145,6 +145,8 @@ btnGenerar.addEventListener("click", () => {
     let muroGenerado = document.querySelector("#muroGenerado");
     let select = document.querySelector("#selectMateriales_1");
     let parrafo = document.createElement("p");
+
+    //AGARRAR TODOS LOS MATERIALES , GENERAR MURO , COMPARAR TRANSMITANCIA TERMICA CON UNA CONSTANTE(INVENTADA) 
     for(let i = 0; i < select.children.length; i++) {
         if(select.children[i].selected && select.children[i].value != "None") {
             parrafo.innerHTML = `Muro ${select.children[i].value}`

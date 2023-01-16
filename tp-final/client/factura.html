@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Factura</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-10 ">
+                <h1>Factura</h1>
+            </div>
+            <div class="col-xs-2">
+              <a href="./index.html"><img class="img img-responsive" src="./logo/logoProductosDetail.PNG" alt="Logotipo"></a>  
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-10">
+                <p><strong>Datos Empresa</strong></p>
+                <h1 class="h6">Tel +54 9 123456789</h1>
+                <h1 class="h6">Direccion: Pellegrini 441 Tandil</h1>
+            </div>
+            <div class="col-xs-2 text-center">
+                <strong>Fecha</strong>
+                <p id="fecha"><p>
+                <strong>Factura No.</strong>
+                <p id="nroFactura"></p>
+            </div>
+        </div>
+        <hr>
+        <div class="row text-center" style="margin-bottom: 2rem;">
+            <div class="col-xs-6">
+                <h1 class="h2">Cliente</h1>
+                <p id="nombreCliente"></p>
+            </div>
+            <div class="col-xs-6">
+                <h1 class="h2">Remitente</h1>
+                <strong>ConcienciaConstructiva S.A</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-condensed table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Precio unitario</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productos">
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right">Subtotal</td>
+                            <td id="subtotal"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right">Descuento</td>
+                            <td id="descuento"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right">Subtotal con descuento</td>
+                            <td id="subtotalDescuento"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right">IVA</td>
+                            <td id="iva"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-right">
+                                <h4>Total</h4>
+                            </td>
+                            <td id="total"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <p class="h5">Gracias por su compra</p>
+            </div>
+        </div>
+    </div>
+    <script src="./js/factura.js"></script>
+</body>
+
+</html>

@@ -45,7 +45,7 @@ btnAgregar.addEventListener("click", async () => {
             body: JSON.stringify(carrito)
         })
         if(respuesta.ok) {
-            swal.fire("Muro agregado al carrito")
+            swal.fire("Muro agregado al carrito");
         }
     }
     else {

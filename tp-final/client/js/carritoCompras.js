@@ -2,7 +2,6 @@ let cardItems = document.querySelector("#cardItems");
 let btnComprar = document.querySelector("#btnComprar");
 let valorPrecioTotal = document.querySelector("#precioTotal");
 let total = document.querySelector("#total");
-//let btnsBorrar = [];
 let precioTotal = 0;
 let carrito, items;
 function crearCardsItems() {
@@ -14,11 +13,10 @@ function crearCardsItems() {
         divRow.classList.add("row");
         divRow.classList.add("align-items-center");
         divRow.classList.add("items")
-        // divRow.setAttribute("value", `${items[i].muro.idMuro}`);
         divRow.style.marginBottom = "5%";
         let divImg = document.createElement("div");
         divImg.classList.add("col-4");
-        // divImg.classList.add("text-start");
+
         let img = document.createElement('img');
         img.setAttribute("src", items[i].muro.imagen);
         img.setAttribute("width", "200px");
@@ -29,7 +27,8 @@ function crearCardsItems() {
         let divCantidad = document.createElement("div");
         divCantidad.classList.add("col-3");
         let parrafoCantidad = document.createElement("p");
-        parrafoCantidad.innerText = items[i].cantidad
+        parrafoCantidad.innerText = items[i].cantidad;
+        parrafoCantidad.classList.add("cantidades");
         let divTotal = document.createElement("div");
         divTotal.classList.add("col-1");
         let parrafoTotal = document.createElement("p");
@@ -46,9 +45,7 @@ function crearCardsItems() {
         imagenTarro.classList.add("bi");
         imagenTarro.classList.add("bi-trash3-fill");
 
-       // let btnBorrarEspecifico = document.querySelector(`#btnBorrar${1}`)
         btnBorrar.appendChild(imagenTarro);
-        //btnsBorrar.push(btnBorrarEspecifico);
 
         precioTotal += items[i].muro.precio * items[i].cantidad;
 
@@ -69,7 +66,7 @@ function crearCardsItems() {
     borrarCarrito(".btnBorrar");
 
     valorPrecioTotal.innerText = `$ ${precioTotal}`;
-    total.innerText = `$ ${precioTotal}`;
+    total.innerText = `$ ${precioTotal * 1.21}`;
     precioTotal = 0;
 }
 
@@ -165,15 +162,53 @@ async function realizarCompra() {
 
     }
     if (cantidadDescontada) {
-        crearFactura(precioTotal, idsMuros);
+        let factura = await crearFactura(precioTotal, idsMuros);
+        let facturaCreada = await fetch(`/detalle-factura/${factura}`);
+        let nuevaCantidadDetalle;
+
+        if (facturaCreada.ok) {
+
+            let jsonFactura = await facturaCreada.json();
+            let cantidades = document.querySelectorAll(".cantidades");
+
+            for (let k = 0; k < jsonFactura.length; k++) {
+                let detalle = {
+                    "muroIdMuro": jsonFactura[k].muroIdMuro,
+                    "facturaIdFactura": jsonFactura[k].facturaIdFactura,
+                    "cantidad": Number(cantidades[k].innerText)
+                }
+                console.log(detalle)
+                 nuevaCantidadDetalle = await fetch(`/detalle-factura`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(detalle)
+                })
+            }
+            if(nuevaCantidadDetalle.ok) {
+                let carritoBorrado = await borrarTodoCarrito();
+                if (carritoBorrado) {
+                   let load = await loadItems();
+                   if(load) {
+                    window.location = "./factura.html";
+                   }
+
+                }
+            }
+
+        }
+
+
     }
 
 }
 
 async function crearFactura(precioTotal, idsMuros) {
+    let precioConIva = precioTotal * 1.21;
     let factura = {
         "fecha": new Date(),
-        "total": precioTotal,
+        "total": precioConIva,
         "usuarioIdUsuario": window.sessionStorage.idUsuario,
         "idsMuros": idsMuros
     }
@@ -186,13 +221,10 @@ async function crearFactura(precioTotal, idsMuros) {
     })
 
     if (response.ok) {
+        let json = await response.json();
+        let idFactura = json.idFactura;
         swal.fire("Articulos comprados");
-        // valorPrecioTotal.innerText = `$ 0`;
-        // total.innerText = `$ 0`;
-        let carritoBorrado = await borrarTodoCarrito();
-        if (carritoBorrado) {
-            loadItems();
-        }
+        return idFactura;
     }
     else {
         swal.fire("Error en la creacion de factura");
@@ -218,28 +250,6 @@ async function borrarTodoCarrito() {
     return true
 
 }
-// async function crearDetalleFactura(cantidad,idMuro,idFactura) {
-//     let detalle = {
-//         "cantidad": cantidad,
-//         "muroIdMuro": idMuro,
-//         "facturaIdFactura": idFactura
-//     }
-//     console.log(detalle)
-//     let respuesta = await fetch("/detallefactura", {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(detalle)
-//     })
-//     if(respuesta.ok) {
-//         console.log("detalle creado");
-//     }
-//     else {
-//         console.log("Error detalle");
-//     }
-
-// }
 
 async function loadItems() {
     carrito = [];
@@ -247,6 +257,7 @@ async function loadItems() {
     if (respuesta.ok) {
         carrito = await respuesta.json()
         crearCardsItems();
+        return true;
     }
 
 }

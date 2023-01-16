@@ -11,6 +11,9 @@ import { TipoMaterialModule } from './tipo_material/tipo-material.module';
 import { FacturaModule } from './factura/factura.module';
 import { RolModule } from './rol/rol.module';
 import { CarritoComprasModule } from './carrito_compras/carritoCompras.module';
+import { DetalleFacturaController } from './detalle_factura/detalleFactura.controller';
+import { DetalleFacturaService } from './detalle_factura/detalleFactura.service';
+import { DetalleFacturaModule } from './detalle_factura/detalleFactura.module';
 
 @Module({
   imports: [
@@ -35,6 +38,7 @@ import { CarritoComprasModule } from './carrito_compras/carritoCompras.module';
     FacturaModule,
     RolModule,
     CarritoComprasModule,
+    DetalleFacturaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

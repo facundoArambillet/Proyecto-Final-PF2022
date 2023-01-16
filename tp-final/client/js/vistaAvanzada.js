@@ -198,6 +198,7 @@ btnGenerar.addEventListener("click", async () => {
         "usuarioIdUsuario": Number(window.sessionStorage.idUsuario),
         "idsMateriales": idsMateriales
     }
+    console.log(muro)
     let respuesta = await fetch('/muro', {
         method: 'POST',
         headers: {
@@ -214,7 +215,7 @@ btnGenerar.addEventListener("click", async () => {
         else {
             coeficiente = "Ineficiente";
         }                                                                    // LA FUNCION toFixed() LIMITA LA CANTIDAD DE DECIMALES
-        parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.toFixed(2)} y es ${coeficiente}`
+        parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.toFixed(2)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muroUsuario.precio}`
     }
     // parrafo.appendChild(btnCarrito)
     btnBorrar.appendChild(imagenTarro)

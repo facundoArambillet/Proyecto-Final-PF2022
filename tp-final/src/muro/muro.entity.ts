@@ -16,13 +16,14 @@ export class Muro {
     @Column()
     private precio : number;
     @Column()
-    private cantidad : number;
+    private stock : number;
     @Column()
     private imagen : string;
     @Column()
     private descripcion : string;
+    // CAMBIAR VALOR A PRIVADO CUANDO TERMINE DE PROBAR PORQUE EN LA BDD NO ME SETEA ESTE VALOR CORRECTAMENTE
     @Column()
-    private coeficienteDeTransmitancia : number;
+    private coeficienteDeTransmitancia : number //Probe tambien con GLfloat;
     @Column()
     private usuarioIdUsuario : number;
 
@@ -46,15 +47,16 @@ export class Muro {
     @JoinColumn()
     public carritosCompras: CarritoCompras[];
 
-    constructor(nombre : string, precio : number, cantidad : number, descripcion: string, idUsuario : number,imagen?: string) {
+    constructor(nombre : string, precio : number, stock : number, descripcion: string, idUsuario : number,imagen?: string) {
+        this.calcularCoeficiente();
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad = cantidad;
+        this.stock = stock;
         this.imagen = imagen;
         this.descripcion = descripcion;
         this.usuarioIdUsuario = idUsuario;
 
-        this.calcularCoeficiente();
+
     }
 
     public getID(): number {
@@ -67,7 +69,7 @@ export class Muro {
         return this.precio;
     }
     public getCantidad(): number {
-        return this.cantidad;
+        return this.stock;
     }
     public getImagen(): string {
         return this.imagen;
@@ -86,7 +88,7 @@ export class Muro {
         this.precio = nuevoPrecio;
     }
     public setCantidad(nuevaCantidad: number) {
-        this.cantidad = nuevaCantidad;
+        this.stock = nuevaCantidad;
     }
     public setImagen(nuevaImagen: string) {
         this.imagen = nuevaImagen;
@@ -97,14 +99,20 @@ export class Muro {
     public setMateriales(nuevosMateriales : Material[]) {
         this.materiales = nuevosMateriales;
     }
+    public setCoeficiente(valor  : number) {
+        this.coeficienteDeTransmitancia = valor
+    }
     public calcularCoeficiente() {
         let resistenciaTotal : number = 0;
+        let coeficiente: number = 0
         if(this.materiales) {
             for(let i = 0; i < this.materiales.length; i++) {
                 this.materiales[i].calcularResistenciaTermica()
                 resistenciaTotal += this.materiales[i].getResistenciaTermica();
             }
             this.coeficienteDeTransmitancia = 1 / resistenciaTotal;
+             let coeficiente =  1 / resistenciaTotal;
+             return coeficiente;
         }
 
     }

@@ -9,39 +9,42 @@ async function crearCardsMateriales() {
 
         let divIndiceE = document.createElement("div");
         divIndiceE.classList.add("col-md-2");
-        let inputIndiceE = document.createElement("input");
-
+        let parrafoIndiceE = document.createElement("p");
+        parrafoIndiceE.innerText = "0";
         let divIndiceLambda = document.createElement("div");
         divIndiceLambda.classList.add("col-md-2");
-        let inputIndiceLambda = document.createElement("input");
-
+        let parrafoLambda = document.createElement("p");
+        parrafoLambda.innerText = "0";
 
         let divIndiceR = document.createElement("div");
         divIndiceR.classList.add("col-md-2");
-        let inputIndiceR = document.createElement("input");
+        let parrafoIndiceR = document.createElement("p");
+        parrafoIndiceR.innerText = "0";
 
         let divCantidad = document.createElement("div");
         divCantidad.classList.add("col-md-2");
+        divCantidad.classList.add("cantidad");
         let inputCantidad = document.createElement("input");
 
         let divPrecio = document.createElement("div");
         divPrecio.classList.add("col-md-2");
-        let inputPrecio = document.createElement("input");
-
-
+        divPrecio.classList.add("precio");
+        let parrafoPrecio = document.createElement("p");
+        parrafoPrecio.innerHTML = "$ 0";
         // VER COMO HACER UNA FUNCION PARA CREAR LOS DROPDOWNS(SELECTS)
         let divSection = document.createElement("div");
         divSection.classList.add("col-md-2");
         let selectMateriales = document.createElement("select");
+        selectMateriales.classList.add("selects");
         selectMateriales.id = `selectMateriales_${i}`
-        selectMateriales.style.width = "154px";
+        selectMateriales.style.width = "120px";
         selectMateriales.style.height = "30px";
         selectMateriales.innerHTML = "";
         let optionNone = document.createElement("option");
         optionNone.innerHTML = "None";
         selectMateriales.appendChild(optionNone);
 
-        crearOptions(i, selectMateriales, inputIndiceE, inputIndiceLambda, inputIndiceR, inputCantidad, inputPrecio,optionNone);
+        crearOptions(i, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone);
         // let respuesta = await fetch(`material/tipo-material/${i}`);
         // if (respuesta.ok) {
 
@@ -57,11 +60,11 @@ async function crearCardsMateriales() {
         //        FUNCION PARA CARGAR LOS DATOS DE LOS OPTIONS
         //         selectMateriales.addEventListener("change", () => {
         //             console.log(option.value)
-        //             inputIndiceE.value = materiales[j].conductividadTermica;
-        //             inputIndiceLambda.value = materiales[j].espesor;
-        //             inputIndiceR.value = materiales[j].resistenciaTermica;
+        //             parrafoIndiceE.value = materiales[j].conductividadTermica;
+        //             parrafoLambda.value = materiales[j].espesor;
+        //             parrafoIndiceR.value = materiales[j].resistenciaTermica;
         //             inputCantidad.value = materiales[j].cantidad;
-        //             inputPrecio.value = materiales[j].precio;
+        //             parrafoPrecio.value = materiales[j].precio;
         //         })
         //     }
 
@@ -69,11 +72,11 @@ async function crearCardsMateriales() {
 
 
         divSection.appendChild(selectMateriales)
-        divIndiceE.appendChild(inputIndiceE);
-        divIndiceLambda.appendChild(inputIndiceLambda);
-        divIndiceR.appendChild(inputIndiceR);
+        divIndiceE.appendChild(parrafoIndiceE);
+        divIndiceLambda.appendChild(parrafoLambda);
+        divIndiceR.appendChild(parrafoIndiceR);
         divCantidad.appendChild(inputCantidad);
-        divPrecio.appendChild(inputPrecio);
+        divPrecio.appendChild(parrafoPrecio);
 
         divRow.appendChild(divSection);
         divRow.appendChild(divIndiceE);
@@ -88,7 +91,7 @@ async function crearCardsMateriales() {
 }
 
 
-async function crearOptions(id, selectMateriales, inputIndiceE, inputIndiceLambda, inputIndiceR, inputCantidad, inputPrecio, optionNone) {
+async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone) {
 
     let respuesta = await fetch(`material/tipo-material/${id}`, {
         headers: {
@@ -99,28 +102,29 @@ async function crearOptions(id, selectMateriales, inputIndiceE, inputIndiceLambd
         let materiales = await respuesta.json();
 
 
-        for (let i = 0; i < materiales.length; i++) {  
+        for (let i = 0; i < materiales.length; i++) {
             if (materiales[i] != undefined) {
                 let material = materiales[i];
                 let option = document.createElement("option");
                 option.innerHTML = material.nombre;
                 option.id = `optionMaterial_${material.idMaterial}`;
+                option.value = material.idMaterial;
                 selectMateriales.appendChild(option);
-                //cargarOption(material,selectMateriales,inputIndiceE,inputIndiceLambda, inputIndiceR, inputCantidad, inputPrecio)
+                //cargarOption(material,selectMateriales,parrafoIndiceE,parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio)
                 selectMateriales.addEventListener("change", () => {
                     if (option.selected) {
-                        inputIndiceE.value = material.conductividadTermica;
-                        inputIndiceLambda.value = material.espesor;
-                        inputIndiceR.value = material.resistenciaTermica;
+                        parrafoIndiceE.innerText = material.conductividadTermica;
+                        parrafoLambda.innerText = material.espesor;
+                        parrafoIndiceR.innerText = material.resistenciaTermica;
                         inputCantidad.value = material.cantidad;
-                        inputPrecio.value = material.precio;
+                        parrafoPrecio.innerText = material.precio;
                     }
-                    else if(optionNone.selected) {
-                        inputIndiceE.value = "";
-                        inputIndiceLambda.value = "";
-                        inputIndiceR.value = "";
-                        inputCantidad.value = "";
-                        inputPrecio.value = "";
+                    else if (optionNone.selected) {
+                        parrafoIndiceE.innerText = "0";
+                        parrafoLambda.innerText = "0";
+                        parrafoIndiceR.innerText = "0";
+                        inputCantidad.innerText = "0";
+                        parrafoPrecio.innerText = "$ 0";
                     }
                 })
             }
@@ -130,27 +134,117 @@ async function crearOptions(id, selectMateriales, inputIndiceE, inputIndiceLambd
 
 }
 
-// async function cargarOption(material,selectMateriales, inputIndiceE, inputIndiceLambda, inputIndiceR, inputCantidad, inputPrecio) {
+// async function cargarOption(material,selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio) {
 //     selectMateriales.addEventListener("change", () => {
 //         console.log(option.selected)
-//         inputIndiceE.value = material.conductividadTermica;
-//         inputIndiceLambda.value = material.espesor;
-//         inputIndiceR.value = material.resistenciaTermica;
+//         parrafoIndiceE.value = material.conductividadTermica;
+//         parrafoLambda.value = material.espesor;
+//         parrafoIndiceR.value = material.resistenciaTermica;
 //         inputCantidad.value = material.cantidad;
-//         inputPrecio.value = material.precio;
+//         parrafoPrecio.value = material.precio;
 //     })
 // }
 crearCardsMateriales();
-btnGenerar.addEventListener("click", () => {
+btnGenerar.addEventListener("click", async () => {
     let muroGenerado = document.querySelector("#muroGenerado");
-    let select = document.querySelector("#selectMateriales_1");
+    let nombreMuro = "";
+    let idsMateriales = [];
+    let selects = document.querySelectorAll(".selects");
+    let inputsCantidades = document.querySelectorAll(".cantidad");
+    let parrafosPrecios = document.querySelectorAll(".precio");
+    let total = 0;
+    let coeficiente = "";
+    const estandarCoeficiente = 0.35;
     let parrafo = document.createElement("p");
+    parrafo.classList.add("items");
+    // let btnCarrito = document.createElement("button");
+    // btnCarrito.innerText = "Agregar al carrito";
+    let btnBorrar = document.createElement("button");
+    btnBorrar.classList.add("btnBorrar");
+    btnBorrar.style.backgroundColor = "white";
+    btnBorrar.style.border = 0;
+    let imagenTarro = document.createElement("i");
+    imagenTarro.classList.add("bi");
+    imagenTarro.classList.add("bi-trash3-fill");
 
-    //AGARRAR TODOS LOS MATERIALES , GENERAR MURO , COMPARAR TRANSMITANCIA TERMICA CON UNA CONSTANTE(INVENTADA) 
-    for(let i = 0; i < select.children.length; i++) {
-        if(select.children[i].selected && select.children[i].value != "None") {
-            parrafo.innerHTML = `Muro ${select.children[i].value}`
+    //AGARRAR TODOS LOS MATERIALES(ya los id de los materiales en los id del option , probar agarrar todos los selects y hacer una matriz), 
+    //GENERAR MURO , COMPARAR TRANSMITANCIA TERMICA CON UNA CONSTANTE(INVENTADA) 
+
+    for (let i = 0; i < selects.length; i++) {
+
+        for (let j = 0; j < selects[i].children.length; j++) {
+            if (selects[i].children[j].selected && selects[i].children[j].value != "None") {
+
+                total += Number(inputsCantidades[i].children[0].value * parrafosPrecios[i].children[0].innerText)
+                //parrafo.innerHTML = `Muro ${select.children[i].value}`
+                idsMateriales.push(Number(selects[i].children[j].value));
+            }
+
+        }
+        for (let k = 0; k < selects[0].children.length; k++) {
+            if (selects[0].children[k].selected && selects[0].children[k].value != "None") {
+                nombreMuro = selects[0].children[k].innerText;
+                // console.log(selects[0].children[k])
+                // console.log(nombreMuro)
+            }
         }
     }
+
+    let muro = {
+        "nombre": `Muro ${nombreMuro}`,
+        "precio": total,
+        "stock": 1,
+        "descripcion": "Muro generado",
+        "usuarioIdUsuario": Number(window.sessionStorage.idUsuario),
+        "idsMateriales": idsMateriales
+    }
+    let respuesta = await fetch('/muro', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(muro)
+    })
+    if (respuesta.ok) {
+        muroUsuario = await respuesta.json();
+        btnBorrar.value = muroUsuario.idMuro;
+        if (muroUsuario.coeficienteDeTransmitancia < estandarCoeficiente) {
+            coeficiente = "Eficiente";
+        }
+        else {
+            coeficiente = "Ineficiente";
+        }                                                                    // LA FUNCION toFixed() LIMITA LA CANTIDAD DE DECIMALES
+        parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.toFixed(2)} y es ${coeficiente}`
+    }
+    // parrafo.appendChild(btnCarrito)
+    btnBorrar.appendChild(imagenTarro)
+    parrafo.appendChild(btnBorrar);
     muroGenerado.appendChild(parrafo);
+
+    borrarMuroGenerado(".btnBorrar");
 })
+
+
+async function borrarMuroGenerado(clase) {
+    let btns = document.querySelectorAll(clase);
+
+    for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", async () => {
+            let response = await fetch(`/muro/${btns[i].value}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            })
+            if (response.ok) {
+
+                let divPadre = document.querySelector("#muroGenerado");
+                let items = document.querySelectorAll(".items");
+                divPadre.removeChild(items[i]);
+                console.log("muro borrado");
+
+            }
+            else {
+                console.log("error en el response");
+            }
+        })
+    }
+}

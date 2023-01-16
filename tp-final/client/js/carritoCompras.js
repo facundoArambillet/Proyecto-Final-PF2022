@@ -2,7 +2,7 @@ let cardItems = document.querySelector("#cardItems");
 let btnComprar = document.querySelector("#btnComprar");
 let valorPrecioTotal = document.querySelector("#precioTotal");
 let total = document.querySelector("#total");
-let btnsBorrar = [];
+//let btnsBorrar = [];
 let precioTotal = 0;
 let carrito, items;
 function crearCardsItems() {
@@ -46,9 +46,9 @@ function crearCardsItems() {
         imagenTarro.classList.add("bi");
         imagenTarro.classList.add("bi-trash3-fill");
 
-        let btnBorrarEspecifico = document.querySelector(`#btnBorrar${1}`)
+       // let btnBorrarEspecifico = document.querySelector(`#btnBorrar${1}`)
         btnBorrar.appendChild(imagenTarro);
-        btnsBorrar.push(btnBorrarEspecifico);
+        //btnsBorrar.push(btnBorrarEspecifico);
 
         precioTotal += items[i].muro.precio * items[i].cantidad;
 
@@ -69,7 +69,6 @@ function crearCardsItems() {
     borrarCarrito(".btnBorrar");
 
     valorPrecioTotal.innerText = `$ ${precioTotal}`;
-    console.log(valorPrecioTotal.innerText)
     total.innerText = `$ ${precioTotal}`;
     precioTotal = 0;
 }
@@ -128,8 +127,8 @@ async function realizarCompra() {
         for (let j = 0; j < items.length; j++) {                // VER COMO HACER PARA VERIFICAR QUE LA CANTIDAD NO SEA MAYOR
             let muro = await fetch(`/muro/${items[j].muroIdMuro}`);        // AL STOCK EN TODOS LOS MUROS A LA VEZ ANTES DE HACER UN PUT
             let jsonMuro = await muro.json();
-            let cantidad = jsonMuro.cantidad - items[i].cantidad;
-            if (cantidad < 0) {
+            let stock = jsonMuro.stock - items[i].cantidad;
+            if (stock < 0) {
                 cantidadNegativa = true;
             }
         }
@@ -141,8 +140,8 @@ async function realizarCompra() {
             swal.fire("La cantidad excede el stock disponible");
         }
         else {
-            let cantidad = {
-                "cantidad": items[i].muro.cantidad - items[i].cantidad,
+            let stock = {
+                "stock": items[i].muro.stock - items[i].cantidad,
             }
 
             let respuesta = await fetch(`/muro/stock/${items[i].muroIdMuro}`, {
@@ -150,7 +149,7 @@ async function realizarCompra() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(cantidad)
+                body: JSON.stringify(stock)
             })
 
             if (respuesta.ok) {
@@ -185,7 +184,7 @@ async function crearFactura(precioTotal, idsMuros) {
         },
         body: JSON.stringify(factura)
     })
-    console.log(response)
+
     if (response.ok) {
         swal.fire("Articulos comprados");
         // valorPrecioTotal.innerText = `$ 0`;

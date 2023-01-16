@@ -1,5 +1,4 @@
 
-
 let cards = document.querySelector("#cards");
 let muros = [];
 let arrayImgs = ["https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg","https://www.shutterstock.com/image-photo/red-brick-wall-texture-background-600w-719331211.jpg",
@@ -8,7 +7,9 @@ let arrayImgs = ["https://www.shutterstock.com/image-vector/red-brick-tile-wall-
 
 function crearCards() {
     if(muros) {
+        //console.log(muros.length)
         for(let i = 0; i < muros.length; i++) {
+          //  console.log(muros)
             let divCol = document.createElement("div");
             divCol.classList.add("col-md-4");
             let divCard = document.createElement("div");
@@ -45,7 +46,7 @@ function crearCards() {
 }
 
 async function loadMuros(){
-    let respuesta = await fetch("/muro");
+    let respuesta = await fetch(`/muro/all/${1}`);
     if(respuesta.ok) {
         let json = await respuesta.json();
         muros = json;

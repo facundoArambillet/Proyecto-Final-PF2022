@@ -17,6 +17,10 @@ export class UsuarioController {
     public getAllRelaciones(@Param("orden") orden: string): Promise<Usuario[]> {
         return this.usuarioService.getAllRelaciones(orden);
     }
+    @Get("/all/id/:id")
+    public getByIDRelaciones(@Param("id") id: number): Promise<Usuario> {
+        return this.usuarioService.getByIDRelaciones(id);
+    }
     @Get(":email")
     public getByEmail(@Param("email") email: string): Promise<Usuario> {
         return this.usuarioService.getByEmail(email);

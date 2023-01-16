@@ -13,25 +13,34 @@ function ocultar () {
     }
 }
 ocultar();
-document.querySelector("#vistaAvanzada").addEventListener("click", () => {
-    console.log(window.sessionStorage.getItem("loginOk"))
+document.querySelector("#vistaAvanzada").addEventListener("click", async () => {
+   // console.log(window.sessionStorage.getItem("loginOk"))
     if(window.sessionStorage.getItem("loginOk") == 'true') {
         window.location = "./vistaAvanzada.html";
     }
     else {
-        alert("Para acceder primero debe loguearse");
-        //swal.fire("Para acceder primero debe loguearse");
-        document.querySelector("#vistaAvanzada").setAttribute("href","./logueo.html");
+        document.querySelector("#vistaAvanzada").setAttribute("href","#");  //TENGO QUE HACER ESTO PARA FRENAR EL HREF QUE TE LLEVA AL HTML vistaAvanzada
+        let alerta = await swal.fire("Para acceder primero debe loguearse");
+
+        if(alerta) {
+            window.location = "./logueo.html"
+            // document.querySelector("#vistaAvanzada").setAttribute("href","./logueo.html");
+        }
     }
 })
-document.querySelector("#carritoDeCompras").addEventListener("click", () => {
+document.querySelector("#carritoDeCompras").addEventListener("click", async () => {
     if(window.sessionStorage.getItem("loginOk") == "true") {
         window.location = "./carritoCompras.html";
     }
     else {
-        alert("Para acceder primero debe loguearse");
-        //swal.fire("Para acceder primero debe loguearse");
-        document.querySelector("#carritoDeCompras").setAttribute("href","./logueo.html");
+        document.querySelector("#carritoDeCompras").setAttribute("href","#"); //TENGO QUE HACER ESTO PARA FRENAR EL HREF QUE TE LLEVA AL HTML carritoCompras
+        let alerta = await swal.fire("Para acceder primero debe loguearse");
+
+        if(alerta) {
+            window.location = "./logueo.html"
+            // document.querySelector("#vistaAvanzada").setAttribute("href","./logueo.html");
+        }
+
     }
 })
 

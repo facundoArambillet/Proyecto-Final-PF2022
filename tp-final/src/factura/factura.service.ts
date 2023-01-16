@@ -67,10 +67,8 @@ export class FacturaService {
                 if (facturaDTO.fecha && facturaDTO.total && facturaDTO.idsMuros) {
                     let IdsMuros: number[] = facturaDTO.idsMuros;
                     let muros = await this.muroRepository.findByIds(IdsMuros);
-                    //console.log(muros)
                     let factura = new Factura(facturaDTO.fecha, facturaDTO.total, facturaDTO.usuarioIdUsuario);
-                    // factura.muros = muros;
-                    factura.setMuros(muros) //CUANDO HAGO ESTO ME EMPIEZA A TIRAR ERROR
+                    factura.setMuros(muros)
                     await this.facturaRepository.save(factura);
 
                     return factura;

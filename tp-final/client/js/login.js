@@ -1,4 +1,4 @@
-let usuarios = [];
+// let usuarios = [];
 let inputEmail = document.querySelector("#typeEmailX")
 let password = document.querySelector("#password");
 let inputPassword = document.querySelector("#typePasswordX");
@@ -40,7 +40,7 @@ async function  cargarData() {
     }
 }
 logueo.addEventListener("click", cargarData);
-window.onkeydown = function (event){
+window.onkeydown = function (event){ // FUNCION QUE SIRVE PARA LOGUEARTE APRETANDO ENTER
     if (event.keyCode == '13'){
         cargarData();
     }
@@ -55,12 +55,12 @@ password.addEventListener("click", () => {
 
 })
 
-async function loadUsuarios() {
-    usuarios = [];
-    let respuesta = await fetch("/usuario");
-    if (respuesta.ok) {
-        let json = await respuesta.json();
-        usuarios = json;
-    }
-}
-loadUsuarios();
+// async function loadUsuarios() {
+//     usuarios = [];
+//     let respuesta = await fetch("/usuario");
+//     if (respuesta.ok) {
+//         let json = await respuesta.json();
+//         usuarios = json;
+//     }
+// }
+// loadUsuarios();

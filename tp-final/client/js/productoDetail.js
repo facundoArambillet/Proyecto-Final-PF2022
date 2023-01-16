@@ -25,7 +25,7 @@ function loadDataMuro() {
     titulo.innerHTML = muro.nombre;
     descripcion.innerHTML = muro.descripcion;
     precio.innerHTML = `$ ${muro.precio} c/u`;
-    stock.innerHTML = `Stock: ${muro.cantidad}`;
+    stock.innerHTML = `Stock: ${muro.stock}`;
     imagen.setAttribute("src", muro.imagen);
 }
 

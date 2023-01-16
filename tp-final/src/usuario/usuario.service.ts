@@ -46,6 +46,24 @@ export class UsuarioService {
 
     }
 
+    public async getByIDRelaciones(idUsuario: number): Promise<Usuario> {
+        try {
+            let criterio: FindOneOptions = { where: { idUsuario: idUsuario }, relations: ["muros","facturas","rol","carritosCompras"] };
+            let usuario: Usuario = await this.usuarioRepository.findOne(criterio);
+            if (usuario) {
+                return usuario;
+            }
+            else {
+                throw new Error("El usuario no se encuentra");
+            }
+        } catch (error) {
+            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la busqueda de usuario ${idUsuario}: ${error}` },
+                HttpStatus.NOT_FOUND);
+        }
+
+
+    }
+
     public async addUsuario(usuarioDTO: UsuarioDTO): Promise<Usuario> {
         try {
             if (usuarioDTO) {

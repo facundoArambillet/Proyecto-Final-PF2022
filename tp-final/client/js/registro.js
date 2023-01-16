@@ -69,8 +69,8 @@ async function registrar() {
     }
 
 }
-btnRegistro.addEventListener("click", registrar);
-window.onkeyup = function (event) {
+btnRegistro.addEventListener("click", registrar); 
+window.onkeyup = function (event) { // FUNCION QUE SIRVE PARA REGISTRARTE APRETANDO ENTER
     if (event.keyCode == '13') {
         registrar();
     }

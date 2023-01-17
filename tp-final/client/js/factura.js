@@ -50,7 +50,7 @@ async function loadDetalle() {
         let nroFactura = document.querySelector("#nroFactura");
         fechaFactura.innerHTML = ultimaFactura.fecha.substring(0, 10);  //ACORTO EL STRING QUE ME DEVUELVE "FECHA" PARA QUE SE VEA MEJOR EN LA FACTURA 
         nroFactura.innerHTML = ultimaFactura.idFactura;
-
+        console.log(json)
         let respuesta = await fetch(`/detalle-factura/${ultimaFactura.idFactura}`);
         if (respuesta.ok) {
             detalles = await respuesta.json();

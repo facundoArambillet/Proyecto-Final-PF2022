@@ -1,4 +1,4 @@
-import { Muro } from "src/muro/muro.entity";
+
 
 export default class FacturaDTO {
     readonly fecha : Date;

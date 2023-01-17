@@ -129,9 +129,6 @@ async function realizarCompra() {
                 cantidadNegativa = true;
             }
         }
-        //     if (cantidad < 0) {                                     
-        //     }
-
 
         if (cantidadNegativa) {
             swal.fire("La cantidad excede el stock disponible");
@@ -191,7 +188,11 @@ async function realizarCompra() {
                 if (carritoBorrado) {
                    let load = await loadItems();
                    if(load) {
-                    window.location = "./factura.html";
+                    let alerta = await swal.fire("Articulos comprados");
+                    if(alerta) {
+                        window.location = "./factura.html";
+                    }
+
                    }
 
                 }
@@ -212,6 +213,7 @@ async function crearFactura(precioTotal, idsMuros) {
         "usuarioIdUsuario": window.sessionStorage.idUsuario,
         "idsMuros": idsMuros
     }
+    console.log(factura)
     let response = await fetch("/factura", {
         method: 'POST',
         headers: {
@@ -223,7 +225,7 @@ async function crearFactura(precioTotal, idsMuros) {
     if (response.ok) {
         let json = await response.json();
         let idFactura = json.idFactura;
-        swal.fire("Articulos comprados");
+        //swal.fire("Articulos comprados");
         return idFactura;
     }
     else {

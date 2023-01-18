@@ -1,8 +1,8 @@
 :root {
-    --blanco:  #f8f9fc;
-    --grisClarito:  #c2c9d6;
-    --grisOscuro:  #1E1F1F;
-    --negro:  #111213;
+    --blanco: #f8f9fc;
+    --grisClarito: #c2c9d6;
+    --grisOscuro: #1E1F1F;
+    --negro: #111213;
 
 }
 
@@ -16,7 +16,7 @@ body {
     color: var(--negro);
 }
 
-div p a i{
+div p a i {
     color: var(--blanco);
     text-decoration: none;
 }
@@ -24,271 +24,94 @@ div p a i{
 .section {
     margin-top: 2%;
 }
+
 .section .card {
     margin-bottom: 5%;
 }
+
 .oculto {
     display: none;
 }
+
 .block {
     padding: 5%;
     background-color: black
 }
+
 .background {
     background-color: black
 }
+
 #logo {
     margin-left: 0;
 }
+#lista {
+    align-items: center;
+}
+
 #footer {
     background-color: var(--grisOscuro);
     padding-top: 3%;
     padding-bottom: 2%;
 }
+
 #footer div div {
     margin-bottom: 2%;
 }
 
 #cardRegistro {
     padding-top: 0 !important;
-} 
+}
+
 #descripcionProducto {
     background-color: #F7F7F7;
     border: 2px #CCCCCC solid;
     height: 350px;
 }
+
 .carrito {
     padding-top: 10%;
 }
+
 #subtotalCarrito {
     color: rgb(92, 90, 90);
 }
+
 #totalCarrito {
     font-size: 18px;
 }
+
 .infoCard {
     border-bottom: 1px solid grey;
 }
 
-/* @media (max-width: 992px) { DESCOMENTAR SI SE AGRANDA EL CARRITO
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-container ul {
+    position: absolute;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 1s;
+    list-style-type: none;
+}
+
+.dropdown-container:hover ul { /*LA CLASE HOVER NO ESTA PARA DISPOSITIVOS MOVILES POR ESO ABAJO CREO UNA CLASE SHOW*/
+    max-height: 400px;
+}
+
+.dropdown-container ul.show {
+    max-height: 400px;
+}
+@media (max-width: 992px) { /*DESCOMENTAR SI SE AGRANDA EL CARRITO*/
     #lista {
         align-items: flex-start !important;
     }
-}     */
+}    
 @media (max-width: 470px) {
-#logo a img {
-    width: 220px;
-}
-
-}
-/* .carousel-indicators [data-bs-target] {
-    background-clip: border-box !important;
-    border-top: 0px solid transparent;
-    height: 2px;
-    width: 10px;
-    border-radius: 100%;
-}
-
-@media (max-width: 1100px) {
-    .card img{
-        height: 25vh !important;
-    }
-    .carrusel {
-        -webkit-perspective: 250px !important;
-        width: 320px !important;
+    #logo a img {
+        width: 220px;
     }
 
 }
- ESTO ESTABA COMENTADO
- @media (min-width: 1050px) {
-    .carousel-item img{
-        height: 95vh !important;
-    }
-
-} 
-
-@media (max-width: 991px) {
-    .carrusel {
-        -webkit-perspective: 300px !important;
-        top: 140px !important;
-    }
-
-}
-@media (max-width: 860px) {
-    .carrusel {
-        top: 120px !important;
-    }
-
-}
-@media (max-width: 768px) {
-    .card img{
-        height: 40vh !important;
-    }
-    .carrusel {
-        top: 110px !important;
-    }
-    #presentation div p {
-        font-size: 14px;
-    }
-}
-@media (max-width: 550px) {
-    .carrusel {
-        -webkit-perspective: 325px !important;
-        top: 100px !important;
-    }
-    #presentation div p {
-        font-size: 12px;
-    }
-}
-@media (max-width: 470px) {
-    .carrusel {
-        -webkit-perspective: 350px !important;
-    }
-    .imgCarrusel {
-        width: 60px !important;
-    }
-    .caixa__card {
-        width: 70px !important;
-        height: 80px !important;
-    }
-
-}
-@media (max-width: 400px) {
-
-    .imgCarrusel {
-        width: 50px !important;
-    }
-    .caixa__card {
-        width: 55px !important;
-        height: 65px !important;
-    }
-
-}
-
-
-
-
-.carrusel {
-    -webkit-perspective: 210px;
-    -moz-perspective: 250px;
-    width: 370px;
-    height: 200px;
-    top: 165px;
-    position: relative;
-    margin: 0 auto;
-}
-
-@-webkit-keyframes efeitoCarrosel {
-    from {
-        -webkit-transform: rotateY(360deg) translateZ(130px) rotateY(-360deg);
-        -moz-transform: rotateY(360deg) translateZ(130px) rotateY(-360deg);
-        z-index: 10;
-        opacity: 1
-    }
-
-    50% {
-        z-index: -10;
-    }
-
-    to {
-        -webkit-transform: rotateY(0deg) translateZ(130px) rotateY(0deg);
-        -moz-transform: rotateY(0deg) translateZ(130px) rotateY(0deg);
-        z-index: 10;
-        opacity: 1
-    }
-}
-
-@-moz-keyframes efeitoCarrosel {
-    from {
-        -moz-transform: rotateY(360deg) translateZ(130px) rotateY(-360deg);
-        z-index: 10;
-        opacity: 1
-    }
-
-    50% {
-        z-index: -10;
-    }
-
-    to {
-        -moz-transform: rotateY(0deg) translateZ(130px) rotateY(0deg);
-        z-index: 10;
-        opacity: 1
-    }
-}
-
-.caixa__card {
-    width: 90px;
-    height: 100px;
-    position: absolute;
-    display: flex;
-    font-weight: bold;
-    justify-content: center;
-    align-items: center;
-    top: 35px;
-    left: 125px;
-    font-size: 9px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
-    text-align: center;
-    -webkit-animation-name: efeitoCarrosel;
-    -moz-animation-name: efeitoCarrosel;
-    -webkit-animation-duration: 16s;
-    -moz-animation-duration: 16s;
-    -webkit-animation-iteration-count: infinite;
-    -moz-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-timing-function: linear;
-}
-
-.caixa__card:hover {
-    border: solid #4466cc 3px;
-    box-shadow: 0px 0px 10px #4466cc;
-}
-
-.caixa__card.cc__1 {
-    background: linear-gradient(-229deg, #0093E9, #80D0C7);
-    -webkit-animation-delay: -14s;
-    -moz-animation-delay: -14s;
-}
-
-.caixa__card.cc__2 {
-
-    background: linear-gradient(-229deg, #00DBDE, #FC00FF);
-    -webkit-animation-delay: -12s;
-    -moz-animation-delay: -12s;
-}
-
-.caixa__card.cc__3 {
-
-    background: linear-gradient(-229deg, #50d990, #d4d054);
-    -webkit-animation-delay: -10s;
-    -moz-animation-delay: -10s;
-}
-
-.caixa__card.cc__4 {
-    background: linear-gradient(-229deg, #cf91ff, #5782F5);
-    -webkit-animation-delay: -8s;
-    -moz-animation-delay: -8s;
-}
-
-.caixa__card.cc__5 {
-    background: linear-gradient(-229deg, #642B73, #C6426E);
-    -webkit-animation-delay: -6s;
-    -moz-animation-delay: -6s;
-}
-
-.caixa__card.cc__6 {
-    background: linear-gradient(-229deg, #D9AFD9, #97D9E1);
-    -webkit-animation-delay: -4s;
-    -moz-animation-delay: -4s;
-}
-
-.caixa__card.cc__7 {
-    background: linear-gradient(-229deg, #FBAB7E, #F7CE68);
-    -webkit-animation-delay: -2s;
-    -moz-animation-delay: -2s;
-}
-
-.caixa__card.cc__8 {
-    background: linear-gradient(-229deg, #1472ff, #A8EB12);
-} */

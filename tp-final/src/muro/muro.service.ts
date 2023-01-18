@@ -75,7 +75,7 @@ export class MuroService {
             let criterio: FindOneOptions = { where: { idMuro: id }, relations: ["materiales"] };
             let muro: Muro = await this.muroRepository.findOne(criterio);
             if (muro) {
-                //muro.calcularCoeficiente(); SI LO PONGO TRAE CORRECTAMENTE EL VALOR PERO EN LA BDD SIGUE APARECIENDO 0
+                muro.calcularCoeficiente();  //SI LO PONGO TRAE CORRECTAMENTE EL VALOR PERO EN LA BDD SIGUE APARECIENDO 0
                 return muro;
             }
             else {
@@ -103,7 +103,6 @@ export class MuroService {
                     // // muro.setCoeficiente(coeficiente)
                     // muro.setCoeficiente(0.3)
                     await this.muroRepository.save(muro) //NO ME GUARDA EL COEFICIENTE DECIMAL PERO SI LOS NUMEROS ENTEROS
-                    console.log(muro)
                     return muro;
                 }
                 else {

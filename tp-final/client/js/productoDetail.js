@@ -23,7 +23,7 @@ function loadDataMuro() {
     let imagen = document.querySelector("#imagen");
 
     titulo.innerHTML = muro.nombre;
-    descripcion.innerHTML = muro.descripcion;
+    descripcion.innerHTML = `${muro.descripcion}`; //su transmitancia termica es de ${muro.coeficienteDeTransmitancia.toFixed(2)} PONER CUANDO TODOS LOS MUROS TENGAN MATERIALES
     precio.innerHTML = `$ ${muro.precio} c/u`;
     stock.innerHTML = `Stock: ${muro.stock}`;
     imagen.setAttribute("src", muro.imagen);

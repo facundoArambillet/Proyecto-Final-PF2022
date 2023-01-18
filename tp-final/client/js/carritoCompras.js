@@ -14,25 +14,32 @@ function crearCardsItems() {
         divRow.classList.add("align-items-center");
         divRow.classList.add("items")
         divRow.style.marginBottom = "5%";
+
         let divImg = document.createElement("div");
         divImg.classList.add("col-4");
-
         let img = document.createElement('img');
         img.setAttribute("src", items[i].muro.imagen);
         img.setAttribute("width", "200px");
+
         let divPrecio = document.createElement("div");
         divPrecio.classList.add("col-3");
         let parrafoPrecio = document.createElement("p");
         parrafoPrecio.innerText = items[i].muro.precio
+
         let divCantidad = document.createElement("div");
         divCantidad.classList.add("col-3");
-        let parrafoCantidad = document.createElement("p");
-        parrafoCantidad.innerText = items[i].cantidad;
-        parrafoCantidad.classList.add("cantidades");
+        let inputCantidad = document.createElement("input");
+        inputCantidad.value = items[i].cantidad;
+        inputCantidad.classList.add("cantidades");
+        inputCantidad.setAttribute("type", "number");
+        inputCantidad.style.width = "100px";
+
         let divTotal = document.createElement("div");
         divTotal.classList.add("col-1");
-        let parrafoTotal = document.createElement("p");
+        let parrafoTotal = document.createElement("p")
+        parrafoTotal.classList.add("precios");
         parrafoTotal.innerText = items[i].muro.precio * items[i].cantidad;
+
         let divBtn = document.createElement("div");
         divBtn.classList.add("col-1");
         divBtn.style.marginBottom = "1.5%";
@@ -41,6 +48,7 @@ function crearCardsItems() {
         btnBorrar.style.border = 0;
         btnBorrar.value = items[i].muroIdMuro;
         btnBorrar.classList.add(`btnBorrar`);
+
         let imagenTarro = document.createElement("i");
         imagenTarro.classList.add("bi");
         imagenTarro.classList.add("bi-trash3-fill");
@@ -51,7 +59,7 @@ function crearCardsItems() {
 
         divImg.appendChild(img);
         divPrecio.appendChild(parrafoPrecio);
-        divCantidad.appendChild(parrafoCantidad);
+        divCantidad.appendChild(inputCantidad);
         divTotal.appendChild(parrafoTotal);
         divBtn.appendChild(btnBorrar);
 
@@ -64,6 +72,7 @@ function crearCardsItems() {
         cardItems.appendChild(divRow);
     }
     borrarCarrito(".btnBorrar");
+    actualizarValores(".cantidades",precioTotal);
 
     valorPrecioTotal.innerText = `$ ${precioTotal}`;
     total.innerText = `$ ${precioTotal * 1.21}`;
@@ -110,8 +119,30 @@ async function borrarCarrito(clase) {
     }
 }
 
+function actualizarValores(clase) {
+    let inputs = document.querySelectorAll(clase);
+    let precios = document.querySelectorAll(".precios");
+    precioTotal = 0;
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener("change", () => {
+            if (inputs[i].value <= 0) {
+                inputs[i].value = 1;
+            }
+            precios[i].innerText = carrito[i].muro.precio * inputs[i].value;
+            console.log(precios[i].innerText)
+            for(let k = 0; k < precios.length; k++) {
+                precioTotal += Number(precios[k].innerText);
+            }
+            valorPrecioTotal.innerText = `$ ${Number(precioTotal)}`;
+            total.innerText = `$ ${Number(precioTotal) * 1.21}`;
+            precioTotal = 0;
+        })
+    }
+}
+
 async function realizarCompra() {
     let items = carrito;
+    let inputs = document.querySelectorAll(".cantidades");
     let idsMateriales = [];
     let idsMuros = [];
     let cantidadDescontada = false;
@@ -120,11 +151,14 @@ async function realizarCompra() {
         let muroRelaciones = await fetch(`/muro/relacion/id/${items[i].muroIdMuro}`)
         let json = await muroRelaciones.json();
 
+        items[i].cantidad = inputs[i].value;
+
         idsMuros.push(items[i].muroIdMuro)
         for (let j = 0; j < items.length; j++) {                // VER COMO HACER PARA VERIFICAR QUE LA CANTIDAD NO SEA MAYOR
             let muro = await fetch(`/muro/${items[j].muroIdMuro}`);        // AL STOCK EN TODOS LOS MUROS A LA VEZ ANTES DE HACER UN PUT
             let jsonMuro = await muro.json();
             let stock = jsonMuro.stock - items[i].cantidad;
+            console.log(items[i].cantidad)
             if (stock < 0) {
                 cantidadNegativa = true;
             }
@@ -167,15 +201,15 @@ async function realizarCompra() {
 
             let jsonFactura = await facturaCreada.json();
             let cantidades = document.querySelectorAll(".cantidades");
-
+            console.log(cantidades)
             for (let k = 0; k < jsonFactura.length; k++) {
                 let detalle = {
                     "muroIdMuro": jsonFactura[k].muroIdMuro,
                     "facturaIdFactura": jsonFactura[k].facturaIdFactura,
-                    "cantidad": Number(cantidades[k].innerText)
+                    "cantidad": Number(cantidades[k].value)
                 }
                 console.log(detalle)
-                 nuevaCantidadDetalle = await fetch(`/detalle-factura`, {
+                nuevaCantidadDetalle = await fetch(`/detalle-factura`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -183,17 +217,17 @@ async function realizarCompra() {
                     body: JSON.stringify(detalle)
                 })
             }
-            if(nuevaCantidadDetalle.ok) {
+            if (nuevaCantidadDetalle.ok) {
                 let carritoBorrado = await borrarTodoCarrito();
                 if (carritoBorrado) {
-                   let load = await loadItems();
-                   if(load) {
-                    let alerta = await swal.fire("Articulos comprados");
-                    if(alerta) {
-                        window.location = "./factura.html";
-                    }
+                    let load = await loadItems();
+                    if (load) {
+                        let alerta = await swal.fire("Articulos comprados");
+                        if (alerta) {
+                            window.location = "./factura.html";
+                        }
 
-                   }
+                    }
 
                 }
             }

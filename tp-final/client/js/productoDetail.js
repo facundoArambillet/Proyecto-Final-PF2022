@@ -25,27 +25,38 @@ function loadDataMuro() {
     titulo.innerHTML = muro.nombre;
     descripcion.innerHTML = `${muro.descripcion}`; //su transmitancia termica es de ${muro.coeficienteDeTransmitancia.toFixed(2)} PONER CUANDO TODOS LOS MUROS TENGAN MATERIALES
     precio.innerHTML = `$ ${muro.precio} c/u`;
-    stock.innerHTML = `Stock: ${muro.stock}`;
+    if(muro.stock >= 1) {
+        stock.innerHTML = `Stock: ${muro.stock}`;
+    }
+    else {
+        stock.innerHTML = `Stock: Sin stock por el momento`;
+    }
+
     imagen.setAttribute("src", muro.imagen);
 }
 
 btnAgregar.addEventListener("click", async () => {
     if(window.sessionStorage.token) {
-        let carrito = {
-            "precioTotal": muro.precio,
-            "cantidad": 1,
-            "usuarioIdUsuario": window.sessionStorage.idUsuario,
-            "muroIdMuro":  params.idMuro
+        if(muro.stock >= 1) {
+            let carrito = {
+                "precioTotal": muro.precio,
+                "cantidad": 1,
+                "usuarioIdUsuario": window.sessionStorage.idUsuario,
+                "muroIdMuro":  params.idMuro
+            }
+            let respuesta = await fetch("/carrito-compras", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(carrito)
+            })
+            if(respuesta.ok) {
+                swal.fire("Muro agregado al carrito");
+            }
         }
-        let respuesta = await fetch("/carrito-compras", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(carrito)
-        })
-        if(respuesta.ok) {
-            swal.fire("Muro agregado al carrito");
+        else {
+            swal.fire("Stock no disponible");
         }
     }
     else {

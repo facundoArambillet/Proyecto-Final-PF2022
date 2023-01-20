@@ -28,8 +28,9 @@ async function  cargarData() {
         window.sessionStorage.setItem("loginOk", true);
         window.sessionStorage.setItem("idUsuario", json.usuario.idUsuario);
         window.sessionStorage.setItem("nombre", json.usuario.nombre);
+        window.sessionStorage.setItem("idRol", json.usuario.rolIdRol);
         window.sessionStorage.setItem("token", json.token);
-        console.log(window.sessionStorage.getItem("loginOk") )
+        console.log(window.sessionStorage.getItem("loginOk") );
         window.location.href = './index.html';
         console.log("Sesion iniciada correctamente");
     }

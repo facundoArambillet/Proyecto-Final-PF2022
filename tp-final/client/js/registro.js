@@ -41,6 +41,7 @@ async function registrar() {
                     window.sessionStorage.setItem("loginOk", true);
                     window.sessionStorage.setItem("idUsuario", json.usuario.idUsuario);
                     window.sessionStorage.setItem("nombre", json.usuario.nombre);
+                    window.sessionStorage.setItem("idRol", json.usuario.rolIdRol);
                     window.sessionStorage.setItem("token", json.token);
                     window.location.href = './index.html';
                 }

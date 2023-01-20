@@ -1,9 +1,9 @@
-
+let tipoMateriales = [];
 let divMateriales = document.querySelector("#materials");
 let btnGenerar = document.querySelector("#btnGenerar");
 
 async function crearCardsMateriales() {
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < tipoMateriales.length; i++) {
         let divRow = document.createElement("div");
         divRow.classList.add("row");
 
@@ -25,6 +25,7 @@ async function crearCardsMateriales() {
         divCantidad.classList.add("col-md-2");
         divCantidad.classList.add("cantidad");
         let inputCantidad = document.createElement("input");
+        inputCantidad.type = "number";
 
         let divPrecio = document.createElement("div");
         divPrecio.classList.add("col-md-2");
@@ -116,7 +117,12 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                         parrafoIndiceE.innerText = material.conductividadTermica;
                         parrafoLambda.innerText = material.espesor;
                         parrafoIndiceR.innerText = material.resistenciaTermica;
-                        inputCantidad.value = material.cantidad;
+                        inputCantidad.value = 1;                                    
+                        inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                            if (inputCantidad.value <= 0) {
+                                inputCantidad.value = 1;
+                            }
+                        })
                         parrafoPrecio.innerText = material.precio;
                     }
                     else if (optionNone.selected) {
@@ -144,85 +150,97 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
 //         parrafoPrecio.value = material.precio;
 //     })
 // }
-crearCardsMateriales();
 btnGenerar.addEventListener("click", async () => {
-    let muroGenerado = document.querySelector("#muroGenerado");
-    let nombreMuro = "";
-    let idsMateriales = [];
-    let selects = document.querySelectorAll(".selects");
-    let inputsCantidades = document.querySelectorAll(".cantidad");
-    let parrafosPrecios = document.querySelectorAll(".precio");
-    let total = 0;
-    let coeficiente = "";
-    const estandarCoeficiente = 0.35;
-    let parrafo = document.createElement("p");
-    parrafo.classList.add("items");
-    // let btnCarrito = document.createElement("button");
-    // btnCarrito.innerText = "Agregar al carrito";
-    let btnBorrar = document.createElement("button");
-    btnBorrar.classList.add("btnBorrar");
-    btnBorrar.style.backgroundColor = "white";
-    btnBorrar.style.border = 0;
-    let imagenTarro = document.createElement("i");
-    imagenTarro.classList.add("bi");
-    imagenTarro.classList.add("bi-trash3-fill");
-
-    //AGARRAR TODOS LOS MATERIALES(ya los id de los materiales en los id del option , probar agarrar todos los selects y hacer una matriz), 
-    //GENERAR MURO , COMPARAR TRANSMITANCIA TERMICA CON UNA CONSTANTE(INVENTADA) 
-
-    for (let i = 0; i < selects.length; i++) {
-
-        for (let j = 0; j < selects[i].children.length; j++) {
-            if (selects[i].children[j].selected && selects[i].children[j].value != "None") {
-
-                total += Number(inputsCantidades[i].children[0].value * parrafosPrecios[i].children[0].innerText)
-                //parrafo.innerHTML = `Muro ${select.children[i].value}`
-                idsMateriales.push(Number(selects[i].children[j].value));
+    let selectNombre = document.querySelector("#selectMateriales_1");
+    let optionNone = false ;
+    for(let i = 0 ; i < selectNombre.children.length; i++) {
+        if(selectNombre.children[i].value == "None" && selectNombre.children[i].selected) {
+            optionNone = true;
+        }
+    }
+    if(!optionNone) {
+        let muroGenerado = document.querySelector("#muroGenerado");
+        let nombreMuro = "";
+        let idsMateriales = [];
+        let selects = document.querySelectorAll(".selects");
+        let inputsCantidades = document.querySelectorAll(".cantidad");
+        let parrafosPrecios = document.querySelectorAll(".precio");
+        let total = 0;
+        let coeficiente = "";
+        const estandarCoeficiente = 0.35;
+        let parrafo = document.createElement("p");
+        parrafo.classList.add("items");
+        // let btnCarrito = document.createElement("button");
+        // btnCarrito.innerText = "Agregar al carrito";
+        let btnBorrar = document.createElement("button");
+        btnBorrar.classList.add("btnBorrar");
+        btnBorrar.style.backgroundColor = "white";
+        btnBorrar.style.border = 0;
+        let imagenTarro = document.createElement("i");
+        imagenTarro.classList.add("bi");
+        imagenTarro.classList.add("bi-trash3-fill");
+    
+        //AGARRAR TODOS LOS MATERIALES(ya los id de los materiales en los id del option , probar agarrar todos los selects y hacer una matriz), 
+        //GENERAR MURO , COMPARAR TRANSMITANCIA TERMICA CON UNA CONSTANTE(INVENTADA) 
+    
+        for (let i = 0; i < selects.length; i++) {
+    
+            for (let j = 0; j < selects[i].children.length; j++) {
+                if (selects[i].children[j].selected && selects[i].children[j].value != "None") {
+    
+                    total += Number(inputsCantidades[i].children[0].value * parrafosPrecios[i].children[0].innerText)
+                    //parrafo.innerHTML = `Muro ${select.children[i].value}`
+                    idsMateriales.push(Number(selects[i].children[j].value));
+                }
+    
             }
-
-        }
-        for (let k = 0; k < selects[0].children.length; k++) {
-            if (selects[0].children[k].selected && selects[0].children[k].value != "None") {
-                nombreMuro = selects[0].children[k].innerText;
-                // console.log(selects[0].children[k])
-                // console.log(nombreMuro)
+            for (let k = 0; k < selects[0].children.length; k++) {
+                if (selects[0].children[k].selected && selects[0].children[k].value != "None") {
+                    nombreMuro = selects[0].children[k].innerText;
+                    // console.log(selects[0].children[k])
+                    // console.log(nombreMuro)
+                }
             }
         }
-    }
-
-    let muro = {
-        "nombre": `Muro ${nombreMuro}`,
-        "precio": total,
-        "stock": 1,
-        "descripcion": "Muro generado",
-        "usuarioIdUsuario": Number(window.sessionStorage.idUsuario),
-        "idsMateriales": idsMateriales
-    }
-    console.log(muro)
-    let respuesta = await fetch('/muro', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(muro)
-    })
-    if (respuesta.ok) {
-        muroUsuario = await respuesta.json();
-        btnBorrar.value = muroUsuario.idMuro;
-        if (muroUsuario.coeficienteDeTransmitancia < estandarCoeficiente) {
-            coeficiente = "Eficiente";
+    
+        let muro = {
+            "nombre": `Muro ${nombreMuro}`,
+            "precio": total,
+            "stock": 1,
+            "descripcion": "Muro generado",
+            "usuarioIdUsuario": Number(window.sessionStorage.idUsuario),
+            "idsMateriales": idsMateriales
         }
-        else {
-            coeficiente = "Ineficiente";
-        }                                                                    // LA FUNCION toFixed() LIMITA LA CANTIDAD DE DECIMALES
-        parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.toFixed(2)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muroUsuario.precio}`
+        console.log(muro)
+        let respuesta = await fetch('/muro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(muro)
+        })
+        if (respuesta.ok) {
+            muroUsuario = await respuesta.json();
+            btnBorrar.value = muroUsuario.idMuro;
+            if (muroUsuario.coeficienteDeTransmitancia < estandarCoeficiente) {
+                coeficiente = "Eficiente";
+            }
+            else {
+                coeficiente = "Ineficiente";
+            }                                                                    // LA FUNCION toFixed() LIMITA LA CANTIDAD DE DECIMALES
+            parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.toFixed(3)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muroUsuario.precio} mas IVA`
+        }
+        // parrafo.appendChild(btnCarrito)
+        btnBorrar.appendChild(imagenTarro)
+        parrafo.appendChild(btnBorrar);
+        muroGenerado.appendChild(parrafo);
+    
+        borrarMuroGenerado(".btnBorrar");
     }
-    // parrafo.appendChild(btnCarrito)
-    btnBorrar.appendChild(imagenTarro)
-    parrafo.appendChild(btnBorrar);
-    muroGenerado.appendChild(parrafo);
+    else {
+        swal.fire("El primer material no puede estar vacio");
+    }
 
-    borrarMuroGenerado(".btnBorrar");
 })
 
 
@@ -248,4 +266,12 @@ async function borrarMuroGenerado(clase) {
             }
         })
     }
+}async function loadTipoMateriales() {
+    let respuesta = await fetch("/tipo-material");
+    if(respuesta.ok) {
+        let json = await respuesta.json();
+        tipoMateriales = json;
+    }
+    crearCardsMateriales();
 }
+loadTipoMateriales();

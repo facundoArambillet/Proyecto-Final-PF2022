@@ -71,11 +71,13 @@ function crearCardsItems() {
 
         cardItems.appendChild(divRow);
     }
-    borrarCarrito(".btnBorrar");
-    actualizarValores(".cantidades",precioTotal);
 
-    valorPrecioTotal.innerText = `$ ${precioTotal}`;
-    total.innerText = `$ ${precioTotal * 1.21}`;
+    valorPrecioTotal.innerText = `$ ${precioTotal.toFixed(2)}`;
+    total.innerText = `$ ${(precioTotal * 1.21).toFixed(2)}`;
+
+    borrarCarrito(".btnBorrar");
+    actualizarValores(".cantidades", precioTotal);
+
     precioTotal = 0;
 }
 
@@ -130,11 +132,11 @@ function actualizarValores(clase) {
             }
             precios[i].innerText = carrito[i].muro.precio * inputs[i].value;
             console.log(precios[i].innerText)
-            for(let k = 0; k < precios.length; k++) {
+            for (let k = 0; k < precios.length; k++) {
                 precioTotal += Number(precios[k].innerText);
             }
-            valorPrecioTotal.innerText = `$ ${Number(precioTotal)}`;
-            total.innerText = `$ ${Number(precioTotal) * 1.21}`;
+            valorPrecioTotal.innerText = `$ ${Number(precioTotal).toFixed(2)}`;
+            total.innerText = `$ ${(Number(precioTotal) * 1.21).toFixed(2)}`;
             precioTotal = 0;
         })
     }
@@ -147,31 +149,38 @@ async function realizarCompra() {
     let idsMuros = [];
     let cantidadDescontada = false;
     let cantidadNegativa = false
-    for (let i = 0; i < items.length; i++) {
-        let muroRelaciones = await fetch(`/muro/relacion/id/${items[i].muroIdMuro}`)
-        let json = await muroRelaciones.json();
+    console.log(items)
+    for (let j = 0; j < items.length; j++) {                // VER COMO HACER PARA VERIFICAR QUE LA CANTIDAD NO SEA MAYOR
+        let muro = await fetch(`/muro/${items[j].muroIdMuro}`);        // AL STOCK EN TODOS LOS MUROS A LA VEZ ANTES DE HACER UN PUT
+        let jsonMuro = await muro.json();
+        let stock = jsonMuro.stock - inputs[j].value;
+        console.log(jsonMuro.stock)
+        console.log(inputs[j].value)
 
-        items[i].cantidad = inputs[i].value;
-
-        idsMuros.push(items[i].muroIdMuro)
-        for (let j = 0; j < items.length; j++) {                // VER COMO HACER PARA VERIFICAR QUE LA CANTIDAD NO SEA MAYOR
-            let muro = await fetch(`/muro/${items[j].muroIdMuro}`);        // AL STOCK EN TODOS LOS MUROS A LA VEZ ANTES DE HACER UN PUT
-            let jsonMuro = await muro.json();
-            let stock = jsonMuro.stock - items[i].cantidad;
-            console.log(items[i].cantidad)
-            if (stock < 0) {
-                cantidadNegativa = true;
-            }
+        console.log(stock)
+        if (stock < 0) {
+            cantidadNegativa = true;
         }
-
-        if (cantidadNegativa) {
-            swal.fire("La cantidad excede el stock disponible");
-        }
-        else {
+    }
+    if (cantidadNegativa) {
+        swal.fire("La cantidad excede el stock disponible");
+    }
+    else {
+        for (let i = 0; i < items.length; i++) {
+            let muroRelaciones = await fetch(`/muro/relacion/id/${items[i].muroIdMuro}`)
+            let json = await muroRelaciones.json();
+    
+            items[i].cantidad = inputs[i].value;
+    
+            idsMuros.push(items[i].muroIdMuro)
+    
+    
+    
+    
             let stock = {
                 "stock": items[i].muro.stock - items[i].cantidad,
             }
-
+    
             let respuesta = await fetch(`/muro/stock/${items[i].muroIdMuro}`, {
                 method: 'PUT',
                 headers: {
@@ -179,7 +188,7 @@ async function realizarCompra() {
                 },
                 body: JSON.stringify(stock)
             })
-
+    
             if (respuesta.ok) {
                 idsMateriales = [];
                 precioTotal += items[i].muro.precio * items[i].cantidad;
@@ -189,53 +198,55 @@ async function realizarCompra() {
             else {
                 console.log("Error para descontar cantidad");
             }
+    
+    
         }
-
-    }
-    if (cantidadDescontada) {
-        let factura = await crearFactura(precioTotal, idsMuros);
-        let facturaCreada = await fetch(`/detalle-factura/${factura}`);
-        let nuevaCantidadDetalle;
-
-        if (facturaCreada.ok) {
-
-            let jsonFactura = await facturaCreada.json();
-            let cantidades = document.querySelectorAll(".cantidades");
-            console.log(cantidades)
-            for (let k = 0; k < jsonFactura.length; k++) {
-                let detalle = {
-                    "muroIdMuro": jsonFactura[k].muroIdMuro,
-                    "facturaIdFactura": jsonFactura[k].facturaIdFactura,
-                    "cantidad": Number(cantidades[k].value)
-                }
-                console.log(detalle)
-                nuevaCantidadDetalle = await fetch(`/detalle-factura`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(detalle)
-                })
-            }
-            if (nuevaCantidadDetalle.ok) {
-                let carritoBorrado = await borrarTodoCarrito();
-                if (carritoBorrado) {
-                    let load = await loadItems();
-                    if (load) {
-                        let alerta = await swal.fire("Articulos comprados");
-                        if (alerta) {
-                            window.location = "./factura.html";
-                        }
-
+        if (cantidadDescontada) {
+            let factura = await crearFactura(precioTotal, idsMuros);
+            let facturaCreada = await fetch(`/detalle-factura/${factura}`);
+            let nuevaCantidadDetalle;
+    
+            if (facturaCreada.ok) {
+    
+                let jsonFactura = await facturaCreada.json();
+                let cantidades = document.querySelectorAll(".cantidades");
+                console.log(cantidades)
+                for (let k = 0; k < jsonFactura.length; k++) {
+                    let detalle = {
+                        "muroIdMuro": jsonFactura[k].muroIdMuro,
+                        "facturaIdFactura": jsonFactura[k].facturaIdFactura,
+                        "cantidad": Number(cantidades[k].value)
                     }
-
+                    console.log(detalle)
+                    nuevaCantidadDetalle = await fetch(`/detalle-factura`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(detalle)
+                    })
                 }
+                if (nuevaCantidadDetalle.ok) {
+                    let carritoBorrado = await borrarTodoCarrito();
+                    if (carritoBorrado) {
+                        let load = await loadItems();
+                        if (load) {
+                            let alerta = await swal.fire("Articulos comprados");
+                            if (alerta) {
+                                 window.location = "./factura.html";
+                            }
+    
+                        }
+    
+                    }
+                }
+    
             }
-
+    
+    
         }
-
-
     }
+
 
 }
 

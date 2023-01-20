@@ -130,7 +130,7 @@ export class MuroService {
                     muro.setImagen(muroDTO.imagen);
                     muro.setDescripcion(muroDTO.descripcion);
                     muro = await this.muroRepository.save(muro);
-                    return true
+                    return true;
                 }
                 else {
                     throw new Error("Datos de muro invalidos");

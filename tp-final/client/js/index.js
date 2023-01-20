@@ -27,22 +27,80 @@ function crearUserMenu () {
     ulUser.style.backgroundColor = "grey";
     ulUser.style.width = "209px";
 
-    let liMuros = document.createElement("li");
-    let anchorMuros = document.createElement("a")
-    anchorMuros.innerHTML = "Mis Muros";
-    anchorMuros.setAttribute("href","./misMuros.html")
-    anchorMuros.classList.add("text-white")
+    let liUser = document.createElement("li");
+    let anchorUser = document.createElement("a");
+    if(window.sessionStorage.idRol == "2") {
+
+        let divRow = document.createElement("div");
+        divRow.classList.add("row");
+        let divColImg = document.createElement("div");
+        divColImg.classList.add("col-2");
+        let divColText = document.createElement("div");
+        divColText.classList.add("col-10");
+
+        let parrafoPanel = document.createElement("p");
+        let imgPanel = document.createElement("i");
+
+        imgPanel.classList.add("bi");
+        imgPanel.classList.add("bi-bricks");
+        parrafoPanel.innerText = "Mis Muros";
+        divColImg.appendChild(imgPanel);
+        divColText.appendChild(parrafoPanel);
+        divRow.appendChild(divColImg);
+        divRow.appendChild(divColText);
+        anchorUser.appendChild(divRow);
+        anchorUser.setAttribute("href","./panelUsuario.html");
+    }
+    else {
+        let divRow = document.createElement("div");
+        divRow.classList.add("row");
+        let divColImg = document.createElement("div");
+        divColImg.classList.add("col-2");
+        let divColText = document.createElement("div");
+        divColText.classList.add("col-10");
+
+        let parrafoPanel = document.createElement("p");
+        let imgPanel = document.createElement("i");
+
+        imgPanel.classList.add("bi");
+        imgPanel.classList.add("bi-clipboard-data");
+        parrafoPanel.innerText = "Panel Administrador";
+        divColImg.appendChild(imgPanel);
+        divColText.appendChild(parrafoPanel);
+        divRow.appendChild(divColImg);
+        divRow.appendChild(divColText);
+        anchorUser.appendChild(divRow);
+        anchorUser.setAttribute("href","./panelUsuarioAdmin.html");
+    }
+
+    anchorUser.classList.add("text-white");
 
     let liSesion = document.createElement("li");
-    let anchorSesion = document.createElement("a")
-    anchorSesion.innerText = "Cerrar Sesion";
-    anchorSesion.setAttribute("href","#")
-    anchorSesion.classList.add("text-white")
+    let anchorSesion = document.createElement("a");
+    let divRow = document.createElement("div");
+    divRow.classList.add("row");
+    let divColImg = document.createElement("div");
+    divColImg.classList.add("col-2");
+    let divColText = document.createElement("div");
+    divColText.classList.add("col-10");
 
-    liMuros.appendChild(anchorMuros);
+    let parrafoSesion = document.createElement("p");
+    let imgExit = document.createElement("i");
+    imgExit.classList.add("bi");
+    imgExit.classList.add("bi-box-arrow-right");
+    parrafoSesion.innerText = "Cerrar Sesion";
+    divColImg.appendChild(imgExit);
+    divColText.appendChild(parrafoSesion);
+    divRow.appendChild(divColImg);
+    divRow.appendChild(divColText);
+    anchorSesion.appendChild(divRow);
+    anchorSesion.setAttribute("href","#");
+    anchorSesion.classList.add("text-white");
+
+    liUser.appendChild(anchorUser);
     liSesion.appendChild(anchorSesion);
 
-    ulUser.appendChild(liMuros);
+    ulUser.appendChild(liUser);
     ulUser.appendChild(liSesion);
 
     divUser.appendChild(spanUser);

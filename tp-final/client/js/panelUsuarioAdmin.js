@@ -11,16 +11,16 @@ function eliminarContenido() {
     // }
 
 }
-// function crearScript() {
-//     let script = document.createElement("script");
-//     script.id = "script";
-//     body.appendChild(script);
-// }
+function crearScript() {
+    let script = document.createElement("script");
+    script.id = "script";
+    body.appendChild(script);
+}
 crearMuro.addEventListener("click", () => {
     eliminarContenido();
     // crearScript();
     // script = document.querySelector("#script");
-    // script.src = "./js/crearMuro.js";
+    // script.src = "./js/imagenAdmin.js";
 
 })
 

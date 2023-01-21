@@ -149,15 +149,11 @@ async function realizarCompra() {
     let idsMuros = [];
     let cantidadDescontada = false;
     let cantidadNegativa = false
-    console.log(items)
     for (let j = 0; j < items.length; j++) {                // VER COMO HACER PARA VERIFICAR QUE LA CANTIDAD NO SEA MAYOR
         let muro = await fetch(`/muro/${items[j].muroIdMuro}`);        // AL STOCK EN TODOS LOS MUROS A LA VEZ ANTES DE HACER UN PUT
         let jsonMuro = await muro.json();
         let stock = jsonMuro.stock - inputs[j].value;
-        console.log(jsonMuro.stock)
-        console.log(inputs[j].value)
 
-        console.log(stock)
         if (stock < 0) {
             cantidadNegativa = true;
         }

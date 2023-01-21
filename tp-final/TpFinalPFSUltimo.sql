@@ -79,7 +79,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `tpfinalpfs2022`.`carritodecompras` (
   `idCarritoDeCompras` INT(11) NOT NULL AUTO_INCREMENT,
   `precioTotal` DOUBLE NOT NULL,
-  `cantidad` INT(11) NOT NULL DEFAULT 0,
+  `cantidad` INT(11) NOT NULL DEFAULT 1,
   `usuarioIdUsuario` INT(11) NOT NULL,
   `muroIdMuro` INT(11) NOT NULL,
   PRIMARY KEY (`idCarritoDeCompras`),

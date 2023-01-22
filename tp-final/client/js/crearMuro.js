@@ -318,7 +318,7 @@ crearMuroUsuario.addEventListener("click", () => {
 
         }
         else {
-            swal.fire("El Nombre del muro no puede estar vacio");
+            swal("El Nombre del muro no puede estar vacio","","error");
         }
 
     })

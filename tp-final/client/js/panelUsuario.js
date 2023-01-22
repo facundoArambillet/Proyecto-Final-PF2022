@@ -171,7 +171,7 @@ async function agregarCarrito(clase) {
                     body: JSON.stringify(carrito)
                 })
                 if (respuesta.ok) {
-                    swal.fire("Muro agregado al carrito");
+                    swal("Muro agregado al carrito","","success");
                 }
     
             }

@@ -53,20 +53,21 @@ async function registrar() {
         }
         else {
 
-            swal.fire("El email ya existe");
+            swal("El email ya existe","","error");
         }
 
     }
     else if (!validacionEmail.test(inputEmail.value)) {
-      await  swal.fire("Email invalido");
+      await  swal("Email invalido",`El email debe tener el siguiente formato:
+        nombre@(gmail/hotmail/etc).com`,"error");
         // alert("Email invalido")
 
     }
     else if (!validacionContrasenia.test(inputContrasenia.value) || inputContrasenia.value.length > 20) {
-        await swal.fire("Formato de contraseña invalido");
+        await swal("Formato de contraseña invalido","","error");
     }
     else if (inputContrasenia.value != inputConfirmacion.value) {
-        await swal.fire("Las contraseñas no coinciden");
+        await swal("Las contraseñas no coinciden","","error");
     }
 
 }

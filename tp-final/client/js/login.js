@@ -37,7 +37,7 @@ async function  cargarData() {
     else  {
         window.sessionStorage.clear()
         //console.clear() BUSCAR COMO HACER PARA QUE NO ME APAREZCAN EL ERROR DEL POST
-        swal.fire("Email o Contraseña invalidos");
+        swal("Email o Contraseña invalidos","","error");
     }
 }
 logueo.addEventListener("click", cargarData);

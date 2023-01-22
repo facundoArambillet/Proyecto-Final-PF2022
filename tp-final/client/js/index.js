@@ -132,7 +132,7 @@ document.querySelector("#vistaAvanzada").addEventListener("click", async () => {
     }
     else {
         document.querySelector("#vistaAvanzada").setAttribute("href","#");  //TENGO QUE HACER ESTO PARA FRENAR EL HREF QUE TE LLEVA AL HTML vistaAvanzada
-        let alerta = await swal.fire("Para acceder primero debe loguearse");
+        let alerta = await swal("Para acceder primero debe loguearse","","error");
 
         if(alerta) {
             window.location = "./logueo.html"
@@ -146,7 +146,7 @@ document.querySelector("#carritoDeCompras").addEventListener("click", async () =
     }
     else {
         document.querySelector("#carritoDeCompras").setAttribute("href","#"); //TENGO QUE HACER ESTO PARA FRENAR EL HREF QUE TE LLEVA AL HTML carritoCompras
-        let alerta = await swal.fire("Para acceder primero debe loguearse");
+        let alerta = await swal("Para acceder primero debe loguearse","","error");
 
         if(alerta) {
             window.location = "./logueo.html"

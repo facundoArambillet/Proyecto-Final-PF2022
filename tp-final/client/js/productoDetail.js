@@ -52,15 +52,15 @@ btnAgregar.addEventListener("click", async () => {
                 body: JSON.stringify(carrito)
             })
             if(respuesta.ok) {
-                swal.fire("Muro agregado al carrito");
+                swal("Muro agregado al carrito","","success");
             }
         }
         else {
-            swal.fire("Stock no disponible");
+            swal("Stock no disponible","","error");
         }
     }
     else {
-        let alerta =  await swal.fire("Primero debe loguearse");
+        let alerta =  await swal("Primero debe loguearse","","error");
         if(alerta) {
             window.location.href = './logueo.html';
         }

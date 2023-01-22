@@ -238,7 +238,7 @@ btnGenerar.addEventListener("click", async () => {
         borrarMuroGenerado(".btnBorrar");
     }
     else {
-        swal.fire("El primer material no puede estar vacio");
+        swal("El primer material no puede estar vacio","","error");
     }
 
 })

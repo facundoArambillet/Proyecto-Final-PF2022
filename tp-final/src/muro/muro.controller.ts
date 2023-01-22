@@ -11,6 +11,10 @@ export class MuroController {
     public getAll(): Promise<Muro[]> {
         return this.muroService.getAll();
     }
+    @Get(":id")
+    public getByID(@Param("id") id: number): Promise<Muro> {
+        return this.muroService.getByID(id);
+    }
     @Get("all/:id")
     public getAllRelaciones(@Param("id") id: number): Promise<Muro[]> {
         return this.muroService.getAllRelaciones(id);
@@ -19,9 +23,9 @@ export class MuroController {
     public getByIDRelaciones(@Param("id") id: number): Promise<Muro> {
         return this.muroService.getByIDRelaciones(id);
     }
-    @Get(":id")
-    public getByID(@Param("id") id: number): Promise<Muro> {
-        return this.muroService.getByID(id);
+    @Get("/all/muro/filtro/:precio")
+    public getByPrecio(@Param("precio") precio: number): Promise<Muro[]> {
+        return this.muroService.getByPrecio(precio);
     }
     @Post()
     public addMuro(@Body() Muro: MuroDTO): Promise<Muro> {

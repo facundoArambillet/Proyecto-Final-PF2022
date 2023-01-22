@@ -31,27 +31,7 @@ export class MuroService {
         }
         return this.muros;
     }
-    /* EN CASO DE USAR ARMAR ENDPOINT EN EL CONTROLLER
-    
-    public async getByIDRelaciones(id: number): Promise<Muro> {
-        try {
-            let criterio: FindOneOptions = { where: { idMuro: id }, relations : ["usuario","materiales"] };
-            let muro: Muro = await this.muroRepository.findOne(criterio);
-            if (muro) {
-                muro.calcularCoeficiente()
-                return muro;
-            }
-            else {
-                throw new Error("El muro no se encuentra");
-            }
-        } catch (error) {
-            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la busqueda de muro ${id}: ${error}` },
-                HttpStatus.NOT_FOUND);
-        }
 
-
-    }
-    */
     public async getByID(id: number): Promise<Muro> {
         try {
             let criterio: FindOneOptions = { where: { idMuro: id }, };
@@ -87,6 +67,39 @@ export class MuroService {
         }
 
 
+    }
+
+    public async getByPrecio(precio: number): Promise<Muro[]> {
+        try {;
+            if(precio <= 15000) {
+
+                let muros: Muro[] = await this.muroRepository
+                .createQueryBuilder("muros")
+                .where("usuarioIdUsuario = 1 AND precio <= 15000")
+                .getMany()
+                return muros;
+            }
+            else if(precio < 30000) {
+                let muros: Muro[] = await this.muroRepository
+                .createQueryBuilder("muros")
+                .where("usuarioIdUsuario = 1 AND precio >= 15000 AND precio <= 30000 ")
+                .getMany()
+                return muros;
+            }
+            else if(precio > 30000) {
+                let muros: Muro[] = await this.muroRepository
+                .createQueryBuilder("muros")
+                .where("usuarioIdUsuario = 1 AND precio > 30000 ")
+                .getMany()
+                return muros;
+            }
+            else {
+                throw new Error("No se encuentra muro con ese parametro de precio");
+            }
+        } catch (error) {
+            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en los filtros de precios ${precio}: ${error}` },
+            HttpStatus.NOT_FOUND);
+        }
     }
 
     public async addMuro(muroDTO: MuroDTO): Promise<Muro> {

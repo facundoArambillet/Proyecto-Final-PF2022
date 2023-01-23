@@ -89,28 +89,44 @@ async function borrarCarrito(clase) {
             let response = await fetch(`/carrito-compras/usuario/all/${window.sessionStorage.idUsuario}`);
             if (response.ok) {
                 let carritosUsuario = await response.json();
-                if (btns[i].value == carritosUsuario[i].muroIdMuro) {
 
-                    let respuesta = await fetch(`/carrito-compras/${carritosUsuario[i].idCarritoDeCompras}`, {
-                        method: 'DELETE',
-                        headers: { 'Content-Type': 'application/json' },
-                    })
-                    if (respuesta.ok) {
-                        let divPadre = document.querySelector("#cardItems");
-                        let items = document.querySelectorAll(".items");
-                        for (let j = 0; j < items.length; j++) {
-                            divPadre.removeChild(items[j]);
+                swal({
+                    title: "Estas seguro?",
+                    text: "una vez eliminado, debera volver a agregarlo desde el inicio",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then(async (willDelete) => { //EL DE ACA ASYNC ES PARA EL AWAIT DE LA RESPUESTA DEL DELETE
+                        if (willDelete) {
+                            swal("Muro borrado de su carrito!", {
+                                icon: "success",
+                            });
+                            // METO LA FUNCIONALIDAD DENTRO DEL ALERT PARA QUE NO SE DISPARE EL BORRADO SI EL USUARIO SE ARREPIENTE
+                            if (btns[i].value == carritosUsuario[i].muroIdMuro) {
+                                let respuesta = await fetch(`/carrito-compras/${carritosUsuario[i].idCarritoDeCompras}`, {
+                                    method: 'DELETE',
+                                    headers: { 'Content-Type': 'application/json' },
+                                })
+                                if (respuesta.ok) {
+                                    let divPadre = document.querySelector("#cardItems");
+                                    let items = document.querySelectorAll(".items");
+                                    for (let j = 0; j < items.length; j++) {
+                                        divPadre.removeChild(items[j]);
+                                    }
+                                    loadItems();
+                                    console.log("muro borrado");
+                                }
+                                else {
+                                    console.log("error en la respuesta");
+                                }
+                            }
+                            else {
+                                console.log("valores no coinciden");
+                            }
                         }
-                        loadItems();
-                        console.log("muro borrado");
-                    }
-                    else {
-                        console.log("error en la respuesta");
-                    }
-                }
-                else {
-                    console.log("valores no coinciden");
-                }
+                    });
+
             }
             else {
                 console.log("error en el response");
@@ -159,24 +175,24 @@ async function realizarCompra() {
         }
     }
     if (cantidadNegativa) {
-        swal("La cantidad excede el stock disponible","","error");
+        swal("La cantidad excede el stock disponible", "", "error");
     }
     else {
         for (let i = 0; i < items.length; i++) {
             let muroRelaciones = await fetch(`/muro/relacion/id/${items[i].muroIdMuro}`)
             let json = await muroRelaciones.json();
-    
+
             items[i].cantidad = inputs[i].value;
-    
+
             idsMuros.push(items[i].muroIdMuro)
-    
-    
-    
-    
+
+
+
+
             let stock = {
                 "stock": items[i].muro.stock - items[i].cantidad,
             }
-    
+
             let respuesta = await fetch(`/muro/stock/${items[i].muroIdMuro}`, {
                 method: 'PUT',
                 headers: {
@@ -184,7 +200,7 @@ async function realizarCompra() {
                 },
                 body: JSON.stringify(stock)
             })
-    
+
             if (respuesta.ok) {
                 idsMateriales = [];
                 precioTotal += items[i].muro.precio * items[i].cantidad;
@@ -194,16 +210,16 @@ async function realizarCompra() {
             else {
                 console.log("Error para descontar cantidad");
             }
-    
-    
+
+
         }
         if (cantidadDescontada) {
             let factura = await crearFactura(precioTotal, idsMuros);
             let facturaCreada = await fetch(`/detalle-factura/${factura}`);
             let nuevaCantidadDetalle;
-    
+
             if (facturaCreada.ok) {
-    
+
                 let jsonFactura = await facturaCreada.json();
                 let cantidades = document.querySelectorAll(".cantidades");
                 console.log(cantidades)
@@ -227,19 +243,19 @@ async function realizarCompra() {
                     if (carritoBorrado) {
                         let load = await loadItems();
                         if (load) {
-                            let alerta = await swal("Articulos comprados","","success");
+                            let alerta = await swal("Articulos comprados", "", "success");
                             if (alerta) {
-                                 window.location = "./factura.html";
+                                window.location = "./factura.html";
                             }
-    
+
                         }
-    
+
                     }
                 }
-    
+
             }
-    
-    
+
+
         }
     }
 
@@ -270,7 +286,7 @@ async function crearFactura(precioTotal, idsMuros) {
         return idFactura;
     }
     else {
-        swal("Error en la creacion de factura","","error");
+        swal("Error en la creacion de factura", "", "error");
     }
 }
 async function borrarTodoCarrito() {

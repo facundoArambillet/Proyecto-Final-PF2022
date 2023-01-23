@@ -117,7 +117,7 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                         parrafoIndiceE.innerText = material.conductividadTermica;
                         parrafoLambda.innerText = material.espesor;
                         parrafoIndiceR.innerText = material.resistenciaTermica;
-                        inputCantidad.value = 1;                                    
+                        inputCantidad.value = 1;
                         inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
                             if (inputCantidad.value <= 0) {
                                 inputCantidad.value = 1;
@@ -152,13 +152,13 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
 // }
 btnGenerar.addEventListener("click", async () => {
     let selectNombre = document.querySelector("#selectMateriales_1");
-    let optionNone = false ;
-    for(let i = 0 ; i < selectNombre.children.length; i++) {
-        if(selectNombre.children[i].value == "None" && selectNombre.children[i].selected) {
+    let optionNone = false;
+    for (let i = 0; i < selectNombre.children.length; i++) {
+        if (selectNombre.children[i].value == "None" && selectNombre.children[i].selected) {
             optionNone = true;
         }
     }
-    if(!optionNone) {
+    if (!optionNone) {
         let muroGenerado = document.querySelector("#muroGenerado");
         let nombreMuro = "";
         let idsMateriales = [];
@@ -179,20 +179,20 @@ btnGenerar.addEventListener("click", async () => {
         let imagenTarro = document.createElement("i");
         imagenTarro.classList.add("bi");
         imagenTarro.classList.add("bi-trash3-fill");
-    
+
         //AGARRAR TODOS LOS MATERIALES(ya los id de los materiales en los id del option , probar agarrar todos los selects y hacer una matriz), 
         //GENERAR MURO , COMPARAR TRANSMITANCIA TERMICA CON UNA CONSTANTE(INVENTADA) 
-    
+
         for (let i = 0; i < selects.length; i++) {
-    
+
             for (let j = 0; j < selects[i].children.length; j++) {
                 if (selects[i].children[j].selected && selects[i].children[j].value != "None") {
-    
+
                     total += Number(inputsCantidades[i].children[0].value * parrafosPrecios[i].children[0].innerText)
                     //parrafo.innerHTML = `Muro ${select.children[i].value}`
                     idsMateriales.push(Number(selects[i].children[j].value));
                 }
-    
+
             }
             for (let k = 0; k < selects[0].children.length; k++) {
                 if (selects[0].children[k].selected && selects[0].children[k].value != "None") {
@@ -202,7 +202,7 @@ btnGenerar.addEventListener("click", async () => {
                 }
             }
         }
-    
+
         let muro = {
             "nombre": `Muro ${nombreMuro}`,
             "precio": total,
@@ -234,11 +234,11 @@ btnGenerar.addEventListener("click", async () => {
         btnBorrar.appendChild(imagenTarro)
         parrafo.appendChild(btnBorrar);
         muroGenerado.appendChild(parrafo);
-    
+
         borrarMuroGenerado(".btnBorrar");
     }
     else {
-        swal("El primer material no puede estar vacio","","error");
+        swal("El primer material no puede estar vacio", "", "error");
     }
 
 })
@@ -249,26 +249,42 @@ async function borrarMuroGenerado(clase) {
 
     for (let i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", async () => {
-            let response = await fetch(`/muro/${btns[i].value}`, {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
+            swal({
+                title: "Esta seguro?",
+                text: "Una vez eliminado, no podra recuperar este muro generado!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
             })
-            if (response.ok) {
+                .then(async (willDelete) => { //EL ASYNC ES PARA EL AWAIT DEL RESPONSE DEL DELETE
+                    if (willDelete) {
+                        swal("Muro eliminado de su perfi!", {
+                            icon: "success",
+                        });
+                        let response = await fetch(`/muro/${btns[i].value}`, {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                        })
+                        if (response.ok) {
 
-                let divPadre = document.querySelector("#muroGenerado");
-                let items = document.querySelectorAll(".items");
-                divPadre.removeChild(items[i]);
-                console.log("muro borrado");
+                            let divPadre = document.querySelector("#muroGenerado");
+                            let items = document.querySelectorAll(".items");
+                            divPadre.removeChild(items[i]);
+                            console.log("muro borrado");
 
-            }
-            else {
-                console.log("error en el response");
-            }
+                        }
+                        else {
+                            console.log("error en el response");
+                        }
+                    }
+                });
+
         })
     }
-}async function loadTipoMateriales() {
+}
+async function loadTipoMateriales() {
     let respuesta = await fetch("/tipo-material");
-    if(respuesta.ok) {
+    if (respuesta.ok) {
         let json = await respuesta.json();
         tipoMateriales = json;
     }

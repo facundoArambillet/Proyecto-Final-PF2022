@@ -361,7 +361,6 @@ crearMuroUsuario.addEventListener("click", () => {
         button.onclick = () => {
             input.click();
         }
-        console.log(input)
         input.addEventListener("change", function () {
             file = this.files[0];
             dropArea.classList.add("active");
@@ -384,13 +383,6 @@ crearMuroUsuario.addEventListener("click", () => {
             file = event.dataTransfer.files[0];
             showFile(file, dropArea);
         })
-
-        // dropArea.addEventListener("drop", (event) => {
-        //     event.preventDefault();
-
-        //     file = event.dataTransfer.files[0];
-        //     showFile();
-        // })
 
     }
 
@@ -447,29 +439,7 @@ crearMuroUsuario.addEventListener("click", () => {
             dragText.textContent = "Arrastrar y soltar para cargar archivo";
         }
     }
-    // async function borrarMuroGenerado(clase) {
-    //     let btns = document.querySelectorAll(clase);
 
-    //     for (let i = 0; i < btns.length; i++) {
-    //         btns[i].addEventListener("click", async () => {
-    //             let response = await fetch(`/muro/${btns[i].value}`, {
-    //                 method: 'DELETE',
-    //                 headers: { 'Content-Type': 'application/json' },
-    //             })
-    //             if (response.ok) {
-
-    //                 let divPadre = document.querySelector("#muroGenerado");
-    //                 let items = document.querySelectorAll(".items");
-    //                 divPadre.removeChild(items[i]);
-    //                 console.log("muro borrado");
-
-    //             }
-    //             else {
-    //                 console.log("error en el response");
-    //             }
-    //         })
-    //     }
-    // }
     async function loadTipoMateriales() {
         let respuesta = await fetch("/tipo-material");
         if (respuesta.ok) {

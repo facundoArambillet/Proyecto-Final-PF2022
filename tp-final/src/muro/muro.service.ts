@@ -112,10 +112,7 @@ export class MuroService {
                         muroDTO.descripcion, muroDTO.usuarioIdUsuario, muroDTO.imagen);
                     muro.setMateriales(materiales);
                     muro.calcularCoeficiente();
-                    // let coeficiente = muro.calcularCoeficiente();
-                    // // muro.setCoeficiente(coeficiente)
-                    // muro.setCoeficiente(0.3)
-                    await this.muroRepository.save(muro) //NO ME GUARDA EL COEFICIENTE DECIMAL PERO SI LOS NUMEROS ENTEROS
+                    await this.muroRepository.save(muro) //SI HAGO EL COEFICIENTE DE TIPO NUMBER NO ME LO GUARDA SI ES DECIMAL
                     return muro;
                 }
                 else {

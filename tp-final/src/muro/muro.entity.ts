@@ -9,23 +9,22 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany
 export class Muro {
 
     @PrimaryGeneratedColumn()
-    private idMuro : number;
+    private idMuro: number;
 
     @Column()
-    private nombre : string
+    private nombre: string
     @Column()
-    private precio : number;
+    private precio: number;
     @Column()
-    private stock : number;
+    private stock: number;
     @Column()
-    private imagen : string;
+    private imagen: string;
     @Column()
-    private descripcion : string;
-    // CAMBIAR VALOR A PRIVADO CUANDO TERMINE DE PROBAR PORQUE EN LA BDD NO ME SETEA ESTE VALOR CORRECTAMENTE
+    private descripcion: string;
     @Column()
-    private coeficienteDeTransmitancia : number //Probe tambien con GLfloat;
+    private coeficienteDeTransmitancia: string //SI HAGO EL COEFICIENTE DE TIPO NUMBER NO ME LO GUARDA SI ES DECIMAL
     @Column()
-    private usuarioIdUsuario : number;
+    private usuarioIdUsuario: number;
 
 
     @ManyToOne(type => Usuario,
@@ -39,23 +38,22 @@ export class Muro {
 
     @ManyToMany(type => Material, material => material.muros)
     @JoinTable()
-    public materiales : Material[];
-    
+    public materiales: Material[];
+
 
     @OneToMany(type => CarritoCompras,
         carritoCompras => carritoCompras.muro)
     @JoinColumn()
     public carritosCompras: CarritoCompras[];
 
-    constructor(nombre : string, precio : number, stock : number, descripcion: string, idUsuario : number,imagen?: string) {
-        this.calcularCoeficiente();
+    constructor(nombre: string, precio: number, stock: number, descripcion: string, idUsuario: number, imagen?: string) {
+        this.coeficienteDeTransmitancia = this.calcularCoeficiente();
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
         this.imagen = imagen;
         this.descripcion = descripcion;
         this.usuarioIdUsuario = idUsuario;
-
 
     }
 
@@ -77,7 +75,7 @@ export class Muro {
     public getDescripcion(): string {
         return this.descripcion;
     }
-    public getCoeficienteDeTransmitancia(): number {
+    public getCoeficienteDeTransmitancia(): string {
         return this.coeficienteDeTransmitancia;
     }
 
@@ -96,24 +94,22 @@ export class Muro {
     public setDescripcion(nuevaDescripcion: string) {
         this.descripcion = nuevaDescripcion;
     }
-    public setMateriales(nuevosMateriales : Material[]) {
+    public setMateriales(nuevosMateriales: Material[]) {
         this.materiales = nuevosMateriales;
     }
-    public setCoeficiente(valor  : number) {
-        this.coeficienteDeTransmitancia = valor
-    }
+
     public calcularCoeficiente() {
-        let resistenciaTotal : number = 0;
-        let coeficiente: number = 0
-        if(this.materiales) {
-            for(let i = 0; i < this.materiales.length; i++) {
+        let resistenciaTotal: number = 0;
+        let coeficiente: string;
+        if (this.materiales) {
+            for (let i = 0; i < this.materiales.length; i++) {
                 this.materiales[i].calcularResistenciaTermica()
                 resistenciaTotal += this.materiales[i].getResistenciaTermica();
             }
-            this.coeficienteDeTransmitancia = 1 / resistenciaTotal;
-             let coeficiente =  1 / resistenciaTotal;
-             return coeficiente;
+            this.coeficienteDeTransmitancia = (1 / resistenciaTotal).toString();
+            let coeficiente = this.coeficienteDeTransmitancia;
+            return coeficiente;
         }
-
+        return coeficiente;
     }
 }

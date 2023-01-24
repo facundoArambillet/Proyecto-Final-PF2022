@@ -1,0 +1,31 @@
+#panelAdmin {
+    margin-top: 4%;
+}
+
+@media (max-width: 1300px) {
+
+    #panelAdmin {
+        margin-top: 5%;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    #panelAdmin {
+        margin-top: 6%;
+    }
+}
+
+@media (max-width: 1050px) {
+
+    #panelAdmin {
+        margin-top: 7%;
+    }
+}
+
+@media (max-width: 950px) {
+
+    #panelAdmin {
+        margin-top: 8%;
+    }
+}

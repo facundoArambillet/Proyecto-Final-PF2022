@@ -227,8 +227,8 @@ btnGenerar.addEventListener("click", async () => {
             }
             else {
                 coeficiente = "Ineficiente";
-            }                                                                    // LA FUNCION toFixed() LIMITA LA CANTIDAD DE DECIMALES
-            parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.toFixed(3)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muroUsuario.precio} mas IVA`
+            }                                                                    // LA FUNCION toFixed() LIMITA LA CANTIDAD DE DECIMALES //LA FUNCION substr() HACE LO MISMO PARA LOS STRINGS
+            parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.substr(0,4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muroUsuario.precio} mas IVA`
         }
         // parrafo.appendChild(btnCarrito)
         btnBorrar.appendChild(imagenTarro)
@@ -251,7 +251,7 @@ async function borrarMuroGenerado(clase) {
         btns[i].addEventListener("click", async () => {
             swal({
                 title: "Esta seguro?",
-                text: "Una vez eliminado, no podra recuperar este muro generado!",
+                text: "Una vez eliminado, no podra recuperar este muro!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,

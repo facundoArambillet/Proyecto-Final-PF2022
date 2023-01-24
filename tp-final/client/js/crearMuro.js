@@ -1,3 +1,7 @@
+import {Cloudinary} from "@cloudinary/url-gen";
+import {Transformation} from "@cloudinary/url-gen";
+
+
 let tipoMateriales = [];
 let divMateriales = document.querySelector("#panelContenido");
 let btnGenerar = document.createElement("button");
@@ -45,14 +49,14 @@ crearMuroUsuario.addEventListener("click", () => {
 
         let header = document.createElement("header");
         header.id = "header"
-        header.innerText = "Drag & Drop to Upload File";
+        header.innerText = "Arrastrar y soltar para cargar archivo";
 
         let span = document.createElement("span");
         span.id = "span";
-        span.innerText = "OR"
+        span.innerText = "O"
 
         let btnBrowse = document.createElement("button");
-        btnBrowse.innerText = "Browse file";
+        btnBrowse.innerText = "Buscar Archivo";
 
         let inputFile = document.createElement("input");
         inputFile.id = "input"
@@ -196,6 +200,28 @@ crearMuroUsuario.addEventListener("click", () => {
             divRowPanel.appendChild(divColContenido);
             divMateriales.appendChild(divRowPanel)
         }
+
+        let divDescripcion = document.createElement("div");
+        divDescripcion.classList.add("row");
+        divDescripcion.style.alignItems = "center"
+        let divColParrafo = document.createElement("div");
+        divColParrafo.classList.add("col-2");
+        let divColTextArea = document.createElement("div");
+        divColTextArea.classList.add("col-10");
+
+        let parrafoDescripcion = document.createElement("p");
+        parrafoDescripcion.innerText = "Descripcion";
+
+        let textArea = document.createElement("textarea");
+        textArea.style.resize = "none";
+        textArea.style.width = "100%";
+        textArea.style.height = "200px";
+
+        divColParrafo.appendChild(parrafoDescripcion);
+        divColTextArea.appendChild(textArea);
+        divDescripcion.appendChild(divColParrafo);
+        divDescripcion.appendChild(divColTextArea);
+
         let divContainerBtn = document.createElement("div");
         divContainerBtn.classList.add("container");
         divContainerBtn.style.display = "flex";
@@ -212,6 +238,7 @@ crearMuroUsuario.addEventListener("click", () => {
         btnGenerar.innerText = "Generar";
         divContainerBtn.appendChild(btnGenerar);
 
+        divMateriales.appendChild(divDescripcion);
         divMateriales.appendChild(divContainerBtn);
         cargarImagen();
 
@@ -269,7 +296,8 @@ crearMuroUsuario.addEventListener("click", () => {
             let selects = document.querySelectorAll(".selects");
             let inputsCantidades = document.querySelectorAll(".cantidad");
             let parrafosPrecios = document.querySelectorAll(".precio");
-            let img = document.querySelectorAll("#imgTag");
+            let img = document.querySelector("#imgTag");
+            let descripcionText = document.querySelector("textarea").value
             let total = 0;
 
 
@@ -293,13 +321,15 @@ crearMuroUsuario.addEventListener("click", () => {
                 //     }
                 // }
             }
+            let imgDesencriptada = window.atob(img.src);
+            console.log(imgDesencriptada)
             console.log(nombreMuro)
             let muro = {
                 "nombre": `${nombreMuro.value}`,
                 "precio": total,
                 "stock": 1,
-                "imagen": img[0].src,
-                "descripcion": "Muro generado",
+                "imagen": img.src,
+                "descripcion": descripcionText,
                 "usuarioIdUsuario": Number(window.sessionStorage.idUsuario),
                 "idsMateriales": idsMateriales
             }
@@ -318,7 +348,7 @@ crearMuroUsuario.addEventListener("click", () => {
 
         }
         else {
-            swal("El Nombre del muro no puede estar vacio","","error");
+            swal("El Nombre del muro no puede estar vacio", "", "error");
         }
 
     })
@@ -334,27 +364,27 @@ crearMuroUsuario.addEventListener("click", () => {
             input.click();
         }
         console.log(input)
-        input.addEventListener("change",function () {
+        input.addEventListener("change", function () {
             file = this.files[0];
             dropArea.classList.add("active");
-            showFile(file,dropArea);
+            showFile(file, dropArea);
         })
 
         dropArea.addEventListener("dragover", (event) => {
             event.preventDefault();
             dropArea.classList.add("active");
-            dragText.textContent = "Release to Upload File";
+            dragText.textContent = "Soltar para cargar archivo";
         })
 
         dropArea.addEventListener("dragleave", () => {
             dropArea.classList.remove("active");
-            dragText.textContent = "Drag & Drop to Upload File";
+            dragText.textContent = "Arrastrar y soltar para cargar archivo";
         })
 
         dropArea.addEventListener("drop", (event) => {
             event.preventDefault();
             file = event.dataTransfer.files[0];
-            showFile(file,dropArea);
+            showFile(file, dropArea);
         })
 
         // dropArea.addEventListener("drop", (event) => {
@@ -366,18 +396,33 @@ crearMuroUsuario.addEventListener("click", () => {
 
     }
 
-    function showFile(file,dropArea) {
+    //let cloudinary = new cloudinary.Cloudinary({cloud_name: "djj3tt8x9", secure: true});
+
+    // const cld = new Cloudinary({
+    //     cloud : {
+    //       cloudName : 'djj3tt8x9'
+    //    }
+    //  });
+
+    const api_key = "683354734239633";
+    const cloud_name = "djj3tt8x9";
+
+    function showFile(file, dropArea) {
         let fileType = file.type;
+        console.log(file)
         let validExtensions = ["image/jpeg", "image/jpg", "image/png"];
         if (validExtensions.includes(fileType)) {
             let fileReader = new FileReader();
+
             fileReader.onload = () => {
                 let fileUrl = fileReader.result;
+                //console.log(fileReader.result)
                 let imgTag = `<img src="${fileUrl}" alt="" id= "imgTag">`;
-
                 dropArea.innerHTML = imgTag;
             }
-            fileReader.readAsDataURL(file);
+          fileReader.readAsDataURL(file);
+          
+
         }
         else {
             alert("Esto no es un archivo de imagen")

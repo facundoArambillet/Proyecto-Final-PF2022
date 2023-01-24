@@ -48,7 +48,7 @@ function crearCardsItems() {
         let divCoeficiente = document.createElement("div");
         divCoeficiente.classList.add("col-2");
         let parrafoCoeficiente = document.createElement("p");
-        parrafoCoeficiente.innerText = items[i].coeficienteDeTransmitancia;
+        parrafoCoeficiente.innerText = items[i].coeficienteDeTransmitancia.substr(0,4);
 
         let divTotal = document.createElement("div");
         divTotal.classList.add("col-1");

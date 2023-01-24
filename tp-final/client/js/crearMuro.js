@@ -5,7 +5,7 @@ let tipoMateriales = [];
 let divMateriales = document.querySelector("#panelContenido");
 let btnGenerar = document.createElement("button");
 let crearMuroUsuario = document.querySelector("#crearMuro");
-
+let url;
 
 crearMuroUsuario.addEventListener("click", () => {
 
@@ -254,34 +254,36 @@ crearMuroUsuario.addEventListener("click", () => {
         if (respuesta.ok) {
             let materiales = await respuesta.json();
 
-
-            for (let i = 0; i < materiales.length; i++) {
-                if (materiales[i] != undefined) {
-                    let material = materiales[i];
-                    let option = document.createElement("option");
-                    option.innerHTML = material.nombre;
-                    option.id = `optionMaterial_${material.idMaterial}`;
-                    option.value = material.idMaterial;
-                    selectMateriales.appendChild(option);
-
-                    selectMateriales.addEventListener("change", () => {
-                        if (option.selected) {
-                            parrafoIndiceE.innerText = material.conductividadTermica;
-                            parrafoLambda.innerText = material.espesor;
-                            parrafoIndiceR.innerText = material.resistenciaTermica;
-                            inputCantidad.value = material.cantidad;
-                            parrafoPrecio.innerText = material.precio;
-                        }
-                        else if (optionNone.selected) {
-                            parrafoIndiceE.innerText = "0";
-                            parrafoLambda.innerText = "0";
-                            parrafoIndiceR.innerText = "0";
-                            inputCantidad.innerText = "0";
-                            parrafoPrecio.innerText = "$ 0";
-                        }
-                    })
+            if(materiales) {
+                for (let i = 0; i < materiales.length; i++) {
+                    if (materiales[i] != undefined) {
+                        let material = materiales[i];
+                        let option = document.createElement("option");
+                        option.innerHTML = material.nombre;
+                        option.id = `optionMaterial_${material.idMaterial}`;
+                        option.value = material.idMaterial;
+                        selectMateriales.appendChild(option);
+    
+                        selectMateriales.addEventListener("change", () => {
+                            if (option.selected) {
+                                parrafoIndiceE.innerText = material.conductividadTermica;
+                                parrafoLambda.innerText = material.espesor;
+                                parrafoIndiceR.innerText = material.resistenciaTermica;
+                                inputCantidad.value = material.cantidad;
+                                parrafoPrecio.innerText = material.precio;
+                            }
+                            else if (optionNone.selected) {
+                                parrafoIndiceE.innerText = "0";
+                                parrafoLambda.innerText = "0";
+                                parrafoIndiceR.innerText = "0";
+                                inputCantidad.innerText = "0";
+                                parrafoPrecio.innerText = "$ 0";
+                            }
+                        })
+                    }
                 }
             }
+
 
         }
 
@@ -320,14 +322,12 @@ crearMuroUsuario.addEventListener("click", () => {
                 //     }
                 // }
             }
-            let imgDesencriptada = window.atob(img.src);
-            console.log(imgDesencriptada)
-            console.log(nombreMuro)
+            //let imgDesencriptada = window.atob(img.src); //ATOM ES UNA FUNCION DE JS PARA DESENCRIPTAR BASE64
             let muro = {
                 "nombre": `${nombreMuro.value}`,
                 "precio": total,
                 "stock": 1,
-                "imagen": img.src,
+                "imagen": url,
                 "descripcion": descripcionText,
                 "usuarioIdUsuario": Number(window.sessionStorage.idUsuario),
                 "idsMateriales": idsMateriales
@@ -340,10 +340,6 @@ crearMuroUsuario.addEventListener("click", () => {
                 },
                 body: JSON.stringify(muro)
             })
-            if (respuesta.ok) {
-                muroUsuario = await respuesta.json();
-                btnBorrar.value = muroUsuario.idMuro;
-            }
 
         }
         else {
@@ -403,12 +399,15 @@ crearMuroUsuario.addEventListener("click", () => {
     //    }
     //  });
 
-    const api_key = "683354734239633";
-    const cloud_name = "djj3tt8x9";
-    
-    function showFile(file, dropArea) {
+    // const api_key = "683354734239633";
+    // const cloud_name = "djj3tt8x9";
+
+
+    const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/djj3tt8x9/upload";
+    const CLOUDINARY_UPLOAD_PRESET = `frolihkd`;
+
+    async function showFile(file, dropArea) {
         let fileType = file.type;
-        console.log(src)
         let validExtensions = ["image/jpeg", "image/jpg", "image/png"];
         if (validExtensions.includes(fileType)) {
             let fileReader = new FileReader();
@@ -419,14 +418,30 @@ crearMuroUsuario.addEventListener("click", () => {
                 let imgTag = `<img src="${fileUrl}" alt="" id= "imgTag">`;
                 dropArea.innerHTML = imgTag;
             }
-          fileReader.readAsDataURL(file);
-          
+            fileReader.readAsDataURL(file);
 
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+            const res = await axios.post(CLOUDINARY_URL, formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                });
+            let imagen = cld.image(res.data.public_id);
+            //RENDERIZO LA IMAGEN
+            imagen
+            .resize(thumbnail().width(300).height(175).gravity(focusOn(FocusOn.face())))
+
+            url = res.data.secure_url;
+            
         }
         else {
-            alert("Esto no es un archivo de imagen")
+            alert("Esto no es un archivo de imagen");
             dropArea.classList.remove("active");
-            dragText.textContent = "Drag & Drop to Upload File";
+            dragText.textContent = "Arrastrar y soltar para cargar archivo";
         }
     }
     // async function borrarMuroGenerado(clase) {

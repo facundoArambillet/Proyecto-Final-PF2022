@@ -1,5 +1,4 @@
-import {Cloudinary} from "@cloudinary/url-gen";
-import {Transformation} from "@cloudinary/url-gen";
+'use strict';
 
 
 let tipoMateriales = [];
@@ -406,10 +405,11 @@ crearMuroUsuario.addEventListener("click", () => {
 
     const api_key = "683354734239633";
     const cloud_name = "djj3tt8x9";
-
+    let src;
     function showFile(file, dropArea) {
         let fileType = file.type;
-        console.log(file)
+        src =  URL.createObjectURL(file.name)
+        console.log(src)
         let validExtensions = ["image/jpeg", "image/jpg", "image/png"];
         if (validExtensions.includes(fileType)) {
             let fileReader = new FileReader();

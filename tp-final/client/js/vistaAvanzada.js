@@ -3,7 +3,7 @@ let divMateriales = document.querySelector("#materials");
 let btnGenerar = document.querySelector("#btnGenerar");
 
 async function crearCardsMateriales() {
-    for (let i = 1; i < tipoMateriales.length; i++) {
+    for (let i = 1; i <= tipoMateriales.length; i++) {
         let divRow = document.createElement("div");
         divRow.classList.add("row");
 
@@ -93,7 +93,6 @@ async function crearCardsMateriales() {
 
 
 async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone) {
-
     let respuesta = await fetch(`material/tipo-material/${id}`, {
         headers: {
             "Authorization": "Bearer " + window.sessionStorage.getItem("token")
@@ -101,7 +100,6 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
     });
     if (respuesta.ok) {
         let materiales = await respuesta.json();
-
 
         for (let i = 0; i < materiales.length; i++) {
             if (materiales[i] != undefined) {

@@ -35,6 +35,24 @@ export class TipoMaterialService {
 
     }
 
+    public async getByNombre(nombre: string): Promise<TipoMaterial> {
+        try {
+            let criterio: FindOneOptions = { where: { nombre: nombre } };
+            let tipoMaterial: TipoMaterial = await this.tipoMaterialRepository.findOne(criterio);
+            if (tipoMaterial) {
+                return tipoMaterial;
+            }
+            else {
+                throw new Error("El tipo de material no se encuentra");
+            }
+        } catch (error) {
+            throw new HttpException({ status: HttpStatus.NOT_FOUND, error: `Error en la busqueda de tipo de material ${nombre}: ${error}` },
+                HttpStatus.NOT_FOUND);
+        }
+
+
+    }
+
     public async getAllRelaciones(orden: string): Promise<TipoMaterial[]> {
         let criterio : FindManyOptions = {relations : ["materiales"], order : {
             idTipoMaterial : orden

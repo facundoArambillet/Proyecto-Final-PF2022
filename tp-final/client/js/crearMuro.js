@@ -340,6 +340,9 @@ crearMuroUsuario.addEventListener("click", () => {
                 },
                 body: JSON.stringify(muro)
             })
+            if(respuesta.ok) {
+                swal("Muro creado con exito","","success");
+            }
 
         }
         else {
@@ -430,10 +433,10 @@ crearMuroUsuario.addEventListener("click", () => {
                         'Content-Type': 'multipart/form-data'
                     },
                 });
-            let imagen = cld.image(res.data.public_id);
-            //RENDERIZO LA IMAGEN
-            imagen
-            .resize(thumbnail().width(300).height(175).gravity(focusOn(FocusOn.face())))
+            // let imagen = cld.image(res.data.public_id);
+            // //RENDERIZO LA IMAGEN
+            // imagen
+            // .resize(thumbnail().width(300).height(175).gravity(focusOn(FocusOn.face())))
 
             url = res.data.secure_url;
             

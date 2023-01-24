@@ -15,6 +15,10 @@ export class TipoMaterialController {
     public getAllRelaciones(@Param("orden") orden: string): Promise<TipoMaterial[]> {
         return this.tipoMaterialService.getAllRelaciones(orden);
     }
+    @Get("all/tipoMaterial/:nombre")
+    public getByNombre(@Param("nombre") nombre: string): Promise<TipoMaterial> {
+        return this.tipoMaterialService.getByNombre(nombre);
+    }
     @Get(":id")
     public getByID(@Param("id") id: number): Promise<TipoMaterial> {
         return this.tipoMaterialService.getByID(id);

@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `tpfinalpfs2022`.`muro` (
   `stock` INT NOT NULL DEFAULT 1,
   `imagen` VARCHAR(255) NOT NULL DEFAULT 'https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg',
   `descripcion` VARCHAR(255) NOT NULL,
-  `coeficienteDeTransmitancia` DOUBLE NOT NULL DEFAULT '1',
+  `coeficienteDeTransmitancia` VARCHAR(45) NOT NULL DEFAULT '1',
   `usuarioIdUsuario` INT(11) NOT NULL,
   PRIMARY KEY (`idMuro`),
   INDEX `fk_Muros_Usuarios1_idx` (`usuarioIdUsuario` ASC),

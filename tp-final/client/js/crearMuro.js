@@ -136,69 +136,72 @@ crearMuroUsuario.addEventListener("click", () => {
         divRowPanel.appendChild(divColContenido);
         divMateriales.appendChild(divRowPanel)
 
-        for (let i = 1; i < tipoMateriales.length; i++) {
-            let divRow = document.createElement("div");
-            divRow.classList.add("row");
-
-            let divIndiceE = document.createElement("div");
-            divIndiceE.classList.add("col-md-2");
-            let parrafoIndiceE = document.createElement("p");
-            parrafoIndiceE.innerText = "0";
-            let divIndiceLambda = document.createElement("div");
-            divIndiceLambda.classList.add("col-md-2");
-            let parrafoLambda = document.createElement("p");
-            parrafoLambda.innerText = "0";
-
-            let divIndiceR = document.createElement("div");
-            divIndiceR.classList.add("col-md-2");
-            let parrafoIndiceR = document.createElement("p");
-            parrafoIndiceR.innerText = "0";
-
-            let divCantidad = document.createElement("div");
-            divCantidad.classList.add("col-md-2");
-            divCantidad.classList.add("cantidad");
-            let inputCantidad = document.createElement("input");
-            inputCantidad.style.width = "100px"
-
-            let divPrecio = document.createElement("div");
-            divPrecio.classList.add("col-md-2");
-            divPrecio.classList.add("precio");
-            let parrafoPrecio = document.createElement("p");
-            parrafoPrecio.innerHTML = "$ 0";
-            // VER COMO HACER UNA FUNCION PARA CREAR LOS DROPDOWNS(SELECTS)
-            let divSection = document.createElement("div");
-            divSection.classList.add("col-md-2");
-            let selectMateriales = document.createElement("select");
-            selectMateriales.classList.add("selects");
-            selectMateriales.id = `selectMateriales_${i}`
-            selectMateriales.style.width = "120px";
-            selectMateriales.style.height = "30px";
-            selectMateriales.innerHTML = "";
-            let optionNone = document.createElement("option");
-            optionNone.innerHTML = "None";
-            selectMateriales.appendChild(optionNone);
-
-            crearOptions(i, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone);
-
-
-            divSection.appendChild(selectMateriales)
-            divIndiceE.appendChild(parrafoIndiceE);
-            divIndiceLambda.appendChild(parrafoLambda);
-            divIndiceR.appendChild(parrafoIndiceR);
-            divCantidad.appendChild(inputCantidad);
-            divPrecio.appendChild(parrafoPrecio);
-
-            divRow.appendChild(divSection);
-            divRow.appendChild(divIndiceE);
-            divRow.appendChild(divIndiceLambda);
-            divRow.appendChild(divIndiceR);
-            divRow.appendChild(divCantidad);
-            divRow.appendChild(divPrecio);
-            divColContenido.appendChild(divRow)
-            divRowPanel.appendChild(divColNombre);
-            divRowPanel.appendChild(divColContenido);
-            divMateriales.appendChild(divRowPanel)
+        if(tipoMateriales.length > 0) {
+            for (let i = 1; i < tipoMateriales.length; i++) {
+                let divRow = document.createElement("div");
+                divRow.classList.add("row");
+    
+                let divIndiceE = document.createElement("div");
+                divIndiceE.classList.add("col-md-2");
+                let parrafoIndiceE = document.createElement("p");
+                parrafoIndiceE.innerText = "0";
+                let divIndiceLambda = document.createElement("div");
+                divIndiceLambda.classList.add("col-md-2");
+                let parrafoLambda = document.createElement("p");
+                parrafoLambda.innerText = "0";
+    
+                let divIndiceR = document.createElement("div");
+                divIndiceR.classList.add("col-md-2");
+                let parrafoIndiceR = document.createElement("p");
+                parrafoIndiceR.innerText = "0";
+    
+                let divCantidad = document.createElement("div");
+                divCantidad.classList.add("col-md-2");
+                divCantidad.classList.add("cantidad");
+                let inputCantidad = document.createElement("input");
+                inputCantidad.style.width = "100px"
+    
+                let divPrecio = document.createElement("div");
+                divPrecio.classList.add("col-md-2");
+                divPrecio.classList.add("precio");
+                let parrafoPrecio = document.createElement("p");
+                parrafoPrecio.innerHTML = "$ 0";
+                // VER COMO HACER UNA FUNCION PARA CREAR LOS DROPDOWNS(SELECTS)
+                let divSection = document.createElement("div");
+                divSection.classList.add("col-md-2");
+                let selectMateriales = document.createElement("select");
+                selectMateriales.classList.add("selects");
+                selectMateriales.id = `selectMateriales_${i}`
+                selectMateriales.style.width = "120px";
+                selectMateriales.style.height = "30px";
+                selectMateriales.innerHTML = "";
+                let optionNone = document.createElement("option");
+                optionNone.innerHTML = "None";
+                selectMateriales.appendChild(optionNone);
+    
+                crearOptions(i, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone);
+    
+    
+                divSection.appendChild(selectMateriales)
+                divIndiceE.appendChild(parrafoIndiceE);
+                divIndiceLambda.appendChild(parrafoLambda);
+                divIndiceR.appendChild(parrafoIndiceR);
+                divCantidad.appendChild(inputCantidad);
+                divPrecio.appendChild(parrafoPrecio);
+    
+                divRow.appendChild(divSection);
+                divRow.appendChild(divIndiceE);
+                divRow.appendChild(divIndiceLambda);
+                divRow.appendChild(divIndiceR);
+                divRow.appendChild(divCantidad);
+                divRow.appendChild(divPrecio);
+                divColContenido.appendChild(divRow)
+                divRowPanel.appendChild(divColNombre);
+                divRowPanel.appendChild(divColContenido);
+                divMateriales.appendChild(divRowPanel)
+            }
         }
+  
 
         let divDescripcion = document.createElement("div");
         divDescripcion.classList.add("row");
@@ -451,8 +454,8 @@ crearMuroUsuario.addEventListener("click", () => {
     loadTipoMateriales();
 
 
-    let container = document.querySelector("#panelContenido");
-    container.style.display = "";
+    // //let container = document.querySelector("#panelContenido");
+     divMateriales.style.display = "initial";
 
 })
 

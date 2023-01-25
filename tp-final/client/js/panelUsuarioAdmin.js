@@ -4,7 +4,8 @@ let panel = document.querySelector("#panelContenido");
 let body = document.querySelector("body");
 let crearMuro = document.querySelector("#crearMuro");
 let crearMaterial = document.querySelector("#crearMaterial");
-let script;
+let actualizarMuro = document.querySelector("#actualizarMuro");
+// let script;
 
 function eliminarContenido() {
     panel.innerHTML = "";
@@ -13,23 +14,12 @@ function eliminarContenido() {
     // }
 
 }
-function crearScript() {
-    let script = document.createElement("script");
-    script.id = "script";
-    body.appendChild(script);
-}
-crearMuro.addEventListener("click", () => {
-    eliminarContenido();
-    // crearScript();
-    // script = document.querySelector("#script");
-    // script.src = "./js/imagenAdmin.js";
+// function crearScript() {
+//     let script = document.createElement("script");
+//     script.id = "script";
+//     body.appendChild(script);
+// }
 
-})
-
-crearMaterial.addEventListener("click", () => {
-    eliminarContenido();
-    // crearScript();
-    // script = document.querySelector("#script");
-    // script.src = "./js/crearMaterial.js";
-
-})
+crearMuro.addEventListener("click",eliminarContenido)
+crearMaterial.addEventListener("click", eliminarContenido)
+actualizarMuro.addEventListener("click",eliminarContenido)

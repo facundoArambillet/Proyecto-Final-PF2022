@@ -124,7 +124,7 @@ function crearCardMaterial() {
 crearMaterialUsuario.addEventListener("click", () => {
     crearCardMaterial();
     let container = document.querySelector("#panelContenido");
-    container.style.display = "";
+    container.style.display = "initial";
 
 })
 

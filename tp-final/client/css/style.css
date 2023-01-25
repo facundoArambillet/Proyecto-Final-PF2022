@@ -123,25 +123,16 @@ div p a i {
     border-bottom: 1px solid grey;
 }
 
-.dropdown-container {
-    position: relative;
-}
-
-.dropdown-container ul {
-    position: absolute;
-    max-height: 0px;
-    overflow: hidden;
-    transition: all 1s;
-    list-style-type: none;
-}
 
 /* .dropdown-container:hover ul {
                                     LA CLASE HOVER NO ESTA PARA DISPOSITIVOS MOVILES POR ESO ABAJO CREO UNA CLASE SHOW
     max-height: 400px;
 } */
 
-.dropdown-container ul.show {
-    max-height: 400px;
+
+#panelContenido {
+    border: 2px solid red;
+    display:none;
 }
 
 @media (max-width: 1200px) {

@@ -33,7 +33,7 @@ function crearCards() {
             let boton = document.createElement("a");
             boton.setAttribute("href",`./productos.html?idMuro=${muros[i].idMuro}`);
             boton.setAttribute("value",muros[i].idMuro);
-            boton.classList.add("btn","btn-primary");
+            boton.classList.add("btn","btn-dark");
             boton.innerHTML = "Ver Mas";
             divBody.appendChild(boton);
             divCard.appendChild(divBody);

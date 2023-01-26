@@ -2,8 +2,8 @@
 
 let muros = [];
 let container = document.querySelector("#panelContenido");
-let btnActualizar = document.querySelector("#actualizarMuro");
-btnActualizar.addEventListener("click", () => {
+let btnActualizarEliminar = document.querySelector("#actualizarEliminarMuro");
+btnActualizarEliminar.addEventListener("click", () => {
     function crearTabla() {
         let divContainer = document.createElement("div");
         divContainer.classList.add("table-container");

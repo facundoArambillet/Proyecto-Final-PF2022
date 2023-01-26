@@ -20,17 +20,17 @@ function crearCardMaterial() {
     divNombre.appendChild(parrafoNombre);
     divNombre.appendChild(inputNombre);
 
-    let divCantidad = document.createElement("div");
-    divCantidad.classList.add("col-2");
-    let parrafoCantidad = document.createElement("p");
-    parrafoCantidad.innerText = "Cantidad";
-    let inputCantidad = document.createElement("input");
-    inputCantidad.id = "inputCantidad";
-    inputCantidad.type = "number";
-    inputCantidad.style.width = "100%";
+    // let divCantidad = document.createElement("div");
+    // divCantidad.classList.add("col-2");
+    // let parrafoCantidad = document.createElement("p");
+    // parrafoCantidad.innerText = "Cantidad";
+    // let inputCantidad = document.createElement("input");
+    // inputCantidad.id = "inputCantidad";
+    // inputCantidad.type = "number";
+    // inputCantidad.style.width = "100%";
 
-    divCantidad.appendChild(parrafoCantidad);
-    divCantidad.appendChild(inputCantidad);
+    // divCantidad.appendChild(parrafoCantidad);
+    // divCantidad.appendChild(inputCantidad);
 
 
     let divPrecio = document.createElement("div");
@@ -58,7 +58,7 @@ function crearCardMaterial() {
     divConductividad.appendChild(inputConductividad);
 
     let divEspesor = document.createElement("div");
-    divEspesor.classList.add("col-1");
+    divEspesor.classList.add("col-2");
     let parrafoEspesor = document.createElement("p");
     parrafoEspesor.innerText = "Espesor";
     let inputEspesor = document.createElement("input");
@@ -71,7 +71,7 @@ function crearCardMaterial() {
 
 
     let divResistencia = document.createElement("div");
-    divResistencia.classList.add("col-1");
+    divResistencia.classList.add("col-2");
     let parrafoResistencia = document.createElement("p");
     parrafoResistencia.innerText = "Resistencia";
     let inputResistencia = document.createElement("input");
@@ -111,7 +111,7 @@ function crearCardMaterial() {
 
 
     divRow.appendChild(divNombre);
-    divRow.appendChild(divCantidad);
+   // divRow.appendChild(divCantidad);
     divRow.appendChild(divPrecio);
     divRow.appendChild(divConductividad);
     divRow.appendChild(divEspesor);
@@ -130,7 +130,7 @@ crearMaterialUsuario.addEventListener("click", () => {
 
 btnGenerarMaterial.addEventListener("click", async () => {
     let nombre = document.querySelector("#inputNombre").value;
-    let cantidad = document.querySelector("#inputCantidad").value;
+    //let cantidad = document.querySelector("#inputCantidad").value;
     let precio = document.querySelector("#inputPrecio").value;
     let conductividad = document.querySelector("#inputConductividad").value;
     let espesor = document.querySelector("#inputEspesor").value;
@@ -147,7 +147,7 @@ btnGenerarMaterial.addEventListener("click", async () => {
         tipoMaterial = await validacion.json();
          nuevoMaterial = {
             "nombre": nombre,
-            "cantidad": Number(cantidad),
+            "cantidad": 1, //Number(cantidad)
             "precio": Number(precio),
             "conductividadTermica": Number(conductividad),
             "espesor": Number(espesor),
@@ -179,7 +179,7 @@ btnGenerarMaterial.addEventListener("click", async () => {
             tipoMaterial = await respuesta.json();
              nuevoMaterial = {
                 "nombre": nombre,
-                "cantidad": Number(cantidad),
+                "cantidad": 1, //Number(cantidad)
                 "precio": Number(precio),
                 "conductividadTermica": Number(conductividad),
                 "espesor": Number(espesor),

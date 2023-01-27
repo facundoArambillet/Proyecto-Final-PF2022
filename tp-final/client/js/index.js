@@ -15,6 +15,10 @@ function ocultar() {
         usuarioMenu(btnSesion,userMenu);
         usuarioMenuMobile();
     }
+    else {
+        let btnCerrar = document.querySelector(".btnCerrar");
+        btnCerrar.style.display = "none";
+    }
 }
 ocultar();
 

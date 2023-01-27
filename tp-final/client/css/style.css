@@ -163,13 +163,6 @@ div p a i {
 }
 
 
-.opcionesMenu > div{
-    height: 150px; 
-    border: 2px solid grey;
-}
-.opcionesMenu > div > p{
-    padding: 10%
-}
 @media (max-width: 1300px) {
 
 }

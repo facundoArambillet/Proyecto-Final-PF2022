@@ -113,7 +113,30 @@ a {
 }
 
 .menu {
-  background-color: #666;
+  background-color:gray;
+  --bs-link-hover-color: white;
   padding-left: 0px;
   padding-right: 0px;
+}
+.opcionesMenu > div{
+  height: 150px; 
+  border: 2px solid #666;
+}
+.opcionesMenu > div > p{
+  padding: 10%
+}
+.crearMuro:hover {
+  background-color:  #666;
+}
+
+.crearMaterial:hover  {
+  background-color: #666;
+}
+
+.actualizarEliminarMuro:hover  {
+  background-color: #666;
+}
+
+.actualizarEliminarMaterial:hover  {
+  background-color: #666;
 }

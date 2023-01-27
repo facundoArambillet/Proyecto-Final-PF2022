@@ -17,7 +17,8 @@ function crearCards() {
             divCard.setAttribute("width", "18rem;");
             let imagen = document.createElement("img");
             imagen.setAttribute("src",muros[i].imagen);
-            imagen.style.height = "250px"
+             imagen.style.height = "250px"
+            
             imagen.classList.add("card-img-top");
             divCard.appendChild(imagen);
             let divBody = document.createElement("div");

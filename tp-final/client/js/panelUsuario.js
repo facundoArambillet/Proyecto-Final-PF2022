@@ -9,19 +9,16 @@ let carrito, items;
 function crearCardsItems() {
 
     items = murosUsuario;
-    console.log(items)
     for (let i = 0; i < items.length; i++) {
         let divRow = document.createElement("div");
         divRow.classList.add("row");
         divRow.classList.add("align-items-center");
         divRow.classList.add("text-center");
         divRow.classList.add("items");
-        divRow.style.marginBottom = "5%";
 
         let divMateriales = document.createElement("div");
-        divMateriales.classList.add("col-3");
-        console.log(materiales)
-        for(let j = 0; j < materiales[i].length; j++) {
+        divMateriales.classList.add("col-2");
+        for (let j = 0; j < materiales[i].length; j++) {
             let parrafoMaterial = document.createElement('p');
             parrafoMaterial.innerText = `${materiales[i][j].nombre}`;
             divMateriales.appendChild(parrafoMaterial);
@@ -42,13 +39,12 @@ function crearCardsItems() {
         inputCantidad.value = items[i].stock;
         inputCantidad.classList.add("cantidades");
         inputCantidad.setAttribute("type", "number");
-        inputCantidad.style.width = "100px";
         inputCantidad.id = `cantidad_${items[i].idMuro}`;
 
         let divCoeficiente = document.createElement("div");
         divCoeficiente.classList.add("col-2");
         let parrafoCoeficiente = document.createElement("p");
-        parrafoCoeficiente.innerText = items[i].coeficienteDeTransmitancia.substr(0,4);
+        parrafoCoeficiente.innerText = items[i].coeficienteDeTransmitancia.substr(0, 4);
 
         let divTotal = document.createElement("div");
         divTotal.classList.add("col-1");
@@ -57,16 +53,14 @@ function crearCardsItems() {
 
         let divBtnBorrar = document.createElement("div");
         divBtnBorrar.classList.add("col-1");
-        divBtnBorrar.style.marginBottom = "1.5%";
+        divBtnBorrar.classList.add("divsPanelUsuario");
         let btnBorrar = document.createElement("button");
-        btnBorrar.style.backgroundColor = "white";
-        btnBorrar.style.border = 0;
         btnBorrar.value = items[i].idMuro;
         btnBorrar.classList.add(`btnBorrar`);
 
         let divBtnCarrito = document.createElement("div");
-        divBtnCarrito.classList.add("col-1");
-        divBtnCarrito.style.marginBottom = "1.5%";
+        divBtnCarrito.classList.add("col-2");
+        divBtnCarrito.classList.add("divsPanelUsuario");
         let btnCarrito = document.createElement("button");
         btnCarrito.classList.add("btn");
         btnCarrito.classList.add("btn-outline-dark");
@@ -107,7 +101,7 @@ function crearCardsItems() {
     }
     borrarMuro(".btnBorrar");
     agregarCarrito(".btnAgregar");
-    actualizarValores(".cantidades",precioTotal);
+    actualizarValores(".cantidades", precioTotal);
     precioTotal = 0;
 }
 
@@ -117,20 +111,46 @@ async function borrarMuro(clase) {
 
     for (let i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", async () => {
-            let respuesta = await fetch(`/muro/${btns[i].value}`, {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
+            swal({
+                title: "Estas seguro que desea eliminar este muro?",
+                text: "Una vez eliminado, no podra recuperarse",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
             })
+                .then(async (willDelete) => { //EL DE ACA ASYNC ES PARA EL AWAIT DE LA RESPUESTA DEL DELETE
+                    if (willDelete) {
+                        swal("Muro borrado con exito!", {
+                            icon: "success",
+                        });
+                        // METO LA FUNCIONALIDAD DENTRO DEL ALERT PARA QUE NO SE DISPARE EL BORRADO SI EL USUARIO SE ARREPIENTE
+                        if (btns[i].value == murosUsuario[i].idMuro) {
+                            let respuesta = await fetch(`/muro/${murosUsuario[i].idMuro}`, {
+                                method: 'DELETE',
+                                headers: { 'Content-Type': 'application/json' },
+                            })
+                            if (respuesta.ok) {
 
-            if (respuesta.ok) {
-                let divPadre = document.querySelector("#murosUsuario");
-                let items = document.querySelectorAll(".items");
-                for (let j = 0; j < items.length; j++) {
-                    divPadre.removeChild(items[j]);
-                }
-                loadMuros();
-                console.log("muro borrado");
-            }
+                                if (respuesta.ok) {
+                                    let divPadre = document.querySelector("#murosUsuario");
+                                    let items = document.querySelectorAll(".items");
+                                    for (let j = 0; j < items.length; j++) {
+                                        divPadre.removeChild(items[j]);
+                                    }
+                                    loadMuros();
+                                    console.log("muro borrado");
+                                }
+                            }
+                            else {
+                                console.log("error en la respuesta");
+                            }
+                        }
+                        else {
+                            console.log("valores no coinciden");
+                        }
+                    }
+                });
+
         })
 
     }
@@ -143,7 +163,7 @@ async function agregarCarrito(clase) {
         btnsAgregar[i].addEventListener("click", async () => {
             let inputCantidad = document.querySelector(`#cantidad_${btnsAgregar[i].value}`)
             let nuevaCantidad = {
-              "stock":  Number(inputCantidad.value)
+                "stock": Number(inputCantidad.value)
             }
             console.log(inputCantidad)
             console.log(nuevaCantidad)
@@ -155,7 +175,7 @@ async function agregarCarrito(clase) {
                 },
                 body: JSON.stringify(nuevaCantidad)
             })
-            if(response.ok) {
+            if (response.ok) {
                 let carrito = {
                     "precioTotal": murosUsuario[i].precio,
                     "cantidad": nuevaCantidad.stock,
@@ -171,9 +191,9 @@ async function agregarCarrito(clase) {
                     body: JSON.stringify(carrito)
                 })
                 if (respuesta.ok) {
-                    swal("Muro agregado al carrito","","success");
+                    swal("Muro agregado al carrito", "", "success");
                 }
-    
+
             }
 
         })
@@ -192,7 +212,7 @@ function actualizarValores(clase) {
             }
             precios[i].innerText = murosUsuario[i].precio * inputs[i].value;
 
-            for(let k = 0; k < precios.length; k++) {
+            for (let k = 0; k < precios.length; k++) {
                 precioTotal += Number(precios[k].innerText);
             }
             precioTotal = 0;
@@ -209,17 +229,17 @@ async function loadMuros() {
         let json = await respuesta.json();
         murosUsuario = json.muros;
     }
-    let cargaMateriales =   await loadMateriales();
-    if(cargaMateriales) {
+    let cargaMateriales = await loadMateriales();
+    if (cargaMateriales) {
         crearCardsItems();
     }
 
 }
 async function loadMateriales() {
     materiales = [];
-    for(let i = 0; i < murosUsuario.length; i++) {
+    for (let i = 0; i < murosUsuario.length; i++) {
         let response = await fetch(`/muro/relacion/id/${murosUsuario[i].idMuro}`);
-        if(response.ok) {
+        if (response.ok) {
             let json = await response.json();
             materiales.push(json.materiales);
         }

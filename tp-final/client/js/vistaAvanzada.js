@@ -3,38 +3,99 @@ let divMateriales = document.querySelector("#materials");
 let btnGenerar = document.querySelector("#btnGenerar");
 
 async function crearCardsMateriales() {
+    let divRow = document.createElement("div");
+    divRow.classList.add("row");
+    divRow.style.marginBottom = "2%"
+
+    let divMaterial = document.createElement("div");
+    divMaterial.classList.add("col");
+    let strongMaterial = document.createElement("strong");
+    strongMaterial.classList.add("subtituloMaterial");
+    strongMaterial.innerText = "Materiales";
+    divMaterial.appendChild(strongMaterial);
+
+    let divIndiceE = document.createElement("div");
+    divIndiceE.classList.add("col");
+    divIndiceE.classList.add("contenidoNone");
+    let strongIndiceE = document.createElement("strong");
+    strongIndiceE.classList.add("subtituloIndiceE");
+    strongIndiceE.innerText = "Indice E";
+    divIndiceE.appendChild(strongIndiceE);
+
+    let divIndiceLambda = document.createElement("div");
+    divIndiceLambda.classList.add("col");
+    divIndiceLambda.classList.add("contenidoNone");
+    let strongIndiceLambda = document.createElement("strong");
+    strongIndiceLambda.classList.add("subtituloIndiceLambda");
+    strongIndiceLambda.innerText = "Indice λ";
+    divIndiceLambda.appendChild(strongIndiceLambda);
+
+    let divIndiceR = document.createElement("div");
+    divIndiceR.classList.add("col");
+    divIndiceR.classList.add("contenidoNone");
+    let strongIndiceR = document.createElement("strong");
+    strongIndiceR.classList.add("subtituloIndiceR");
+    strongIndiceR.innerText = "Indice R";
+    divIndiceR.appendChild(strongIndiceR);
+
+    let divCantidadSubtitulo = document.createElement("div");
+    divCantidadSubtitulo.classList.add("col");
+    let strongCantidad = document.createElement("strong");
+    strongCantidad.classList.add("subtituloCantidad");
+    strongCantidad.innerText = "Cantidad";
+    divCantidadSubtitulo.appendChild(strongCantidad);
+
+    let divPrecioSubtitulo = document.createElement("div");
+    divPrecioSubtitulo.classList.add("col");
+    let strongPrecio = document.createElement("strong");
+    strongPrecio.classList.add("subtituloPrecio");
+    strongPrecio.innerText = "Precio C/U";
+    divPrecioSubtitulo.appendChild(strongPrecio);
+
+    divRow.appendChild(divMaterial);
+    divRow.appendChild(divIndiceE);
+    divRow.appendChild(divIndiceLambda);
+    divRow.appendChild(divIndiceR);
+    divRow.appendChild(divCantidadSubtitulo);
+    divRow.appendChild(divPrecioSubtitulo);
+    divMateriales.appendChild(divRow);
+
+
     for (let i = 1; i <= tipoMateriales.length; i++) {
-        let divRow = document.createElement("div");
+        divRow = document.createElement("div");
         divRow.classList.add("row");
 
-        let divIndiceE = document.createElement("div");
-        divIndiceE.classList.add("col-md-2");
+        divIndiceE = document.createElement("div");
+        divIndiceE.classList.add("col");
+        divIndiceE.classList.add("contenidoNone");
         let parrafoIndiceE = document.createElement("p");
         parrafoIndiceE.innerText = "0";
-        let divIndiceLambda = document.createElement("div");
-        divIndiceLambda.classList.add("col-md-2");
+        divIndiceLambda = document.createElement("div");
+        divIndiceLambda.classList.add("col");
+        divIndiceLambda.classList.add("contenidoNone");
         let parrafoLambda = document.createElement("p");
         parrafoLambda.innerText = "0";
 
-        let divIndiceR = document.createElement("div");
-        divIndiceR.classList.add("col-md-2");
+        divIndiceR = document.createElement("div");
+        divIndiceR.classList.add("col");
+        divIndiceR.classList.add("contenidoNone");
         let parrafoIndiceR = document.createElement("p");
         parrafoIndiceR.innerText = "0";
 
-        let divCantidad = document.createElement("div");
-        divCantidad.classList.add("col-md-2");
+        divCantidad = document.createElement("div");
+        divCantidad.classList.add("col");
         divCantidad.classList.add("cantidad");
         let inputCantidad = document.createElement("input");
         inputCantidad.type = "number";
 
-        let divPrecio = document.createElement("div");
-        divPrecio.classList.add("col-md-2");
+        divPrecio = document.createElement("div");
+        divPrecio.classList.add("col");
         divPrecio.classList.add("precio");
         let parrafoPrecio = document.createElement("p");
         parrafoPrecio.innerHTML = "$ 0";
         // VER COMO HACER UNA FUNCION PARA CREAR LOS DROPDOWNS(SELECTS)
         let divSection = document.createElement("div");
-        divSection.classList.add("col-md-2");
+        divSection.classList.add("col");
         let selectMateriales = document.createElement("select");
         selectMateriales.classList.add("selects");
         selectMateriales.id = `selectMateriales_${i}`
@@ -226,7 +287,7 @@ btnGenerar.addEventListener("click", async () => {
             else {
                 coeficiente = "Ineficiente";
             }                                                                    // LA FUNCION toFixed() LIMITA LA CANTIDAD DE DECIMALES //LA FUNCION substr() HACE LO MISMO PARA LOS STRINGS
-            parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.substr(0,4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muroUsuario.precio} mas IVA`
+            parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.substr(0, 4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muroUsuario.precio} mas IVA`
         }
         // parrafo.appendChild(btnCarrito)
         btnBorrar.appendChild(imagenTarro)

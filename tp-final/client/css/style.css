@@ -9,6 +9,9 @@
 * {
     list-style: none;
 }
+a {
+    text-decoration: none;
+}
 
 body {
     font-family: 'Titillium Web', sans-serif;
@@ -37,6 +40,7 @@ div p a i {
     display: none;
 }
 
+/* NAV */
 .block {
     padding: 5%;
     background-color: black
@@ -53,6 +57,7 @@ div p a i {
 #lista {
     align-items: center;
 }
+
 
 .nav_right>ul {
     display: flex;
@@ -78,10 +83,13 @@ div p a i {
     color: var(--grisClarito);
 }
 
-.letra-clara {
-    color: rgb(255, 255, 255);
+.slider {
+    margin-top: 1%; 
+    height: 90vh;
 }
 
+
+/* FOOTER */
 #footer {
     background-color: var(--grisOscuro);
     padding-top: 3%;
@@ -102,7 +110,13 @@ div p a i {
     border: 2px #CCCCCC solid;
     height: 350px;
 }
-
+/* PRODUCTO DETAIL */
+#card {
+    border: 2px solid black;
+    padding: 1.5%;
+    margin-bottom: 8%;
+}
+/* */
 #vistaAvanzada {
     margin-top: 8%;
 }
@@ -123,16 +137,41 @@ div p a i {
     border-bottom: 1px solid grey;
 }
 
-
-/* .dropdown-container:hover ul {
-                                    LA CLASE HOVER NO ESTA PARA DISPOSITIVOS MOVILES POR ESO ABAJO CREO UNA CLASE SHOW
-    max-height: 400px;
-} */
-
-
+/* PANEL USUARIO */
+.items{
+    margin-bottom: 5%;
+}
+.cantidades {
+    width: 100px;
+}
+.divsPanelUsuario{
+    margin-bottom: 1.5%;
+}
+.btnBorrar {
+    border: 0;
+    background-color: white;
+}
 #panelContenido {
-    border: 2px solid red;
     display:none;
+}
+#murosUsuario {
+    margin-bottom: 20%;
+}
+#titulo {
+    margin-bottom: 5%; 
+    margin-top: 5%;
+}
+
+
+.opcionesMenu > div{
+    height: 150px; 
+    border: 2px solid grey;
+}
+.opcionesMenu > div > p{
+    padding: 10%
+}
+@media (max-width: 1300px) {
+
 }
 
 @media (max-width: 1200px) {
@@ -140,6 +179,10 @@ div p a i {
     #vistaAvanzada {
         margin-top: 9%;
     }
+    #titulo {
+        margin-top: 7%;
+    }
+
 }
 
 @media (max-width: 1100px) {
@@ -147,7 +190,18 @@ div p a i {
     #vistaAvanzada {
         margin-top: 10%;
     }
+    #card {
+        margin-bottom: 10%;
+    }
+
 }
+
+@media (max-width: 1050px) {
+    #titulo {
+        margin-top: 8%;
+    }
+}
+
 
 @media (max-width: 992px) {
 
@@ -161,6 +215,12 @@ div p a i {
     #vistaAvanzada {
         margin-top: 12%;
     }
+    .contenidoNone{
+        display: none;
+    }
+    #card {
+        margin-bottom: 12%;
+    }
 }
 
 @media (max-width: 850px) {
@@ -168,8 +228,57 @@ div p a i {
     #vistaAvanzada {
         margin-top: 14%;
     }
+    #titulo {
+        margin-top: 9%;
+    }
 }
 
+@media (max-width: 776px) {
+
+    #vistaAvanzada {
+        margin-top: 14%;
+    }
+
+}
+@media (max-width: 767px) {
+
+    .tablaVistaAvanzada {
+        margin-top: 8% !important; 
+    }
+    #titulo {
+        margin-top: 11%;
+    }
+    .cantidades {
+        width: 85px;
+    }
+
+}
+@media (max-width: 660px) {
+
+    .tablaVistaAvanzada {
+        margin-top: 10% !important;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .tablaVistaAvanzada {
+        margin-top: 12% !important;
+    }
+    #titulo {
+        margin-top: 12%;
+    }
+
+}
+
+@media (max-width: 550px) {
+
+    .tablaVistaAvanzada {
+        margin-top: 14% !important;
+    }
+
+}
 
 @media (max-width: 470px) {
     #logo a img {

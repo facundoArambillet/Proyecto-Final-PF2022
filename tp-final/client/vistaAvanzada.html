@@ -30,13 +30,13 @@
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="./quienesSomos.html">Quienes Somos</a>
+            <a class="nav-link active" aria-current="page" href="./quienesSomos.html">¿Quienes Somos?</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="./queSignifica.html">Que significa?</a>
+            <a class="nav-link active" href="./queSignifica.html">¿Que significa?</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="./queNecesitamosSaber.html">Que necesitamos saber</a>
+            <a class="nav-link active" href="./queNecesitamosSaber.html">¿Que necesitamos saber?</a>
           </li>
         </ul>
       </div>
@@ -48,6 +48,9 @@
           </li>
           <li class="nav-item d-block d-md-block d-lg-none">
             <a class="nav-link active vistaAvanzada" href="#">Vista Avanzada</a>
+          </li>
+          <li class="nav-item d-block d-md-block d-lg-none">
+            <a class="nav-link active usuarioPanel email-perfil" href="#"></a>
           </li>
           <!-- Contiene enlaces -->
           <div class="contenedor contenedor-enlaces-nav fondo-oscuro">
@@ -77,7 +80,7 @@
                     </div>
                     <div class="dd_right">
                       <ul>
-                        <li id="email-perfil">Usuario</li>
+                        <li class="email-perfil">Usuario</li>
                         <li id="panelUsuario">Mis Muros</li>
                         <li id="btn_cerrar_sesion">Cerrar sesión</li>
                       </ul>
@@ -114,17 +117,17 @@
 
   <div class="container-fluid" id="vistaAvanzada">
     <div class="row">
-      <div class="col-lg-7 col-md-9">
-        <div class="container-fluid  text-center" style="margin-bottom: 2%;">
-          <div class="row">
-            <div class="col-md-2"><strong>Materiales</strong></div>
-            <div class="col-md-2"><strong>Indice e</strong></div>
-            <div class="col-md-2"><strong>Indice λ</strong></div>
-            <div class="col-md-2"><strong>indice R</strong></div>
-            <div class="col-md-2"><strong>Cantidad</strong></div>
-            <div class="col-md-2"><strong>Precio C/U</strong></div>
+      <div class="col-7 tablaVistaAvanzada" >
+        <!-- <div class="container-fluid  text-center" style="margin-bottom: 2%;">
+          <div class="row subtitulosVistaAvanzada" >
+             <div class="col "><strong class="subtituloMaterial">Materiales</strong></div>
+            <div class="col  contenidoNone"><strong class="subtituloIndiceE">Indice e</strong></div>
+            <div class="col  contenidoNone"><strong class="subtituloIndiceLambda">Indice λ</strong></div>
+            <div class="col  contenidoNone"><strong class="subtituloIndiceR">indice R</strong></div>
+            <div class="col "><strong class="subtituloCantidad">Cantidad</strong></div>
+            <div class="col "><strong class="subtituloPrecio">Precio C/U</strong></div>
           </div>
-        </div>
+        </div> -->
   
         <div class="container-fluid text-center" id="materials">
         </div>
@@ -138,7 +141,7 @@
 
       <div class="col-1"></div>
       
-      <div class="col-4" style="margin-top: 1%;" id="muroGenerado">
+      <div class="col-3 tablaVistaAvanzada" style="margin-top: 1%;" id="muroGenerado">
         
       </div>
     </div>

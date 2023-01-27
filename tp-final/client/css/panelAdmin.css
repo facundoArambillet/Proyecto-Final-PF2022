@@ -1,7 +1,9 @@
 #panelAdmin {
     margin-top: 4%;
 }
-
+a {
+  color: black;
+}
 @media (max-width: 1300px) {
 
     #panelAdmin {

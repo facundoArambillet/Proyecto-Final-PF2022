@@ -13,16 +13,20 @@ function ocultar() {
         btnSesion.setAttribute("href","#")
         let userMenu = document.querySelector('.dd_menu');
         usuarioMenu(btnSesion,userMenu);
+        usuarioMenuMobile();
     }
 }
 ocultar();
 
 function usuarioMenu(btnSesion,userMenu) {
-    let nombre = document.querySelector('#email-perfil') 
+    let nombre = document.querySelectorAll('.email-perfil'); 
+    for(let i = 0 ; i < nombre.length; i++) {
+        nombre[i].innerHTML = window.sessionStorage.getItem('nombre');
+    }
     let panelUsuario = document.querySelector("#panelUsuario");
     let btnCerrarSesion = document.querySelector("#btn_cerrar_sesion");
     btnSesion.addEventListener('click', function () {
-        nombre.innerHTML = window.sessionStorage.getItem('nombre');
+
         if(window.sessionStorage.idRol == "2") {
             panelUsuario.innerHTML = "Mis Muros";
             panelUsuario.addEventListener("click", () => {
@@ -39,6 +43,7 @@ function usuarioMenu(btnSesion,userMenu) {
 
     });
     cerrarSesion(btnCerrarSesion);
+    cerrarSesionMobile();
 
 }
 
@@ -48,6 +53,15 @@ function cerrarSesion(btnCerrarSesion) {
         window.location = "./index.html";
     })
 }
+
+function cerrarSesionMobile() {
+    let btnCerrar = document.querySelector(".btnCerrar");
+    btnCerrar.addEventListener("click", () => {
+        window.sessionStorage.clear();
+        window.location = "./index.html";
+    })
+}
+
 
 let vistaAvanzada = document.querySelectorAll(".vistaAvanzada");
 for (let i = 0; i < vistaAvanzada.length; i++) {
@@ -61,6 +75,19 @@ for (let index = 0; index < carritoVentana.length; index++) {
     carritoVentana[index].addEventListener("click", function () {
         bloquear("./carritoCompras.html", "./logueo.html");
     });
+}
+function usuarioMenuMobile() {
+    let usuarioPanel = document.querySelector(".usuarioPanel");
+    if(window.sessionStorage.idRol == "2") {
+        usuarioPanel.addEventListener("click", () => {
+            window.location = "./panelUsuario.html"
+        })
+    }
+    else {
+        usuarioPanel.addEventListener("click", () => {
+            window.location = "./panelUsuarioAdmin.html"
+        })
+    }
 }
 
 async function bloquear(locationOK, locationError) {

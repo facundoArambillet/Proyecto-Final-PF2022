@@ -31,7 +31,7 @@ function loadDataMuro() {
     else {
         stock.innerHTML = `Stock: Sin stock por el momento`;
     }
-
+    // imagen.style.minWidth = "605px";
     imagen.setAttribute("src", muro.imagen);
 }
 

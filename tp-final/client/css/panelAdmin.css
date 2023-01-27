@@ -140,3 +140,6 @@ a {
 .actualizarEliminarMaterial:hover  {
   background-color: #666;
 }
+.materiales > td > input {
+  width: 100px;
+}

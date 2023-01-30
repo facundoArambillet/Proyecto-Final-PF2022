@@ -96,14 +96,12 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             btnBorrar.appendChild(iBorrar);
             btnBorrar.value = materiales[i].idMaterial;
             btnBorrar.classList.add("btnBorrarMaterial")
-            btnBorrar.style.backgroundColor = "white";
-            btnBorrar.style.border = 0;
+            btnBorrar.classList.add("btns-tabla");
             let btnActualizar = document.createElement("button");
             btnActualizar.appendChild(iActualizar);
             btnActualizar.value = materiales[i].idMaterial;
             btnActualizar.classList.add("btnActualizarMaterial");
-            btnActualizar.style.backgroundColor = "white";
-            btnActualizar.style.border = 0;
+            btnActualizar.classList.add("btns-tabla");
     
     
             divBorrar.appendChild(btnBorrar);

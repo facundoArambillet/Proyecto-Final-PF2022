@@ -84,14 +84,12 @@ btnActualizarEliminar.addEventListener("click", () => {
             btnBorrar.appendChild(iBorrar);
             btnBorrar.value = muros[i].idMuro;
             btnBorrar.classList.add("btnBorrar")
-            btnBorrar.style.backgroundColor = "white";
-            btnBorrar.style.border = 0;
+            btnBorrar.classList.add("btns-tabla");
             let btnActualizar = document.createElement("button");
             btnActualizar.appendChild(iActualizar);
             btnActualizar.value = muros[i].idMuro;
             btnActualizar.classList.add("btnActualizar");
-            btnActualizar.style.backgroundColor = "white";
-            btnActualizar.style.border = 0;
+            btnActualizar.classList.add("btns-tabla");
 
 
             divBorrar.appendChild(btnBorrar);

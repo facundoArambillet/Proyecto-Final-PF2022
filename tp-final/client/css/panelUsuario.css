@@ -1,0 +1,10 @@
+#murosUsuario {
+    margin-bottom: 20%;
+}
+
+@media (max-width: 1110px) {
+    #murosUsuario {
+        margin-bottom: 25%;
+    }
+    
+}

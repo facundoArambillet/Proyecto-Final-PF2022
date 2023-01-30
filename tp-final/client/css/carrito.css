@@ -1,0 +1,37 @@
+#cardItems {
+    margin-top: 4%;
+}
+
+#carrito {
+    margin-top: 6%;
+}
+
+#descripcionProducto {
+    margin-top: 1.5%;
+}
+
+@media (max-width: 1100px) {
+    #carrito {
+        margin-top: 7%;
+    }
+
+}
+
+@media (max-width: 1000px) {
+    #carrito {
+        margin-top: 8%;
+    }
+
+    .px-5 {
+        padding-right: 1.5rem !important;
+        padding-left: 1.5rem !important;
+    }
+
+    .btn-lg {
+
+        --bs-btn-padding-y: 0.5rem;
+        --bs-btn-padding-x: 1rem;
+        --bs-btn-font-size: 1rem;
+        --bs-btn-border-radius: 0.5rem;
+    }
+}

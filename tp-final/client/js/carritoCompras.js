@@ -5,15 +5,31 @@ let total = document.querySelector("#total");
 let precioTotal = 0;
 let carrito, items;
 function crearCardsItems() {
-
     items = carrito;
     console.log(items)
+
+    if(items.length == 0) {
+        let carrito = document.querySelector("#carrito");
+        carrito.style.height = "406px";
+        let divContenido = document.createElement("div");
+        divContenido.classList.add("row");
+        divContenido.classList.add("text-center");
+        let divCol = document.createElement("div");
+        divCol.classList.add("col");
+        let h1 = document.createElement("h1");
+        h1.innerText = "No posee muros en el carrito";
+
+        carrito.innerHTML = '';
+        divCol.appendChild(h1);
+        divContenido.appendChild(divCol);
+        carrito.appendChild(divContenido);
+    }
+
     for (let i = 0; i < items.length; i++) {
         let divRow = document.createElement("div");
         divRow.classList.add("row");
         divRow.classList.add("align-items-center");
-        divRow.classList.add("items")
-        divRow.style.marginBottom = "5%";
+        divRow.classList.add("items");
 
         let divImg = document.createElement("div");
         divImg.classList.add("col-4");

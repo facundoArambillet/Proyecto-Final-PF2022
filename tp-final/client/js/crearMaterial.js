@@ -256,6 +256,7 @@ btnGenerarMaterial.addEventListener("click", async () => {
             "resistenciaTermica": Number(resistencia),
 
         }
+        console.log(nuevoMaterial)
         let response = await fetch("/material", {
             method: 'POST',
             headers: {

@@ -152,16 +152,10 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                                     headers: { 'Content-Type': 'application/json' },
                                 })
                                 if (respuesta.ok) {
-                                    let divPadre = document.querySelector(".table-rwd");
-                                    let items = document.querySelectorAll(".items");
-                                    console.log(divPadre)
-                                    console.log(items)
-
-                                    console.log(items[i])
-                                    divPadre.removeChild(items[i]);
-
-                                    // loadMurosAdmin();
-                                    console.log("muro borrado");
+                                    let panel = document.querySelector("#panelContenido");
+                                    panel.innerHTML = "";
+                                    loadMaterialesAdmin();
+                                    
                                 }
                                 else {
                                     console.log("error en la respuesta");

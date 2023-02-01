@@ -8,7 +8,7 @@ let carrito, items;
 
 function crearCardsItems() {
     items = murosUsuario;
-    if(items.length == 0) {
+    if (items.length == 0) {
         let divContenido = document.createElement("div");
         divContenido.classList.add("row");
         divContenido.classList.add("text-center");
@@ -29,7 +29,7 @@ function crearCardsItems() {
             divRow.classList.add("align-items-center");
             divRow.classList.add("text-center");
             divRow.classList.add("items");
-    
+
             let divMateriales = document.createElement("div");
             divMateriales.classList.add("col-2");
             for (let j = 0; j < materiales[i].length; j++) {
@@ -37,16 +37,16 @@ function crearCardsItems() {
                 parrafoMaterial.innerText = `${materiales[i][j].nombre}`;
                 divMateriales.appendChild(parrafoMaterial);
             }
-    
-    
+
+
             // img.setAttribute("src", items[i].imagen);
             // img.setAttribute("width", "250px");
-    
+
             let divPrecio = document.createElement("div");
             divPrecio.classList.add("col-2");
             let parrafoPrecio = document.createElement("p");
             parrafoPrecio.innerText = items[i].precio
-    
+
             let divCantidad = document.createElement("div");
             divCantidad.classList.add("col-2");
             let inputCantidad = document.createElement("input");
@@ -54,24 +54,24 @@ function crearCardsItems() {
             inputCantidad.classList.add("cantidades");
             inputCantidad.setAttribute("type", "number");
             inputCantidad.id = `cantidad_${items[i].idMuro}`;
-    
+
             let divCoeficiente = document.createElement("div");
             divCoeficiente.classList.add("col-2");
             let parrafoCoeficiente = document.createElement("p");
             parrafoCoeficiente.innerText = items[i].coeficienteDeTransmitancia.substr(0, 4);
-    
+
             let divTotal = document.createElement("div");
             divTotal.classList.add("col-1");
             let parrafoTotal = document.createElement("p")
             parrafoTotal.classList.add("precios");
-    
+
             let divBtnBorrar = document.createElement("div");
             divBtnBorrar.classList.add("col-1");
             divBtnBorrar.classList.add("divsPanelUsuario");
             let btnBorrar = document.createElement("button");
             btnBorrar.value = items[i].idMuro;
             btnBorrar.classList.add(`btnBorrar`);
-    
+
             let divBtnCarrito = document.createElement("div");
             divBtnCarrito.classList.add("col-2");
             divBtnCarrito.classList.add("divsPanelUsuario");
@@ -83,17 +83,17 @@ function crearCardsItems() {
             btnCarrito.classList.add("btnAgregar");
             btnCarrito.value = items[i].idMuro;
             btnCarrito.innerText = "Agregar al carrito";
-    
+
             let imagenTarro = document.createElement("i");
             imagenTarro.classList.add("bi");
             imagenTarro.classList.add("bi-trash3-fill");
-    
+
             btnBorrar.appendChild(imagenTarro);
-    
+
             precioTotal += items[i].precio * items[i].stock;
-    
+
             parrafoTotal.innerText = precioTotal;
-    
+
             //divImg.appendChild(img);
             divPrecio.appendChild(parrafoPrecio);
             divCantidad.appendChild(inputCantidad);
@@ -101,7 +101,7 @@ function crearCardsItems() {
             divTotal.appendChild(parrafoTotal);
             divBtnBorrar.appendChild(btnBorrar);
             divBtnCarrito.appendChild(btnCarrito);
-    
+
             divRow.appendChild(divMateriales);
             divRow.appendChild(divPrecio);
             divRow.appendChild(divCantidad);
@@ -109,7 +109,7 @@ function crearCardsItems() {
             divRow.appendChild(divTotal);
             divRow.appendChild(divBtnBorrar);
             divRow.appendChild(divBtnCarrito);
-    
+
             cardItems.appendChild(divRow);
             precioTotal = 0;
         }
@@ -136,27 +136,28 @@ async function borrarMuro(clase) {
             })
                 .then(async (willDelete) => { //EL DE ACA ASYNC ES PARA EL AWAIT DE LA RESPUESTA DEL DELETE
                     if (willDelete) {
-                        swal("Muro borrado con exito!", {
-                            icon: "success",
-                        });
+
                         // METO LA FUNCIONALIDAD DENTRO DEL ALERT PARA QUE NO SE DISPARE EL BORRADO SI EL USUARIO SE ARREPIENTE
                         if (btns[i].value == murosUsuario[i].idMuro) {
                             let respuesta = await fetch(`/muro/${murosUsuario[i].idMuro}`, {
                                 method: 'DELETE',
                                 headers: { 'Content-Type': 'application/json' },
                             })
-                            if (respuesta.ok) {
 
-                                if (respuesta.ok) {
-                                    let divPadre = document.querySelector("#murosUsuario");
-                                    let items = document.querySelectorAll(".items");
-                                    for (let j = 0; j < items.length; j++) {
-                                        divPadre.removeChild(items[j]);
-                                    }
-                                    loadMuros();
-                                    console.log("muro borrado");
+
+                            if (respuesta.ok) {
+                                let divPadre = document.querySelector("#murosUsuario");
+                                let items = document.querySelectorAll(".items");
+                                for (let j = 0; j < items.length; j++) {
+                                    divPadre.removeChild(items[j]);
                                 }
+                                swal("Muro borrado con exito!", {
+                                    icon: "success",
+                                });
+                                loadMuros();
+                                console.log("muro borrado");
                             }
+
                             else {
                                 console.log("error en la respuesta");
                             }

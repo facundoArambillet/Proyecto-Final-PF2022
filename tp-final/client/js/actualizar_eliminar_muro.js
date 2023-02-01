@@ -132,26 +132,18 @@ btnActualizarEliminar.addEventListener("click", () => {
                 })
                     .then(async (willDelete) => { //EL DE ACA ASYNC ES PARA EL AWAIT DE LA RESPUESTA DEL DELETE
                         if (willDelete) {
-                            swal("Muro borrado con exito!", {
-                                icon: "success",
-                            });
                             // METO LA FUNCIONALIDAD DENTRO DEL ALERT PARA QUE NO SE DISPARE EL BORRADO SI EL USUARIO SE ARREPIENTE
                             if (btns[i].value == muros[i].idMuro) {
-                                let respuesta = await fetch(`/muro/${muros[i].idMuro}`, {
+                                let respuesta = await fetch(`/muro/${btns[i].value}`, {
                                     method: 'DELETE',
                                     headers: { 'Content-Type': 'application/json' },
                                 })
                                 if (respuesta.ok) {
-                                    let divPadre = document.querySelector(".table-rwd");
-                                    let items = document.querySelectorAll(".items");
-                                    console.log(divPadre)
-                                    console.log(items)
-
-                                    console.log(items[i])
-                                    divPadre.removeChild(items[i]);
-
-                                    // loadMurosAdmin();
-                                    console.log("muro borrado");
+                                    container.innerHTML = '';
+                                    loadMurosAdmin();
+                                    swal("Muro borrado con exito!", {
+                                        icon: "success",
+                                    });
                                 }
                                 else {
                                     console.log("error en la respuesta");
@@ -180,7 +172,7 @@ btnActualizarEliminar.addEventListener("click", () => {
 
                         let json = await response.json();
                         let idsMateriales = [];
-                        for(let j = 0; j < json.materiales.length; j++) {
+                        for (let j = 0; j < json.materiales.length; j++) {
                             idsMateriales.push(json.materiales[i].idMaterial)
                         }
 

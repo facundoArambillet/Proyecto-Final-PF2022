@@ -10,9 +10,6 @@ let actualizarEliminarMaterial = document.querySelector("#actualizarEliminarMate
 
 function eliminarContenido() {
     panel.innerHTML = "";
-    // if(body.childElementCount == 7) { // ENCUENTRO EL SCRIPT PARA ELIMINARLO
-    //     body.removeChild(body.children[6]);
-    // }
 
 }
 // function crearScript() {
@@ -21,7 +18,7 @@ function eliminarContenido() {
 //     body.appendChild(script);
 // }
 
-crearMuro.addEventListener("click",eliminarContenido)
-crearMaterial.addEventListener("click", eliminarContenido)
-actualizarEliminarMuro.addEventListener("click",eliminarContenido)
-actualizarEliminarMaterial.addEventListener("click",eliminarContenido)
+crearMuro.addEventListener("click",eliminarContenido);
+crearMaterial.addEventListener("click", eliminarContenido);
+actualizarEliminarMuro.addEventListener("click",eliminarContenido);
+actualizarEliminarMaterial.addEventListener("click",eliminarContenido);

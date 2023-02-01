@@ -1,4 +1,6 @@
 let tipoMateriales = [];
+let muros = [];
+const estandarCoeficiente = 0.35;
 let divMateriales = document.querySelector("#materials");
 let btnGenerar = document.querySelector("#btnGenerar");
 
@@ -164,24 +166,15 @@ btnGenerar.addEventListener("click", async () => {
         }
     }
     if (!optionNone) {
-        let muroGenerado = document.querySelector("#muroGenerado");
-        let nombreMuro = "";
+        // let muroGenerado = document.querySelector("#muroGenerado");
         let idsMateriales = [];
         let selects = document.querySelectorAll(".selects");
         let inputsCantidades = document.querySelectorAll(".cantidad");
         let parrafosPrecios = document.querySelectorAll(".precio");
         let total = 0;
-        let coeficiente = "";
-        const estandarCoeficiente = 0.35;
-        let parrafo = document.createElement("p");
-        parrafo.classList.add("items");
-        let btnBorrar = document.createElement("button");
-        btnBorrar.classList.add("btnBorrar");
-        btnBorrar.style.backgroundColor = "white";
-        btnBorrar.style.border = 0;
-        let imagenTarro = document.createElement("i");
-        imagenTarro.classList.add("bi");
-        imagenTarro.classList.add("bi-trash3-fill");
+        // let coeficiente = ""
+        // let parrafo = document.createElement("p");
+        // parrafo.classList.add("items");
 
 
         for (let i = 0; i < selects.length; i++) {
@@ -209,7 +202,6 @@ btnGenerar.addEventListener("click", async () => {
             "usuarioIdUsuario": Number(window.sessionStorage.idUsuario),
             "idsMateriales": idsMateriales
         }
-        console.log(muro)
         let respuesta = await fetch('/muro', {
             method: 'POST',
             headers: {
@@ -217,22 +209,14 @@ btnGenerar.addEventListener("click", async () => {
             },
             body: JSON.stringify(muro)
         })
-        if (respuesta.ok) {
-            muroUsuario = await respuesta.json();
-            btnBorrar.value = muroUsuario.idMuro;
-            if (muroUsuario.coeficienteDeTransmitancia < estandarCoeficiente) {
-                coeficiente = "Eficiente";
+        if(respuesta.ok) {
+            loadMurosUsuario();
+            let murosGenerados = document.querySelector("#muroGenerado");
+            murosGenerados.innerHTML = '';
+            if(murosGenerados == '') {
+                crearCardMuros();
             }
-            else {
-                coeficiente = "Ineficiente";
-            }                                                                    // LA FUNCION toFixed() LIMITA LA CANTIDAD DE DECIMALES //LA FUNCION substr() HACE LO MISMO PARA LOS STRINGS
-            parrafo.innerHTML = `Muro ${nombreMuro} tiene una transmitancia de : ${muroUsuario.coeficienteDeTransmitancia.substr(0, 4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muroUsuario.precio} mas IVA`
         }
-        btnBorrar.appendChild(imagenTarro)
-        parrafo.appendChild(btnBorrar);
-        muroGenerado.appendChild(parrafo);
-
-        borrarMuroGenerado(".btnBorrar");
     }
     else {
         swal("El primer material no puede estar vacio", "", "error");
@@ -240,11 +224,54 @@ btnGenerar.addEventListener("click", async () => {
 
 })
 
+async function crearCardMuros() {
+    let muroGenerado = document.querySelector("#muroGenerado");
+    let coeficiente = "";
+    for(let i = 0 ; i < muros.length; i++) {
+        let divMuro = document.createElement("div");
+        divMuro.classList.add("items");
+        let parrafoMuro = document.createElement("p");
+
+        let btnBorrar = document.createElement("button");
+        btnBorrar.classList.add("btnBorrar");
+        btnBorrar.style.backgroundColor = "white";
+        btnBorrar.style.border = 0;
+        btnBorrar.value = muros[i].idMuro;
+
+        let imagenTarro = document.createElement("i");
+        imagenTarro.classList.add("bi");
+        imagenTarro.classList.add("bi-trash3-fill");
+
+        btnBorrar.appendChild(imagenTarro);
+
+        if(muros[i].coeficienteDeTransmitancia < estandarCoeficiente) {
+            coeficiente = "Eficiente";
+        }
+        else {
+            coeficiente = "Ineficiente";
+        }
+        if(window.sessionStorage.idRol == "2") {
+            parrafoMuro.innerHTML = `Muro ${muros[i].nombre} tiene una transmitancia de : ${muros[i].coeficienteDeTransmitancia.substr(0, 4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muros[i].precio} mas IVA`
+
+        }
+        else {
+            parrafoMuro.innerHTML = `${muros[i].nombre} tiene una transmitancia de : ${muros[i].coeficienteDeTransmitancia.substr(0, 4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muros[i].precio} mas IVA`
+
+        }
+        
+        parrafoMuro.appendChild(btnBorrar);
+        divMuro.appendChild(parrafoMuro);
+        muroGenerado.appendChild(divMuro);
+    }
+    borrarMuroGenerado(".btnBorrar");
+
+}
 
 async function borrarMuroGenerado(clase) {
     let btns = document.querySelectorAll(clase);
 
     for (let i = 0; i < btns.length; i++) {
+
         btns[i].addEventListener("click", async () => {
             swal({
                 title: "Esta seguro?",
@@ -255,19 +282,21 @@ async function borrarMuroGenerado(clase) {
             })
                 .then(async (willDelete) => { //EL ASYNC ES PARA EL AWAIT DEL RESPONSE DEL DELETE
                     if (willDelete) {
-                        swal("Muro eliminado de su perfi!", {
-                            icon: "success",
-                        });
                         let response = await fetch(`/muro/${btns[i].value}`, {
                             method: 'DELETE',
                             headers: { 'Content-Type': 'application/json' },
                         })
                         if (response.ok) {
-
                             let divPadre = document.querySelector("#muroGenerado");
                             let items = document.querySelectorAll(".items");
-                            divPadre.removeChild(items[i]);
-                            console.log("muro borrado");
+                            for(let p = 0; p < items.length; p++) {
+                                divPadre.removeChild(items[p]);
+                            }
+                            loadMurosUsuario();
+
+                            swal("Muro eliminado de su perfi!", {
+                                icon: "success",
+                            });
 
                         }
                         else {
@@ -287,4 +316,13 @@ async function loadTipoMateriales() {
     }
     crearCardsMateriales();
 }
+async function loadMurosUsuario() {
+    let respuesta = await fetch(`/muro/all/${window.sessionStorage.idUsuario}`);
+    if (respuesta.ok) {
+        let json = await respuesta.json();
+        muros = json;
+    }
+    crearCardMuros();
+}
 loadTipoMateriales();
+loadMurosUsuario();

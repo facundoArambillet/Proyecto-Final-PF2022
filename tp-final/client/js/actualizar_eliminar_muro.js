@@ -43,6 +43,7 @@ btnActualizarEliminar.addEventListener("click", () => {
             textNombre.innerText = muros[i].nombre;
             textNombre.id = `nombre_${muros[i].idMuro}`;
             tdNombre.appendChild(textNombre);
+
             let tdPrecio = document.createElement("td");
             let inputPrecio = document.createElement("input");
             inputPrecio.style.width = "80px"
@@ -50,6 +51,11 @@ btnActualizarEliminar.addEventListener("click", () => {
             inputPrecio.value = muros[i].precio;
             inputPrecio.id = `precio_${muros[i].idMuro}`;
             tdPrecio.appendChild(inputPrecio);
+            inputPrecio.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                if (inputPrecio.value <= 0) {
+                    inputPrecio.value = 1;
+                }
+            })
             let tdStock = document.createElement("td");
             let inputStock = document.createElement("input");
             inputStock.style.width = "80px"
@@ -57,6 +63,12 @@ btnActualizarEliminar.addEventListener("click", () => {
             inputStock.value = muros[i].stock;
             inputStock.id = `stock_${muros[i].idMuro}`;
             tdStock.appendChild(inputStock);
+            inputStock.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                if (inputStock.value < 0) {
+                    inputStock.value = 1;
+                }
+            })
+
             let tdCoeficiente = document.createElement("td");
             tdCoeficiente.innerText = muros[i].coeficienteDeTransmitancia.substring(0, 4);
             let tdDescripcion = document.createElement("td");
@@ -65,9 +77,11 @@ btnActualizarEliminar.addEventListener("click", () => {
             textDescripcion.innerText = muros[i].descripcion;
             textDescripcion.id = `descripcion_${muros[i].idMuro}`;
             tdDescripcion.appendChild(textDescripcion);
+
             let tdIconos = document.createElement("td");
             let divRow = document.createElement("div");
             divRow.classList.add("row");
+
             let divBorrar = document.createElement("div");
             divBorrar.classList.add("col-6");
             let divActualizar = document.createElement("div");
@@ -76,6 +90,7 @@ btnActualizarEliminar.addEventListener("click", () => {
             let iBorrar = document.createElement("i");
             iBorrar.classList.add("bi");
             iBorrar.classList.add("bi-trash3-fill");
+
             let iActualizar = document.createElement("i");
             iActualizar.classList.add("bi");
             iActualizar.classList.add("bi-arrow-repeat");
@@ -85,6 +100,7 @@ btnActualizarEliminar.addEventListener("click", () => {
             btnBorrar.value = muros[i].idMuro;
             btnBorrar.classList.add("btnBorrar")
             btnBorrar.classList.add("btns-tabla");
+
             let btnActualizar = document.createElement("button");
             btnActualizar.appendChild(iActualizar);
             btnActualizar.value = muros[i].idMuro;
@@ -112,7 +128,7 @@ btnActualizarEliminar.addEventListener("click", () => {
         borrarMuro(".btnBorrar");
         actualizarMuro(".btnActualizar");
     }
-
+    let inputs = document.querySelectorAll("input");
 
 
 
@@ -124,7 +140,7 @@ btnActualizarEliminar.addEventListener("click", () => {
 
 
                 swal({
-                    title: "Estas seguro que desea eliminar este muro?",
+                    title: "¿Estas seguro que desea eliminar este muro?",
                     text: "una vez eliminado, No podra recuperarse",
                     icon: "warning",
                     buttons: true,

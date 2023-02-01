@@ -1,0 +1,11 @@
+.factura {
+    display: flex;
+    align-items: baseline;
+}
+#btn {
+    background-color: black;
+    color: white;
+}
+#btn:hover {
+    background-color: rgb(37, 37, 37);
+}

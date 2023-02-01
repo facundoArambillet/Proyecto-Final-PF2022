@@ -146,7 +146,7 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                         parrafoIndiceE.innerText = "0";
                         parrafoLambda.innerText = "0";
                         parrafoIndiceR.innerText = "0";
-                        inputCantidad.innerText = "0";
+                        inputCantidad.innerText = "";
                         parrafoPrecio.innerText = "$ 0";
                     }
                 })

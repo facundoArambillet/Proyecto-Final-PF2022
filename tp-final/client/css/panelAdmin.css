@@ -5,6 +5,11 @@
 a {
   color: black;
 }
+@media (max-width: 1350px) {
+  #panelContenido {
+      margin-top: 1%;
+  }
+}
 
 @media (max-width: 1300px) {
 
@@ -31,6 +36,21 @@ a {
 
   #panelAdmin {
     margin-top: 8%;
+  }
+}
+@media (max-width: 740px) {
+  #panelContenido {
+      margin-top: 2%;
+  }
+}
+@media (max-width: 600px) {
+  #panelContenido {
+      margin-top: 4%;
+  }
+}
+@media (max-width: 520px) {
+  #panelContenido {
+      margin-top: 7%;
   }
 }
 

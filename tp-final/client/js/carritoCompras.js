@@ -107,7 +107,7 @@ async function borrarCarrito(clase) {
                 let carritosUsuario = await response.json();
 
                 swal({
-                    title: "Estas seguro?",
+                    title: "¿Estas seguro?",
                     text: "una vez eliminado, debera volver a agregarlo desde el inicio",
                     icon: "warning",
                     buttons: true,

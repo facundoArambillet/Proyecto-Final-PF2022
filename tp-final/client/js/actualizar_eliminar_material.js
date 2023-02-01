@@ -45,6 +45,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             textNombre.innerText = materiales[i].nombre;
             textNombre.id = `nombre_${materiales[i].idMaterial}`;
             tdNombre.appendChild(textNombre);
+
             let tdPrecio = document.createElement("td");
             let inputPrecio = document.createElement("input");
             inputPrecio.style.width = "80px";
@@ -52,6 +53,11 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             inputPrecio.value = materiales[i].precio;
             inputPrecio.id = `precio_${materiales[i].idMaterial}`;
             tdPrecio.appendChild(inputPrecio);
+            inputPrecio.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                if (inputPrecio.value <= 0) {
+                    inputPrecio.value = 1;
+                }
+            })
             // let tdStock = document.createElement("td");
             // let inputStock = document.createElement("input");
             // inputStock.style.width = "80px"
@@ -65,21 +71,40 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             inputConductividad.value = materiales[i].conductividadTermica;
             inputConductividad.id = `conductividad_${materiales[i].idMaterial}`
             tdConductividad.appendChild(inputConductividad);
+            inputConductividad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                if (inputConductividad.value <= 0) {
+                    inputConductividad.value = 1;
+                }
+            })
+            
             let tdEspesor = document.createElement("td");
             let inputEspesor = document.createElement("input");
             inputEspesor.style.width = "80px";
             inputEspesor.value = materiales[i].espesor;
             inputEspesor.id = `espesor_${materiales[i].idMaterial}`;
             tdEspesor.appendChild(inputEspesor);
+            inputEspesor.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                if (inputEspesor.value <= 0) {
+                    inputEspesor.value = 1;
+                }
+            })
+
             let tdResistencia = document.createElement("td");
             let inputResistencia = document.createElement("input");
             inputResistencia.style.width = "80px";
             inputResistencia.value = materiales[i].espesor;
             inputResistencia.id = `resistencia_${materiales[i].idMaterial}`;
             tdResistencia.appendChild(inputResistencia);
+            inputResistencia.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                if (inputResistencia.value <= 0) {
+                    inputResistencia.value = 1;
+                }
+            })
+
             let tdIconos = document.createElement("td");
             let divRow = document.createElement("div");
             divRow.classList.add("row");
+
             let divBorrar = document.createElement("div");
             divBorrar.classList.add("col-6");
             let divActualizar = document.createElement("div");
@@ -97,6 +122,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             btnBorrar.value = materiales[i].idMaterial;
             btnBorrar.classList.add("btnBorrarMaterial")
             btnBorrar.classList.add("btns-tabla");
+
             let btnActualizar = document.createElement("button");
             btnActualizar.appendChild(iActualizar);
             btnActualizar.value = materiales[i].idMaterial;
@@ -134,7 +160,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
 
 
                 swal({
-                    title: "Estas seguro que desea eliminar este Material?",
+                    title: "¿Estas seguro que desea eliminar este Material?",
                     text: "una vez eliminado, No podra recuperarse",
                     icon: "warning",
                     buttons: true,

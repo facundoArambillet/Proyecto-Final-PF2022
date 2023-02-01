@@ -1,5 +1,6 @@
 let detalles = [];
 let muros = [];
+let btn = document.querySelector("#btn");
 let tabla = "";
 let total = 0;
 
@@ -73,4 +74,8 @@ async function loadDetalle() {
 }
 
 loadDetalle();
+
+btn.addEventListener("click", () => {
+    window.location = "/index.html";
+})
 

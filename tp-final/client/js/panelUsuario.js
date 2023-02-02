@@ -14,10 +14,11 @@ function crearCardsItems() {
         divContenido.classList.add("text-center");
         let divCol = document.createElement("div");
         divCol.classList.add("col");
+
         let h1 = document.createElement("h1");
         h1.innerText = "No posee muros generados";
 
-        cardItems.innerHTML = ''
+        cardItems.innerHTML = '';
         divCol.appendChild(h1);
         divContenido.appendChild(divCol);
         cardItems.appendChild(divContenido);

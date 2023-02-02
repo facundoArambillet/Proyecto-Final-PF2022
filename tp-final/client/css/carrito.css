@@ -8,6 +8,8 @@
 
 #descripcionProducto {
     margin-top: 1.5%;
+    padding: 30px 30px; 
+    margin-bottom: 5%;
 }
 
 @media (max-width: 1100px) {

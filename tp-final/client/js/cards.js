@@ -47,13 +47,6 @@ function crearCards() {
 
 }
 
-function ocultar() {
-    if(sliderMuro.style.display != "none") {
-        let imgMuro = document.querySelector("#imgMuro");
-        imgMuro.src = "https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg";
-    }
-}
-
 async function loadMuros(){
     let respuesta = await fetch(`/muro/all/${1}`);
     if(respuesta.ok) {
@@ -64,4 +57,3 @@ async function loadMuros(){
 
 }
 loadMuros();
-sliderMuro.addEventListener("change", ocultar)

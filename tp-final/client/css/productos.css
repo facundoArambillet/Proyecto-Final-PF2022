@@ -1,3 +1,35 @@
-div #card div  {
+div #card div {
     margin-bottom: 5%;
+}
+
+#contenedor {
+    margin-top: 8%;
+}
+
+#imagen {
+    width: 80%;
+}
+
+#contenedorProductos {
+    margin-left: 9%;
+    margin-top: 2%;
+}
+#caracteristicasMuro {
+    margin-right: 23%;
+}
+#logo {
+    width: 50%;
+}
+@media (max-width: 950px) {
+
+    #contenedor {
+        margin-top: 10%;
+    }
+}
+
+@media (max-width: 800px) {
+
+    #contenedor {
+        margin-top: 15%;
+    }
 }

@@ -82,12 +82,25 @@ div p a i {
 .nr_li a:hover {
     color: var(--grisClarito);
 }
+#imgLogo {
+    width: 300px;
+}
+#perfil {
+    display: none;
+}
 
+/* CARRUSEL */
 .slider {
     margin-top: 1%; 
     height: 90vh;
 }
+#sliderMuro {
+    display: none;
+}
 
+#logueo {
+    margin-top: 10%;
+}
 
 /* FOOTER */
 #footer {
@@ -109,6 +122,9 @@ div p a i {
     background-color: #F7F7F7;
     border: 2px #CCCCCC solid;
     height: 350px;
+}
+#copyright {
+    height: 50px;
 }
 /* PRODUCTO DETAIL */
 #card {

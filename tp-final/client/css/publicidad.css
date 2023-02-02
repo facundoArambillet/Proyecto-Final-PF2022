@@ -10,6 +10,9 @@
     color: white;
 }
 
+.logo img {
+    width: 100px !important;
+}
 .nombre {
     font-family: Helvetica, Arial, sans-serif;
     position: absolute;
@@ -27,7 +30,7 @@
 .caja i {
     padding: 3px;
 }
-#redSocial{
+.redSocial{
     position: absolute;
     font-size: 12px;
     border: 1px solid rgba(0, 0, 0, .12);
@@ -35,7 +38,12 @@
     bottom: 15%;
     left: 5%;
 }
-
+#twitter {
+    color: rgb(47, 140, 177) !important;
+}
+#facebook {
+    color: blue !important;
+}
 @media (max-width: 1120px) {
     .caja img {
         width: 260px;

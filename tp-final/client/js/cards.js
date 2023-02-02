@@ -1,5 +1,6 @@
 
 let cards = document.querySelector("#cards");
+let sliderMuro = document.querySelector("#sliderMuro");
 let muros = [];
 let arrayImgs = ["https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg","https://www.shutterstock.com/image-photo/red-brick-wall-texture-background-600w-719331211.jpg",
 "https://img.freepik.com/fotos-premium/muro-hormigon-blanco-textura-fondo_33720-905.jpg?w=1380","https://images.pexels.com/photos/2378959/pexels-photo-2378959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -46,6 +47,13 @@ function crearCards() {
 
 }
 
+function ocultar() {
+    if(sliderMuro.style.display != "none") {
+        let imgMuro = document.querySelector("#imgMuro");
+        imgMuro.src = "https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg";
+    }
+}
+
 async function loadMuros(){
     let respuesta = await fetch(`/muro/all/${1}`);
     if(respuesta.ok) {
@@ -56,3 +64,4 @@ async function loadMuros(){
 
 }
 loadMuros();
+sliderMuro.addEventListener("change", ocultar)

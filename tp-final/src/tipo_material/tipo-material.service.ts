@@ -53,9 +53,9 @@ export class TipoMaterialService {
 
     }
 
-    public async getAllRelaciones(orden: string): Promise<TipoMaterial[]> {
-        let criterio : FindManyOptions = {relations : ["materiales"], order : {
-            idTipoMaterial : orden
+    public async getByNombreRelaciones(nombre: string): Promise<TipoMaterial[]> {
+        let criterio : FindManyOptions = {relations : ["materiales"], where : {
+            nombre : nombre
         }};
         this.tiposMateriales = await this.tipoMaterialRepository.find(criterio);
         return this.tiposMateriales;

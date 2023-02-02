@@ -30,7 +30,7 @@ export class MaterialController {
         return this.materialService.updateMaterial(id,material);
     }
     @Delete(":id")
-    public deleteMaterial(@Param("id") id: number): Promise<boolean> {
+    public deleteMaterial(@Param("id") id: number): Promise<Material> {
         return this.materialService.deleteMaterial(id);
     }
 }

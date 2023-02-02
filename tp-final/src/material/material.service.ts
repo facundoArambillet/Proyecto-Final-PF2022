@@ -42,6 +42,7 @@ export class MaterialService {
 
     }
 
+
     public async addMaterial(materialDTO: MaterialDTO): Promise<Material> {
         try {
             if (materialDTO) {
@@ -92,13 +93,13 @@ export class MaterialService {
         }
     }
 
-    public async deleteMaterial(id: number): Promise<boolean> {
+    public async deleteMaterial(id: number): Promise<Material> {
         try {
             if (id) {
-                let criterio: FindOneOptions = { where: { idMaterial: id } };
+                let criterio: FindOneOptions = { where: { idMaterial: id }, relations : ["tipoMaterial"] };
                 let material: Material = await this.materialRepository.findOne(criterio);
                 await this.materialRepository.delete(material.getID());
-                return true;
+                return material;
             }
             else {
                 throw new Error("id invalido");

@@ -137,7 +137,7 @@ async function crearCardsMateriales() {
     divMateriales.appendChild(divRowPanel)
 
     if (tipoMateriales.length > 0) {
-        for (let i = 1; i < tipoMateriales.length; i++) {
+        for (let i = 0; i < tipoMateriales.length; i++) {
             let divRow = document.createElement("div");
             divRow.classList.add("row");
 
@@ -185,7 +185,6 @@ async function crearCardsMateriales() {
             selectMateriales.appendChild(optionNone);
 
             await crearOptions(i, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone);
-
 
             divSection.appendChild(selectMateriales)
             divIndiceE.appendChild(parrafoIndiceE);
@@ -253,52 +252,54 @@ async function crearCardsMateriales() {
 
 
 async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone) {
-
-    let respuesta = await fetch(`material/tipo-material/${id}`, {
-        headers: {
-            "Authorization": "Bearer " + window.sessionStorage.getItem("token")
-        }
+    let respuesta = await fetch(`/tipo-material/all/${tipoMateriales[id].nombre}`, {
     });
     if (respuesta.ok) {
-        let materiales = await respuesta.json();
+        let tipoMaterialJson = await respuesta.json();
 
-        if (materiales) {
-            for (let i = 0; i < materiales.length; i++) {
-                if (materiales[i] != undefined) {
-                    let material = materiales[i];
+        for (let i = 0; i < tipoMaterialJson.length; i++) {
+            if (tipoMaterialJson[i] != undefined) {
+                let materiales = tipoMaterialJson[i].materiales;
+                console.log(materiales)
+
+                for(let j = 0; j < materiales.length; j++) {
                     let option = document.createElement("option");
-                    option.innerHTML = material.nombre;
-                    option.id = `optionMaterial_${material.idMaterial}`;
-                    option.value = material.idMaterial;
+                    option.innerHTML = materiales[j].nombre;
+                    option.id = `optionMaterial_${materiales[j].idMaterial}`;
+                    option.value = materiales[j].idMaterial;
                     selectMateriales.appendChild(option);
-
+    
                     selectMateriales.addEventListener("change", () => {
                         if (option.selected) {
-                            parrafoIndiceE.innerText = material.conductividadTermica;
-                            parrafoLambda.innerText = material.espesor;
-                            parrafoIndiceR.innerText = material.resistenciaTermica;
+                            parrafoIndiceE.innerText = materiales[j].conductividadTermica;
+                            parrafoLambda.innerText = materiales[j].espesor;
+                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica;
                             inputCantidad.value = 1;
-                            parrafoPrecio.innerText = material.precio;
+                            inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                                if (inputCantidad.value <= 0) {
+                                    inputCantidad.value = 1;
+                                }
+                            })
+                            parrafoPrecio.innerText = materiales[j].precio;
                         }
                         else if (optionNone.selected) {
                             parrafoIndiceE.innerText = "0";
                             parrafoLambda.innerText = "0";
                             parrafoIndiceR.innerText = "0";
-                            inputCantidad.innerText = "0";
+                            inputCantidad.innerText = "";
                             parrafoPrecio.innerText = "$ 0";
                         }
                     })
                 }
+
             }
         }
-
 
     }
 
 }
 crearMuroUsuario.addEventListener("click", () => {
     crearCardsMateriales();
-
     function cargarImagen() {
         const dropArea = document.querySelector(".drag-area");
         let dragText = dropArea.querySelector("header");
@@ -411,7 +412,6 @@ btnGenerar.addEventListener("click", async () => {
         }
 
     }
-    console.log(optionSelected)
     if (nombreMuro.value) {
         console.log("entro")
         if (url != "") {
@@ -470,6 +470,7 @@ btnGenerar.addEventListener("click", async () => {
 
 
 async function loadTipoMateriales() {
+    tipoMateriales = [];
     let respuesta = await fetch("/tipo-material");
     if (respuesta.ok) {
         let json = await respuesta.json();

@@ -178,9 +178,14 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                                     headers: { 'Content-Type': 'application/json' },
                                 })
                                 if (respuesta.ok) {
-                                    let panel = document.querySelector("#panelContenido");
-                                    panel.innerHTML = "";
-                                    loadMaterialesAdmin();
+                                    let materialEliminado = await respuesta.json();
+                                    if(materialEliminado) {
+                                        eliminarTipoMaterial(materialEliminado.tipoMaterial.nombre)
+                                        let panel = document.querySelector("#panelContenido");
+                                        panel.innerHTML = "";
+                                        loadMaterialesAdmin();
+                                    }
+
                                     
                                 }
                                 else {
@@ -245,7 +250,19 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             })
         }
     }
-    
+    async function eliminarTipoMaterial(nombre) {
+        let respuesta = await fetch(`/tipo-material/all/${nombre}`)
+        if(respuesta.ok) {
+            let tipoMateriales = await respuesta.json();
+            console.log(tipoMateriales)
+            if(tipoMateriales && tipoMateriales[0].materiales.length == 0) {  //TipoMateriales me retorna un arreglo(con un unico elemento por eso el [0])
+                let response = await fetch(`/tipo-material/${tipoMateriales[0].idTipoMaterial}`,{
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                })
+            }
+        }
+    }
     async function loadMaterialesAdmin() {
         let respuesta = await fetch("/material");
         if(respuesta.ok) {

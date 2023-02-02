@@ -33,3 +33,10 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Agregado para conectar BDD con Host(Heroku)
+# /node_modules
+# /dist
+# npm-debug.log
+# .DS_Store
+# /*.env

@@ -5,7 +5,6 @@
             "id": 1,
             "img":"https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg",
             "nombre": "Muro 1",
-            "duenio": "Clemente",
             "materiales": [
                 {},{},{}
             ],
@@ -15,7 +14,6 @@
             "id": 2,
             "img":"https://img.freepik.com/fotos-premium/muro-hormigon-blanco-textura-fondo_33720-905.jpg?w=1380",
             "nombre": "Muro 2",
-            "duenio": "Hernan",
             "materiales": [
                 {},{},{}
             ],
@@ -25,34 +23,31 @@
             "id": 3,
             "img":"https://www.aparicio-partner.com/wp-content/uploads/2017/05/foto_sassi_rocce_02-1024x675.jpg",
             "nombre": "Muro 3",
-            "duenio": "Fernando",
             "materiales": [
                 {},{},{}
             ],
             "precio": 300
         },
         {
-            "id": 1,
+            "id": 4,
             "img":"https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg",
             "nombre": "Muro 1",
-            "duenio": "Clemente",
             "materiales": [
                 {},{},{}
             ],
             "precio": 100
         },
         {
-            "id": 2,
+            "id": 5,
             "img":"https://img.freepik.com/fotos-premium/muro-hormigon-blanco-textura-fondo_33720-905.jpg?w=1380",
             "nombre": "Muro 2",
-            "duenio": "Hernan",
             "materiales": [
                 {},{},{}
             ],
             "precio": 200
         },
         {
-            "id": 3,
+            "id": 6,
             "img":"https://www.aparicio-partner.com/wp-content/uploads/2017/05/foto_sassi_rocce_02-1024x675.jpg",
             "nombre": "Muro 3",
             "duenio": "Fernando",

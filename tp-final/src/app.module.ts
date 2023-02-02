@@ -30,6 +30,18 @@ import { DetalleFacturaModule } from './detalle_factura/detalleFactura.module';
           "dist/**/**.entity{.ts,.js}"
         ],
         "synchronize": false
+
+        // "type": "mysql",
+        // "host": "localhost",
+        // "port": 3306,
+        // "username": "id20227796_root",
+        // "password": "rc5bOmHk!Es(W)Ut",
+        // "database": "id20227796_fullstack2022	",
+        // "entities": [
+        //   "dist/**/**.entity{.ts,.js}"
+        // ],
+        // "synchronize": false
+
       }),
     MaterialModule,
     MuroModule,

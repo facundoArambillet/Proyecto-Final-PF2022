@@ -246,7 +246,7 @@ async function crearCardsMateriales() {
 
     divMateriales.appendChild(divDescripcion);
     divMateriales.appendChild(divContainerBtn);
-    //cargarImagen();
+    cargarImagen();
 
 }
 
@@ -262,13 +262,13 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                 let materiales = tipoMaterialJson[i].materiales;
                 console.log(materiales)
 
-                for(let j = 0; j < materiales.length; j++) {
+                for (let j = 0; j < materiales.length; j++) {
                     let option = document.createElement("option");
                     option.innerHTML = materiales[j].nombre;
                     option.id = `optionMaterial_${materiales[j].idMaterial}`;
                     option.value = materiales[j].idMaterial;
                     selectMateriales.appendChild(option);
-    
+
                     selectMateriales.addEventListener("change", () => {
                         if (option.selected) {
                             parrafoIndiceE.innerText = materiales[j].conductividadTermica;
@@ -299,98 +299,99 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
 
 }
 crearMuroUsuario.addEventListener("click", () => {
-    crearCardsMateriales();
-    function cargarImagen() {
-        const dropArea = document.querySelector(".drag-area");
-        let dragText = dropArea.querySelector("header");
-        let button = dropArea.querySelector("button");
-        let input = dropArea.querySelector("input");
-        let file;
+    loadTipoMateriales();
 
-        button.onclick = () => {
-            input.click();
-        }
-        input.addEventListener("change", function () {
-            file = this.files[0];
-            dropArea.classList.add("active");
-            showFile(file, dropArea);
-        })
-
-        dropArea.addEventListener("dragover", (event) => {
-            event.preventDefault();
-            dropArea.classList.add("active");
-            dragText.textContent = "Soltar para cargar archivo";
-        })
-
-        dropArea.addEventListener("dragleave", () => {
-            dropArea.classList.remove("active");
-            dragText.textContent = "Arrastrar y soltar para cargar archivo";
-        })
-
-        dropArea.addEventListener("drop", (event) => {
-            event.preventDefault();
-            file = event.dataTransfer.files[0];
-            showFile(file, dropArea);
-        })
-
-    }
-    cargarImagen();
+    //cargarImagen();
     divMateriales.style.display = "initial";
-
-    //let cloudinary = new cloudinary.Cloudinary({cloud_name: "djj3tt8x9", secure: true});
-
-    // const cld = new Cloudinary({     // NO ME DEJA RENDERIZAR LA IMAGEN PORQUE ME TIRA ESTE ERROR:
-    //     cloud : {                    // Uncaught SyntaxError: Cannot use import statement outside a module 
-    //       cloudName : 'djj3tt8x9'
-    //    }
-    //  });
-
-    // const api_key = "683354734239633";
-    // const cloud_name = "djj3tt8x9";
-
-    const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/djj3tt8x9/upload";
-    const CLOUDINARY_UPLOAD_PRESET = `frolihkd`;
-
-    async function showFile(file, dropArea) {
-        let fileType = file.type;
-        let validExtensions = ["image/jpeg", "image/jpg", "image/png"];
-        if (validExtensions.includes(fileType)) {
-            let fileReader = new FileReader();
-
-            fileReader.onload = () => {
-                let fileUrl = fileReader.result;
-                //console.log(fileReader.result)
-                let imgTag = `<img src="${fileUrl}" alt="" id= "imgTag">`;
-                dropArea.innerHTML = imgTag;
-            }
-            fileReader.readAsDataURL(file);
-
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
-            const res = await axios.post(CLOUDINARY_URL, formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                });
-            // let imagen = cld.image(res.data.secure_url);
-            // //RENDERIZO LA IMAGEN
-            // imagen
-            // .resize(thumbnail().width(300).height(175).gravity(focusOn(FocusOn.face())))
-
-            url = res.data.secure_url;
-
-        }
-        else {
-            alert("Esto no es un archivo de imagen");
-            dropArea.classList.remove("active");
-            dragText.textContent = "Arrastrar y soltar para cargar archivo";
-        }
-    }
-
 })
+
+//let cloudinary = new cloudinary.Cloudinary({cloud_name: "djj3tt8x9", secure: true});
+
+// const cld = new Cloudinary({     // NO ME DEJA RENDERIZAR LA IMAGEN PORQUE ME TIRA ESTE ERROR:
+//     cloud : {                    // Uncaught SyntaxError: Cannot use import statement outside a module 
+//       cloudName : 'djj3tt8x9'
+//    }
+//  });
+
+// const api_key = "683354734239633";
+// const cloud_name = "djj3tt8x9";
+const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/djj3tt8x9/upload";
+const CLOUDINARY_UPLOAD_PRESET = `frolihkd`;
+
+function cargarImagen() {
+    const dropArea = document.querySelector(".drag-area");
+    let dragText = dropArea.querySelector("header");
+    let button = dropArea.querySelector("button");
+    let input = dropArea.querySelector("input");
+    let file;
+
+    button.onclick = () => {
+        input.click();
+    }
+    input.addEventListener("change", function () {
+        file = this.files[0];
+        dropArea.classList.add("active");
+        showFile(file, dropArea);
+    })
+
+    dropArea.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        dropArea.classList.add("active");
+        dragText.textContent = "Soltar para cargar archivo";
+    })
+
+    dropArea.addEventListener("dragleave", () => {
+        dropArea.classList.remove("active");
+        dragText.textContent = "Arrastrar y soltar para cargar archivo";
+    })
+
+    dropArea.addEventListener("drop", (event) => {
+        event.preventDefault();
+        file = event.dataTransfer.files[0];
+        showFile(file, dropArea);
+    })
+
+}
+
+async function showFile(file, dropArea) {
+    let fileType = file.type;
+    let validExtensions = ["image/jpeg", "image/jpg", "image/png"];
+    if (validExtensions.includes(fileType)) {
+        let fileReader = new FileReader();
+
+        fileReader.onload = () => {
+            let fileUrl = fileReader.result;
+            //console.log(fileReader.result)
+            let imgTag = `<img src="${fileUrl}" alt="" id= "imgTag">`;
+            dropArea.innerHTML = imgTag;
+        }
+        fileReader.readAsDataURL(file);
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+        const res = await axios.post(CLOUDINARY_URL, formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+            });
+        // let imagen = cld.image(res.data.secure_url);
+        // //RENDERIZO LA IMAGEN
+        // imagen
+        // .resize(thumbnail().width(300).height(175).gravity(focusOn(FocusOn.face())))
+
+        url = res.data.secure_url;
+
+    }
+    else {
+        alert("Esto no es un archivo de imagen");
+        dropArea.classList.remove("active");
+        dragText.textContent = "Arrastrar y soltar para cargar archivo";
+    }
+}
+
 
 btnGenerar.addEventListener("click", async () => {
     let nombreMuro = document.querySelector("#inputNombre"); // HACER INPUT PARA AGARRAR EL NOMBRE DESDE LA TABLA DE CREACION DE MURO
@@ -405,7 +406,7 @@ btnGenerar.addEventListener("click", async () => {
     let optionSelected = false;
     for (let i = 0; i < selects.length; i++) {
         let items = selects[i].children;
-        for(let j = 0; j < items.length; j++) {
+        for (let j = 0; j < items.length; j++) {
             if (items[j].value != "None" && items[j].selected) {
                 optionSelected = true;
             }
@@ -454,11 +455,11 @@ btnGenerar.addEventListener("click", async () => {
                 }
             }
             else {
-                swal("La descripcion no puede estar vacia","","error")
+                swal("La descripcion no puede estar vacia", "", "error")
             }
         }
         else {
-            swal("Debe seleccionar una imagen","","error");
+            swal("Debe seleccionar una imagen", "", "error");
         }
 
     }
@@ -478,7 +479,7 @@ async function loadTipoMateriales() {
     }
     crearCardsMateriales();
 }
-loadTipoMateriales();
+
 
 
 

@@ -185,11 +185,12 @@ btnActualizarEliminar.addEventListener("click", () => {
                 if (btnsActualizar[i].value == muros[i].idMuro) {
                     let response = await fetch(`/muro/relacion/id/${muros[i].idMuro}`)
                     if (response.ok) {
-
                         let json = await response.json();
+                        
                         let idsMateriales = [];
                         for (let j = 0; j < json.materiales.length; j++) {
-                            idsMateriales.push(json.materiales[i].idMaterial)
+                            console.log(json.materiales[j])
+                            idsMateriales.push(json.materiales[j].idMaterial)
                         }
 
                         let nuevoNombre = document.querySelector(`#nombre_${muros[i].idMuro}`);

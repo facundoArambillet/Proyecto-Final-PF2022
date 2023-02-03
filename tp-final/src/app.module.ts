@@ -11,13 +11,11 @@ import { TipoMaterialModule } from './tipo_material/tipo-material.module';
 import { FacturaModule } from './factura/factura.module';
 import { RolModule } from './rol/rol.module';
 import { CarritoComprasModule } from './carrito_compras/carritoCompras.module';
-import { DetalleFacturaController } from './detalle_factura/detalleFactura.controller';
-import { DetalleFacturaService } from './detalle_factura/detalleFactura.service';
 import { DetalleFacturaModule } from './detalle_factura/detalleFactura.module';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({ rootPath: join(__dirname, "..", "client") }),
+    ServeStaticModule.forRoot({ rootPath: join(__dirname,"..","client") }),
     TypeOrmModule.forRoot(
       {
         "type": "mysql",
@@ -30,7 +28,7 @@ import { DetalleFacturaModule } from './detalle_factura/detalleFactura.module';
           "dist/**/**.entity{.ts,.js}"
         ],
         "synchronize": false
-
+      }
         // "type": "mysql",
         // "host": "localhost",
         // "port": 3306,
@@ -42,7 +40,8 @@ import { DetalleFacturaModule } from './detalle_factura/detalleFactura.module';
         // ],
         // "synchronize": false
 
-      }),
+      //}
+      ),
     MaterialModule,
     MuroModule,
     UsuarioModule,

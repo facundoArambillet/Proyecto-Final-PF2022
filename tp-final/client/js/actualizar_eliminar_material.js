@@ -48,7 +48,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
 
             let tdPrecio = document.createElement("td");
             let inputPrecio = document.createElement("input");
-            inputPrecio.style.width = "80px";
+            inputPrecio.classList.add("inputsTabla");
             inputPrecio.type = "number";
             inputPrecio.value = materiales[i].precio;
             inputPrecio.id = `precio_${materiales[i].idMaterial}`;
@@ -66,8 +66,8 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             // inputStock.id = `stock_${materiales[i].idMaterial}`;
             // tdStock.appendChild(inputStock);
             let tdConductividad = document.createElement("td");
-            let inputConductividad = document.createElement("input")
-            inputConductividad.style.width = "80px";
+            let inputConductividad = document.createElement("input");
+            inputConductividad.classList.add("inputsTabla");
             inputConductividad.value = materiales[i].conductividadTermica;
             inputConductividad.id = `conductividad_${materiales[i].idMaterial}`
             tdConductividad.appendChild(inputConductividad);
@@ -79,7 +79,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             
             let tdEspesor = document.createElement("td");
             let inputEspesor = document.createElement("input");
-            inputEspesor.style.width = "80px";
+            inputEspesor.classList.add("inputsTabla");
             inputEspesor.value = materiales[i].espesor;
             inputEspesor.id = `espesor_${materiales[i].idMaterial}`;
             tdEspesor.appendChild(inputEspesor);
@@ -91,7 +91,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
 
             let tdResistencia = document.createElement("td");
             let inputResistencia = document.createElement("input");
-            inputResistencia.style.width = "80px";
+            inputResistencia.classList.add("inputsTabla")
             inputResistencia.value = materiales[i].espesor;
             inputResistencia.id = `resistencia_${materiales[i].idMaterial}`;
             tdResistencia.appendChild(inputResistencia);

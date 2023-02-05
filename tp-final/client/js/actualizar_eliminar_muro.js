@@ -46,7 +46,7 @@ btnActualizarEliminar.addEventListener("click", () => {
 
             let tdPrecio = document.createElement("td");
             let inputPrecio = document.createElement("input");
-            inputPrecio.style.width = "80px"
+            inputPrecio.classList.add("inputsTabla")
             inputPrecio.type = "number";
             inputPrecio.value = muros[i].precio;
             inputPrecio.id = `precio_${muros[i].idMuro}`;
@@ -58,7 +58,7 @@ btnActualizarEliminar.addEventListener("click", () => {
             })
             let tdStock = document.createElement("td");
             let inputStock = document.createElement("input");
-            inputStock.style.width = "80px"
+            inputStock.classList.add("inputsTabla");
             inputStock.type = "number";
             inputStock.value = muros[i].stock;
             inputStock.id = `stock_${muros[i].idMuro}`;

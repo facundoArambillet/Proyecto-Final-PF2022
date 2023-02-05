@@ -28,7 +28,7 @@ async function crearCardsMateriales() {
     parrafoNombre.innerText = "Nombre Muro";
     let inputNombre = document.createElement("input");
     inputNombre.id = "inputNombre";
-    inputNombre.style.width = "120px";
+    inputNombre.classList.add("inputsMuros");
     inputNombre.type = "text";
 
 
@@ -159,7 +159,7 @@ async function crearCardsMateriales() {
             divCantidad.classList.add("col-md-2");
             divCantidad.classList.add("cantidad");
             let inputCantidad = document.createElement("input");
-            inputCantidad.style.width = "100px";
+            inputCantidad.classList.add("inputsMuros");
             inputCantidad.type = "number";
             inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
                 if (inputCantidad.value <= 0) {
@@ -177,8 +177,7 @@ async function crearCardsMateriales() {
             let selectMateriales = document.createElement("select");
             selectMateriales.classList.add("selects");
             selectMateriales.id = `selectMateriales_${i}`
-            selectMateriales.style.width = "120px";
-            selectMateriales.style.height = "30px";
+            selectMateriales.classList.add("selectMateriales");
             selectMateriales.innerHTML = "";
             let optionNone = document.createElement("option");
             optionNone.innerHTML = "None";
@@ -219,9 +218,7 @@ async function crearCardsMateriales() {
     parrafoDescripcion.innerText = "Descripcion";
 
     let textArea = document.createElement("textarea");
-    textArea.style.resize = "none";
-    textArea.style.width = "100%";
-    textArea.style.height = "200px";
+    textArea.classList.add("textArea");
 
     divColParrafo.appendChild(parrafoDescripcion);
     divColTextArea.appendChild(textArea);
@@ -230,8 +227,7 @@ async function crearCardsMateriales() {
 
     let divContainerBtn = document.createElement("div");
     divContainerBtn.classList.add("container");
-    divContainerBtn.style.display = "flex";
-    divContainerBtn.style.justifyContent = "flex-end"
+    divContainerBtn.classList.add("btnGenerar")
     divContainerBtn.setAttribute("role", "group");
     divContainerBtn.setAttribute("aria-label", "Basic outlined example");
 

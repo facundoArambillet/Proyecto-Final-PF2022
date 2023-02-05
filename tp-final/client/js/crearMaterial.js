@@ -193,9 +193,7 @@ function crearCardMaterial() {
 
     let divContainerBtn = document.createElement("div");
     divContainerBtn.classList.add("container");
-    divContainerBtn.style.marginTop = "1%";
-    divContainerBtn.style.display = "flex";
-    divContainerBtn.style.justifyContent = "flex-end";
+    divContainerBtn.classList.add("btnGenerar");
     divContainerBtn.setAttribute("role", "group");
     divContainerBtn.setAttribute("aria-label", "Basic outlined example");
 

@@ -87,8 +87,7 @@ async function crearCardsMateriales() {
         let selectMateriales = document.createElement("select");
         selectMateriales.classList.add("selects");
         selectMateriales.id = `selectMateriales_${i}`;
-        selectMateriales.style.width = "120px";
-        selectMateriales.style.height = "30px";
+        selectMateriales.classList.add("selectMateriales");
         selectMateriales.innerHTML = "";
         tdMaterial.appendChild(selectMateriales);
         let optionNone = document.createElement("option");

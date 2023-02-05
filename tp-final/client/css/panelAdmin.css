@@ -5,9 +5,10 @@
 a {
   color: black;
 }
+
 @media (max-width: 1350px) {
   #panelContenido {
-      margin-top: 1%;
+    margin-top: 1%;
   }
 }
 
@@ -38,19 +39,22 @@ a {
     margin-top: 8%;
   }
 }
+
 @media (max-width: 740px) {
   #panelContenido {
-      margin-top: 2%;
+    margin-top: 2%;
   }
 }
+
 @media (max-width: 600px) {
   #panelContenido {
-      margin-top: 4%;
+    margin-top: 4%;
   }
 }
+
 @media (max-width: 520px) {
   #panelContenido {
-      margin-top: 7%;
+    margin-top: 7%;
   }
 }
 
@@ -167,4 +171,25 @@ a {
 
 .materiales>td>input {
   width: 100px;
+}
+
+.inputsTabla {
+  width: 80px;
+}
+
+.btnGenerar {
+  display: flex;
+  margin-top: 1%;
+  justify-content: flex-end;
+}
+
+.inputsMuros {
+  width: 100px;
+}
+
+
+.textArea {
+  resize: none;
+  width: 100%;
+  height: 200px;
 }

@@ -175,6 +175,10 @@ div p a i {
     margin-bottom: 5%; 
     margin-top: 5%;
 }
+.selectMateriales {
+    width: 120px;
+    height: 30px;
+ }
 
 
 /* MEDIAS QUERYS */

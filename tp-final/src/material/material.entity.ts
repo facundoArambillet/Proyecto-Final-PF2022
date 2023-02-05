@@ -15,13 +15,13 @@ export class Material {
     @Column()
     private cantidad : number;
     @Column()
-    private precio : number;
+    private precio : string;
     @Column()
-    private conductividadTermica : number;
+    private conductividadTermica : string;
     @Column()
-    private espesor : number;
+    private espesor : string;
     @Column()
-    private resistenciaTermica : number;
+    private resistenciaTermica : string;
     @Column()
     private tipoMaterialIdTipoMaterial : number;
 
@@ -32,7 +32,7 @@ export class Material {
 
     @ManyToMany(type => Muro, muro => muro.materiales)
     public muros : Muro[];
-    constructor(nombre : string, cantidad : number, precio : number , conductividadT : number, espesor: number,idTipoDeMaterial: number ) {
+    constructor(nombre : string, cantidad : number, precio : string , conductividadT : string, espesor: string,idTipoDeMaterial: number ) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
@@ -51,16 +51,16 @@ export class Material {
     public getCantidad(): number {
         return this.cantidad;
     }
-    public getPrecio(): number {
+    public getPrecio(): string {
         return this.precio;
     }
-    public getConductividadTermica(): number {
+    public getConductividadTermica(): string {
         return this.conductividadTermica;
     }
-    public getEspesor(): number {
+    public getEspesor(): string {
         return this.espesor;
     }
-    public getResistenciaTermica(): number {
+    public getResistenciaTermica(): string {
         return this.resistenciaTermica;
     }
 
@@ -70,16 +70,16 @@ export class Material {
     public setCantidad(nuevaCantidad: number) {
         this.cantidad = nuevaCantidad;
     }
-    public setPrecio(nuevoPrecio: number) {
+    public setPrecio(nuevoPrecio: string) {
         this.precio = nuevoPrecio;
     }
-    public setConductividadTermica(nuevaConductividad: number) {
+    public setConductividadTermica(nuevaConductividad: string) {
         this.conductividadTermica = nuevaConductividad;
     }
-    public setEspesor(nuevoEspesor: number) {
+    public setEspesor(nuevoEspesor: string) {
         this.espesor = nuevoEspesor;
     }
     public calcularResistenciaTermica() {
-        this.resistenciaTermica = (this.espesor / this.conductividadTermica);
+        this.resistenciaTermica = String(Number(this.espesor) / Number(this.conductividadTermica));
     }
 }

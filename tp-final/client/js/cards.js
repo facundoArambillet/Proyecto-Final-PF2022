@@ -2,9 +2,9 @@
 let cards = document.querySelector("#cards");
 let sliderMuro = document.querySelector("#sliderMuro");
 let muros = [];
-let arrayImgs = ["https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg","https://www.shutterstock.com/image-photo/red-brick-wall-texture-background-600w-719331211.jpg",
-"https://img.freepik.com/fotos-premium/muro-hormigon-blanco-textura-fondo_33720-905.jpg?w=1380","https://images.pexels.com/photos/2378959/pexels-photo-2378959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-"https://www.aparicio-partner.com/wp-content/uploads/2017/05/foto_sassi_rocce_02-1024x675.jpg","https://img.freepik.com/fotos-premium/muro-ciudad-madera_23-2148106996.jpg?w=900"];
+// let arrayImgs = ["https://www.shutterstock.com/image-vector/red-brick-tile-wall-background-600w-1429103369.jpg","https://www.shutterstock.com/image-photo/red-brick-wall-texture-background-600w-719331211.jpg",
+// "https://img.freepik.com/fotos-premium/muro-hormigon-blanco-textura-fondo_33720-905.jpg?w=1380","https://images.pexels.com/photos/2378959/pexels-photo-2378959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+// "https://www.aparicio-partner.com/wp-content/uploads/2017/05/foto_sassi_rocce_02-1024x675.jpg","https://img.freepik.com/fotos-premium/muro-ciudad-madera_23-2148106996.jpg?w=900"];
 
 function crearCards() {
     if(muros) {
@@ -30,7 +30,7 @@ function crearCards() {
             divBody.appendChild(titulo);
             let parrafo = document.createElement("p");
             parrafo.classList.add("card-text");
-            parrafo.innerHTML = `${muros[i].descripcion.substr(0,30)}...`; // LOS PUNTOS SON PARA DAR LA SESANCION DE CONTINUACION A LA DESCRIPCION DEL MURO
+            parrafo.innerHTML = `${muros[i].descripcion.substr(0,30)}...`; // LOS PUNTOS SON PARA DAR LA SENSANCION DE CONTINUACION A LA DESCRIPCION DEL MURO
             divBody.appendChild(parrafo);
             let boton = document.createElement("a");
             boton.setAttribute("href",`./productos.html?idMuro=${muros[i].idMuro}`);

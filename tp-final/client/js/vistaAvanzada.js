@@ -137,7 +137,7 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                         if (option.selected) {
                             parrafoIndiceE.innerText = materiales[j].conductividadTermica;
                             parrafoLambda.innerText = materiales[j].espesor;
-                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica;
+                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica.substr(0,4);
                             inputCantidad.value = 1;
                             inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
                                 if (inputCantidad.value <= 0) {
@@ -280,7 +280,7 @@ async function borrarMuroGenerado(clase) {
 
         btns[i].addEventListener("click", async () => {
             swal({
-                title: "Esta seguro?",
+                title: "¿Esta seguro?",
                 text: "Una vez eliminado, no podra recuperar este muro!",
                 icon: "warning",
                 buttons: true,

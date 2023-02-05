@@ -19,8 +19,8 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
         tdConductividad.innerText = "Conductividad Termica";
         let tdEspesor = document.createElement("td");
         tdEspesor.innerText = "Espesor";
-        let tdResistencia = document.createElement("td");
-        tdResistencia.innerText = "Resistencia Termica";
+        // let tdResistencia = document.createElement("td");
+        // tdResistencia.innerText = "Resistencia Termica";
         let tdActualizarBorrar = document.createElement("td");
         tdActualizarBorrar.innerText = "Actualizar/Borrar";
     
@@ -30,7 +30,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
         // tr.appendChild(tdStock);
         tr.appendChild(tdConductividad);
         tr.appendChild(tdEspesor);
-        tr.appendChild(tdResistencia);
+        // tr.appendChild(tdResistencia);
         tr.appendChild(tdActualizarBorrar);
         table.appendChild(tr);
         divContainer.appendChild(table);
@@ -89,17 +89,17 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                 }
             })
 
-            let tdResistencia = document.createElement("td");
-            let inputResistencia = document.createElement("input");
-            inputResistencia.classList.add("inputsTabla")
-            inputResistencia.value = materiales[i].espesor;
-            inputResistencia.id = `resistencia_${materiales[i].idMaterial}`;
-            tdResistencia.appendChild(inputResistencia);
-            inputResistencia.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
-                if (inputResistencia.value <= 0) {
-                    inputResistencia.value = 1;
-                }
-            })
+            // let tdResistencia = document.createElement("td");
+            // let inputResistencia = document.createElement("input");
+            // inputResistencia.classList.add("inputsTabla")
+            // inputResistencia.value = materiales[i].espesor;
+            // inputResistencia.id = `resistencia_${materiales[i].idMaterial}`;
+            // tdResistencia.appendChild(inputResistencia);
+            // inputResistencia.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+            //     if (inputResistencia.value <= 0) {
+            //         inputResistencia.value = 1;
+            //     }
+            // })
 
             let tdIconos = document.createElement("td");
             let divRow = document.createElement("div");
@@ -141,7 +141,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             //tr.appendChild(tdStock);
             tr.appendChild(tdConductividad);
             tr.appendChild(tdEspesor);
-            tr.appendChild(tdResistencia);
+            // tr.appendChild(tdResistencia);
             tr.appendChild(tdIconos);
             table.appendChild(tr);
             divContainer.appendChild(table);
@@ -210,7 +210,12 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             btnsActualizar[i].addEventListener("click", async () => {
 
                 if (btnsActualizar[i].value == materiales[i].idMaterial) {
-                    let response = await fetch(`/material/${materiales[i].idMaterial}`)
+                    let response = await fetch(`/material/${materiales[i].idMaterial}`, 
+                    {
+                        headers: {
+                            "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+                        }
+                    })
                     if (response.ok) {
 
                         let json = await response.json();
@@ -219,7 +224,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                         let nuevoPrecio = document.querySelector(`#precio_${materiales[i].idMaterial}`);
                         let nuevaConductividad = document.querySelector(`#conductividad_${materiales[i].idMaterial}`);
                         let nuevoEspesor = document.querySelector(`#espesor_${materiales[i].idMaterial}`);
-                        let nuevaResistencia = document.querySelector(`#resistencia_${materiales[i].idMaterial}`)
+                        // let nuevaResistencia = document.querySelector(`#resistencia_${materiales[i].idMaterial}`)
 
                         let nuevoMaterial = {
                             "nombre": nuevoNombre.value,
@@ -227,7 +232,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                             "precio": Number(nuevoPrecio.value),
                             "conductividadTermica": Number(nuevaConductividad.value),
                             "espesor": Number(nuevoEspesor.value),
-                            "resistenciaTermica": Number(nuevaResistencia.value),
+                            // "resistenciaTermica": Number(nuevaResistencia.value),
                         }
                         console.log(nuevoMaterial)
                         let respuesta = await fetch(`/material/${materiales[i].idMaterial}`, {

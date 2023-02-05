@@ -256,7 +256,6 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
         for (let i = 0; i < tipoMaterialJson.length; i++) {
             if (tipoMaterialJson[i] != undefined) {
                 let materiales = tipoMaterialJson[i].materiales;
-                console.log(materiales)
 
                 for (let j = 0; j < materiales.length; j++) {
                     let option = document.createElement("option");
@@ -269,7 +268,7 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                         if (option.selected) {
                             parrafoIndiceE.innerText = materiales[j].conductividadTermica;
                             parrafoLambda.innerText = materiales[j].espesor;
-                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica;
+                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica.substr(0,4);
                             inputCantidad.value = 1;
                             inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
                                 if (inputCantidad.value <= 0) {

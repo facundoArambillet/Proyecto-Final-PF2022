@@ -76,6 +76,7 @@ export class MaterialService {
                     material.setCantidad(materialDTO.cantidad);
                     material.setPrecio(materialDTO.precio);
                     material.setConductividadTermica(materialDTO.conductividadTermica);
+                    material.calcularResistenciaTermica();
                     material.setEspesor(materialDTO.espesor);
                     material = await this.materialRepository.save(material);
                     return true

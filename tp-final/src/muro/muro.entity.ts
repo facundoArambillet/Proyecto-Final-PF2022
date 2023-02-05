@@ -14,7 +14,7 @@ export class Muro {
     @Column()
     private nombre: string
     @Column()
-    private precio: number;
+    private precio: string;
     @Column()
     private stock: number;
     @Column()
@@ -46,7 +46,7 @@ export class Muro {
     @JoinColumn()
     public carritosCompras: CarritoCompras[];
 
-    constructor(nombre: string, precio: number, stock: number, descripcion: string, idUsuario: number, imagen?: string) {
+    constructor(nombre: string, precio: string, stock: number, descripcion: string, idUsuario: number, imagen?: string) {
         this.coeficienteDeTransmitancia = this.calcularCoeficiente();
         this.nombre = nombre;
         this.precio = precio;
@@ -63,7 +63,7 @@ export class Muro {
     public getNombre(): string {
         return this.nombre;
     }
-    public getPrecio(): number {
+    public getPrecio(): string {
         return this.precio;
     }
     public getCantidad(): number {
@@ -82,7 +82,7 @@ export class Muro {
     public setNombre(nuevoNombre: string) {
         this.nombre = nuevoNombre;
     }
-    public setPrecio(nuevoPrecio: number) {
+    public setPrecio(nuevoPrecio: string) {
         this.precio = nuevoPrecio;
     }
     public setCantidad(nuevaCantidad: number) {
@@ -104,7 +104,7 @@ export class Muro {
         if (this.materiales) {
             for (let i = 0; i < this.materiales.length; i++) {
                 this.materiales[i].calcularResistenciaTermica()
-                resistenciaTotal += this.materiales[i].getResistenciaTermica();
+                resistenciaTotal += Number(this.materiales[i].getResistenciaTermica());
             }
             this.coeficienteDeTransmitancia = (1 / resistenciaTotal).toString();
             let coeficiente = this.coeficienteDeTransmitancia;

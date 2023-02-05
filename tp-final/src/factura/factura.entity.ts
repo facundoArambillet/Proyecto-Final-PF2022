@@ -10,7 +10,7 @@ export class Factura {
     @Column()
     private fecha : Date
     @Column()
-    private total : number;
+    private total : string;
     @Column()
     private usuarioIdUsuario: number;
 
@@ -26,7 +26,7 @@ export class Factura {
     public muros : Muro[];
 
 
-    constructor(fecha : Date, total: number, idUsuario: number) {
+    constructor(fecha : Date, total: string, idUsuario: number) {
         this.fecha = fecha;
         this.total = total;
         this.usuarioIdUsuario = idUsuario;
@@ -38,13 +38,13 @@ export class Factura {
     public getFecha(): Date {
         return this.fecha;
     }
-    public getTotal(): number {
+    public getTotal(): string {
         return this.total;
     }
     public setFecha(nuevaFecha: Date): void {
         this.fecha = nuevaFecha;
     }
-    public setTotal(nuevoTotal: number): void {
+    public setTotal(nuevoTotal: string): void {
         this.total = nuevoTotal;
     }
     public setMuros(nuevosMuros : Muro[]) {

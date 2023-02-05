@@ -135,8 +135,8 @@ function crearCardMaterial() {
     tdStockConductividad.innerText = "Conductividad";
     let tdEspesor = document.createElement("td");
     tdEspesor.innerText = "Espesor";
-    let tdResistencia = document.createElement("td");
-    tdResistencia.innerText = "Resistencia";
+    // let tdResistencia = document.createElement("td");
+    // tdResistencia.innerText = "Resistencia";
     let tdTipoMaterial = document.createElement("td");
     tdTipoMaterial.innerText = "Tipo de material";
 
@@ -145,7 +145,7 @@ function crearCardMaterial() {
     trMateriales.appendChild(tdPrecioMaterial);
     trMateriales.appendChild(tdStockConductividad);
     trMateriales.appendChild(tdEspesor);
-    trMateriales.appendChild(tdResistencia);
+    // trMateriales.appendChild(tdResistencia);
     trMateriales.appendChild(tdTipoMaterial);
     tableMaterial.appendChild(trMateriales);
     divContainerMaterial.appendChild(tableMaterial);
@@ -166,24 +166,45 @@ function crearCardMaterial() {
     inputPrecioMaterial.id = "inputPrecio";
     inputPrecioMaterial.type = "number";
     tdInputPrecio.appendChild(inputPrecioMaterial);
+    inputPrecioMaterial.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+        if (inputPrecioMaterial.value <= 0) {
+            inputPrecioMaterial.value = 1;
+        }
+    })
 
     let tdConductividadMaterial = document.createElement("td");
     let inputConductividadMaterial = document.createElement("input");
     inputConductividadMaterial.id = "inputConductividad";
     inputConductividadMaterial.type = "number";
     tdConductividadMaterial.appendChild(inputConductividadMaterial);
+    inputConductividadMaterial.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+        if (inputConductividadMaterial.value <= 0) {
+            inputConductividadMaterial.value = 1;
+        }
+    })
+
 
     let tdEspesorMaterial = document.createElement("td");
     let inputEspesorMaterial = document.createElement("input");
     inputEspesorMaterial.id = "inputEspesor";
     inputEspesorMaterial.type = "number";
     tdEspesorMaterial.appendChild(inputEspesorMaterial);
+    inputEspesorMaterial.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+        if (inputEspesorMaterial.value <= 0) {
+            inputEspesorMaterial.value = 1;
+        }
+    })
 
-    let tdResistenciaMaterial = document.createElement("td");
-    let inputResistenciaMaterial = document.createElement("input");
-    inputResistenciaMaterial.id = "inputResistencia";
-    inputResistenciaMaterial.type = "number";
-    tdResistenciaMaterial.appendChild(inputResistenciaMaterial);
+    // let tdResistenciaMaterial = document.createElement("td");
+    // let inputResistenciaMaterial = document.createElement("input");
+    // inputResistenciaMaterial.id = "inputResistencia";
+    // inputResistenciaMaterial.type = "number";
+    // tdResistenciaMaterial.appendChild(inputResistenciaMaterial);
+    // inputResistenciaMaterial.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+    //     if (inputResistenciaMaterial.value <= 0) {
+    //         inputResistenciaMaterial.value = 1;
+    //     }
+    // })
 
     let tdTipoMaterialValue = document.createElement("td");
     let inpuTipoMaterial = document.createElement("input");
@@ -211,7 +232,7 @@ function crearCardMaterial() {
     tr.appendChild(tdInputPrecio);
     tr.appendChild(tdConductividadMaterial);
     tr.appendChild(tdEspesorMaterial);
-    tr.appendChild(tdResistenciaMaterial);
+    // tr.appendChild(tdResistenciaMaterial);
     tr.appendChild(tdTipoMaterialValue);
     tableMaterial.appendChild(tr);
     divContainerMaterial.appendChild(tableMaterial);
@@ -233,7 +254,7 @@ btnGenerarMaterial.addEventListener("click", async () => {
     let precio = document.querySelector("#inputPrecio").value;
     let conductividad = document.querySelector("#inputConductividad").value;
     let espesor = document.querySelector("#inputEspesor").value;
-    let resistencia = document.querySelector("#inputResistencia").value;
+    // let resistencia = document.querySelector("#inputResistencia").value;
     let tipoDeMaterial = document.querySelector("#inputTipoMaterial").value.toLowerCase();
     let tipoMaterial;
     let nuevoMaterial;
@@ -251,7 +272,7 @@ btnGenerarMaterial.addEventListener("click", async () => {
             "conductividadTermica": Number(conductividad),
             "espesor": Number(espesor),
             "tipoMaterialIdTipoMaterial": tipoMaterial.idTipoMaterial,
-            "resistenciaTermica": Number(resistencia),
+            // "resistenciaTermica": Number(resistencia),
 
         }
         console.log(nuevoMaterial)
@@ -284,7 +305,7 @@ btnGenerarMaterial.addEventListener("click", async () => {
                 "conductividadTermica": Number(conductividad),
                 "espesor": Number(espesor),
                 "tipoMaterialIdTipoMaterial": tipoMaterial.idTipoMaterial,
-                "resistenciaTermica": Number(resistencia),
+                // "resistenciaTermica": Number(resistencia),
 
             }
             console.log(nuevoMaterial)

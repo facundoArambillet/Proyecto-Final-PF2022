@@ -69,7 +69,7 @@ export class UsuarioService {
             if (usuarioDTO) {
                 if (usuarioDTO.nombre && usuarioDTO.contrasenia && usuarioDTO.rolIdRol) {
                     usuarioDTO.contrasenia = await hash(usuarioDTO.contrasenia,10) // ENCRIPTACION DE CONTRASEÑA
-                    let usuario = await this.usuarioRepository.save(new Usuario(usuarioDTO.nombre, usuarioDTO.contrasenia, usuarioDTO.rolIdRol));
+                    let usuario = await this.usuarioRepository.save(new Usuario(usuarioDTO.nombre.toLowerCase(), usuarioDTO.contrasenia, usuarioDTO.rolIdRol));
                     
                     return usuario;
                 }

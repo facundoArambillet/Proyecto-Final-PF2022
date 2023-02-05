@@ -1,7 +1,7 @@
 
 export default class MuroDTO {
     readonly nombre: string;
-    readonly precio: number;
+    readonly precio: string;
     readonly stock: number;
     readonly imagen: string;
     readonly descripcion: string;

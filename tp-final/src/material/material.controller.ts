@@ -13,13 +13,14 @@ export class MaterialController {
         return this.materialService.getAll();
     }
     @UseGuards(JwtGuard)
-    @Get("tipo-material/:id")
-    public getAllRelaciones(@Param("id") id: number): Promise<Material[]> {
-        return this.materialService.getAllRelaciones(id)
-    }
     @Get(":id")
     public getByID(@Param("id") id: number): Promise<Material> {
         return this.materialService.getByID(id);
+    }
+    // ENDPOINT USADO PARA TRAERME TODOS LOS MATERIALES DE UN DETERMINADO TIPO DE MATERIAL
+    @Get("tipo-material/:id")
+    public getAllRelaciones(@Param("id") id: number): Promise<Material[]> {
+        return this.materialService.getAllRelaciones(id)
     }
     @Post()
     public addMaterial(@Body() material: MaterialDTO): Promise<Material> {

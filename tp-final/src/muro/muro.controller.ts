@@ -19,10 +19,12 @@ export class MuroController {
     public getAllRelaciones(@Param("id") id: number): Promise<Muro[]> {
         return this.muroService.getAllRelaciones(id);
     }
+    // ENDPOINT USADO PARA TRAERME POR ID UN MURO Y SUS RELACIONES
     @Get("/relacion/id/:id")
     public getByIDRelaciones(@Param("id") id: number): Promise<Muro> {
         return this.muroService.getByIDRelaciones(id);
     }
+    // ENDPOINT POSIBLEMENTE USABLE PARA TRAER MUROS POR RANGOS DE PRECIO
     @Get("/all/muro/filtro/:precio")
     public getByPrecio(@Param("precio") precio: number): Promise<Muro[]> {
         return this.muroService.getByPrecio(precio);

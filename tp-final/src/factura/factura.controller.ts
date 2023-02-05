@@ -10,17 +10,18 @@ export class FacturaController {
     public getAll(): Promise<Factura[]> {
         return this.facturaService.getAll();
     }
+    @Get(":id")
+    public getByID(@Param("id") id: number): Promise<Factura> {
+        return this.facturaService.getByID(id);
+    }
     @Get("all/:orden")
     public getAllRelaciones(@Param("orden") orden: string): Promise<Factura[]> {
         return this.facturaService.getAllRelaciones(orden);
     }
+    // ENDPOINT USADO PARA TRAERME UNA FACTURA CON SUS RELACIONES
     @Get("all/id/:id")
     public getByIDRelaciones(@Param("id") id: number): Promise<Factura> {
         return this.facturaService.getByIDRelaciones(id);
-    }
-    @Get(":id")
-    public getByID(@Param("id") id: number): Promise<Factura> {
-        return this.facturaService.getByID(id);
     }
     @Post()
     public addFactura(@Body() factura: FacturaDTO): Promise<Factura> {

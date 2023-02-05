@@ -10,20 +10,20 @@ export class CarritoComprasController {
     public getAll(): Promise<CarritoCompras[]> {
         return this.carritoComprasService.getAll();
     }
-    
-    @Get("all/:id")
-    public getAllRelaciones(@Param("id") id: number): Promise<CarritoCompras[]> {
-        return this.carritoComprasService.getAllRelaciones(id);
-    }
-    @Get("usuario/all/:id")
-    public getCarritosUsuario(@Param("id") id: number): Promise<CarritoCompras[]> {
-        return this.carritoComprasService.getCarritosUsuario(id);
-    }
-    
     @Get(":id")
     public getByID(@Param("id") id: number): Promise<CarritoCompras> {
         return this.carritoComprasService.getByID(id);
     }
+    @Get("all/:id")
+    public getAllRelaciones(@Param("id") id: number): Promise<CarritoCompras[]> {
+        return this.carritoComprasService.getAllRelaciones(id);
+    }
+    // ENDPOINT QUE ME TRAE TODOS LOS CARRITOS DE UN USUARIO(usado para cargar/eliminar los muros y mostrarlos en carrito.html)
+    @Get("usuario/all/:id")
+    public getCarritosUsuario(@Param("id") id: number): Promise<CarritoCompras[]> {
+        return this.carritoComprasService.getCarritosUsuario(id);
+    }
+
     @Post()
     public addCarrito(@Body() carritoCompras: CarritoComprasDTO): Promise<CarritoCompras> {
         return this.carritoComprasService.addCarrito(carritoCompras);

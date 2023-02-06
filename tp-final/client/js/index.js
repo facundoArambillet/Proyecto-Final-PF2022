@@ -29,16 +29,16 @@ function usuarioMenu(btnSesion,userMenu) {
     let btnCerrarSesion = document.querySelector("#btn_cerrar_sesion");
     btnSesion.addEventListener('click', function () {
 
-        if(window.sessionStorage.idRol == "2") {
-            panelUsuario.innerHTML = "Mis Muros";
-            panelUsuario.addEventListener("click", () => {
-                window.location = "./panelUsuario.html";
-            })
-        }
-        else {
+        if(window.sessionStorage.nombre == "facundoarambillet@gmail.com") {
             panelUsuario.innerHTML = "Panel Administrador";
             panelUsuario.addEventListener("click", () => {
                 window.location = "./panelUsuarioAdmin.html";
+            })
+        }
+        else {
+            panelUsuario.innerHTML = "Mis Muros";
+            panelUsuario.addEventListener("click", () => {
+                window.location = "./panelUsuario.html";
             })
         }
         userMenu.classList.toggle('activo');
@@ -80,14 +80,14 @@ for (let index = 0; index < carritoVentana.length; index++) {
 }
 function usuarioMenuMobile() {
     let usuarioPanel = document.querySelector(".usuarioPanel");
-    if(window.sessionStorage.idRol == "2") {
+    if(window.sessionStorage.nombre == "facundoarambillet@gmail.com") {
         usuarioPanel.addEventListener("click", () => {
-            window.location = "./panelUsuario.html"
+            window.location = "./panelUsuarioAdmin.html"
         })
     }
     else {
         usuarioPanel.addEventListener("click", () => {
-            window.location = "./panelUsuarioAdmin.html"
+            window.location = "./panelUsuario.html"
         })
     }
 }

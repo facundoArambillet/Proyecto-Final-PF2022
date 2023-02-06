@@ -224,10 +224,6 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                                 "Authorization": "Bearer " + window.sessionStorage.getItem("token")
                             }
                         })
-                    if (respuesta.status == 401) {
-                        window.sessionStorage.clear();
-                        window.location = "/index.html";
-                    }
                     if (response.ok) {
 
                         let json = await response.json();
@@ -248,7 +244,10 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                         }
                         let respuesta = await fetch(`/material/${materiales[i].idMaterial}`, {
                             method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: {
+                                'Content-Type': 'application/json',
+                                "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+                            },
                             body: JSON.stringify(nuevoMaterial)
                         })
                         if (respuesta.status == 401) {

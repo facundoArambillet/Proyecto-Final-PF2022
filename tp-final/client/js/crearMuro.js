@@ -1,6 +1,4 @@
 'use strict';
-
-
 let tipoMateriales = [];
 let divMateriales = document.querySelector("#panelContenido");
 let btnGenerar = document.createElement("button");
@@ -268,7 +266,7 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                         if (option.selected) {
                             parrafoIndiceE.innerText = materiales[j].conductividadTermica;
                             parrafoLambda.innerText = materiales[j].espesor;
-                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica.substr(0,4);
+                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica.substr(0, 4);
                             inputCantidad.value = 1;
                             inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
                                 if (inputCantidad.value <= 0) {
@@ -409,9 +407,7 @@ btnGenerar.addEventListener("click", async () => {
 
     }
     if (nombreMuro.value) {
-        console.log("entro")
         if (url != "") {
-            console.log("entro1")
             if (descripcionText) {
                 //AGARRAR TODOS LOS MATERIALES(ya los id de los materiales en los id del option , probar agarrar todos los selects y hacer una matriz), 
                 //GENERAR MURO , COMPARAR TRANSMITANCIA TERMICA CON UNA CONSTANTE(INVENTADA) 
@@ -436,14 +432,19 @@ btnGenerar.addEventListener("click", async () => {
                     "usuarioIdUsuario": Number(window.sessionStorage.idUsuario),
                     "idsMateriales": idsMateriales
                 }
-                console.log(muro)
                 let respuesta = await fetch('/muro', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+
                     },
                     body: JSON.stringify(muro)
                 })
+                if(respuesta.status == 401) {
+                    window.sessionStorage.clear();
+                    window.location = "/index.html";
+                }
                 if (respuesta.ok) {
                     swal("Muro creado con exito", "", "success");
 

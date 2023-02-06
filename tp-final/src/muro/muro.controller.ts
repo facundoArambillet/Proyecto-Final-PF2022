@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'dist/usuario/jwt.guard';
 import MuroDTO from './muro.dto';
 import { Muro } from './muro.entity';
 import { MuroService } from './muro.service';
@@ -29,18 +30,22 @@ export class MuroController {
     public getByPrecio(@Param("precio") precio: number): Promise<Muro[]> {
         return this.muroService.getByPrecio(precio);
     }
+    @UseGuards(JwtGuard)
     @Post()
     public addMuro(@Body() Muro: MuroDTO): Promise<Muro> {
         return this.muroService.addMuro(Muro);
     }
+    @UseGuards(JwtGuard)
     @Put(":id")
     public updateMuro(@Param("id") id: number, @Body() muro: MuroDTO  ): Promise<boolean> {
         return this.muroService.updateMuro(id,muro);
     }
+    @UseGuards(JwtGuard)
     @Put("/stock/:id")
     public updateCantidad(@Param("id") id: number, @Body() nuevaCantidad: number  ): Promise<boolean> {
         return this.muroService.updateCantidad(id,nuevaCantidad);
     }
+    @UseGuards(JwtGuard)
     @Delete(":id")
     public deleteMuro(@Param("id") id: number): Promise<boolean> {
         return this.muroService.deleteMuro(id);

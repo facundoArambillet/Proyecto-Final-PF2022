@@ -1,3 +1,4 @@
+'use strict';
 let cardItems = document.querySelector("#cardItems");
 let btnComprar = document.querySelector("#btnComprar");
 let valorPrecioTotal = document.querySelector("#precioTotal");

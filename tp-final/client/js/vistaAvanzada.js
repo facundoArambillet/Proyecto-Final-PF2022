@@ -1,3 +1,4 @@
+'use strict';
 let tipoMateriales = [];
 let muros = [];
 const estandarCoeficiente = 0.35;

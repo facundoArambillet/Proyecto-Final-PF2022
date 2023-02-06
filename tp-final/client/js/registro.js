@@ -1,4 +1,4 @@
-
+'use strict';
 let btnRegistro = document.querySelector("#btnRegistro");
 let password = document.querySelector("#password");
 let inputContrasenia = document.querySelector("#contrasenia");

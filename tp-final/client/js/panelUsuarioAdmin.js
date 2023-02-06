@@ -1,5 +1,4 @@
 'use strict';
-
 let panel = document.querySelector("#panelContenido");
 let body = document.querySelector("body");
 let crearMuro = document.querySelector("#crearMuro");

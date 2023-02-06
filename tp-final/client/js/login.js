@@ -1,4 +1,4 @@
-// let usuarios = [];
+'use strict';
 let inputEmail = document.querySelector("#typeEmailX")
 let password = document.querySelector("#password");
 let inputPassword = document.querySelector("#typePasswordX");

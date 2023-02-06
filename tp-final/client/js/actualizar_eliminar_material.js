@@ -1,4 +1,4 @@
-
+'use strict';
 let materiales = [];
 let btnActualizarEliminarMaterial = document.querySelector("#actualizarEliminarMaterial");
 
@@ -23,8 +23,8 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
         // tdResistencia.innerText = "Resistencia Termica";
         let tdActualizarBorrar = document.createElement("td");
         tdActualizarBorrar.innerText = "Actualizar/Borrar";
-    
-    
+
+
         tr.appendChild(tdNombre);
         tr.appendChild(tdPrecio);
         // tr.appendChild(tdStock);
@@ -35,7 +35,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
         table.appendChild(tr);
         divContainer.appendChild(table);
         container.appendChild(divContainer);
-    
+
         for (let i = 0; i < materiales.length; i++) {
             let tr = document.createElement("tr");
             tr.classList.add("items");
@@ -76,7 +76,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                     inputConductividad.value = 1;
                 }
             })
-            
+
             let tdEspesor = document.createElement("td");
             let inputEspesor = document.createElement("input");
             inputEspesor.classList.add("inputsTabla");
@@ -109,14 +109,14 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             divBorrar.classList.add("col-6");
             let divActualizar = document.createElement("div");
             divActualizar.classList.add("col-6");
-    
+
             let iBorrar = document.createElement("i");
             iBorrar.classList.add("bi");
             iBorrar.classList.add("bi-trash3-fill");
             let iActualizar = document.createElement("i");
             iActualizar.classList.add("bi");
             iActualizar.classList.add("bi-arrow-repeat");
-    
+
             let btnBorrar = document.createElement("button");
             btnBorrar.appendChild(iBorrar);
             btnBorrar.value = materiales[i].idMaterial;
@@ -128,14 +128,14 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             btnActualizar.value = materiales[i].idMaterial;
             btnActualizar.classList.add("btnActualizarMaterial");
             btnActualizar.classList.add("btns-tabla");
-    
-    
+
+
             divBorrar.appendChild(btnBorrar);
             divActualizar.appendChild(btnActualizar)
             divRow.appendChild(divActualizar);
             divRow.appendChild(divBorrar);
             tdIconos.appendChild(divRow);
-    
+
             tr.appendChild(tdNombre);
             tr.appendChild(tdPrecio);
             //tr.appendChild(tdStock);
@@ -147,7 +147,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             divContainer.appendChild(table);
             container.appendChild(divContainer);
         }
-        
+
         borrarMaterial(".btnBorrarMaterial");
         actualizarMaterial(".btnActualizarMaterial");
     }
@@ -175,18 +175,26 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                             if (btns[i].value == materiales[i].idMaterial) {
                                 let respuesta = await fetch(`/material/${materiales[i].idMaterial}`, {
                                     method: 'DELETE',
-                                    headers: { 'Content-Type': 'application/json' },
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+
+                                    },
                                 })
+                                if (respuesta.status == 401) {
+                                    window.sessionStorage.clear();
+                                    window.location = "/index.html";
+                                }
                                 if (respuesta.ok) {
                                     let materialEliminado = await respuesta.json();
-                                    if(materialEliminado) {
+                                    if (materialEliminado) {
                                         eliminarTipoMaterial(materialEliminado.tipoMaterial.nombre)
                                         let panel = document.querySelector("#panelContenido");
                                         panel.innerHTML = "";
                                         loadMaterialesAdmin();
                                     }
 
-                                    
+
                                 }
                                 else {
                                     console.log("error en la respuesta");
@@ -210,12 +218,16 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             btnsActualizar[i].addEventListener("click", async () => {
 
                 if (btnsActualizar[i].value == materiales[i].idMaterial) {
-                    let response = await fetch(`/material/${materiales[i].idMaterial}`, 
-                    {
-                        headers: {
-                            "Authorization": "Bearer " + window.sessionStorage.getItem("token")
-                        }
-                    })
+                    let response = await fetch(`/material/${materiales[i].idMaterial}`,
+                        {
+                            headers: {
+                                "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+                            }
+                        })
+                    if (respuesta.status == 401) {
+                        window.sessionStorage.clear();
+                        window.location = "/index.html";
+                    }
                     if (response.ok) {
 
                         let json = await response.json();
@@ -234,12 +246,15 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                             "espesor": Number(nuevoEspesor.value),
                             // "resistenciaTermica": Number(nuevaResistencia.value),
                         }
-                        console.log(nuevoMaterial)
                         let respuesta = await fetch(`/material/${materiales[i].idMaterial}`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(nuevoMaterial)
                         })
+                        if (respuesta.status == 401) {
+                            window.sessionStorage.clear();
+                            window.location = "/index.html";
+                        }
                         if (respuesta.ok) {
                             swal("Material actualizado con exito", "", "success");
                         }
@@ -257,20 +272,24 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
     }
     async function eliminarTipoMaterial(nombre) {
         let respuesta = await fetch(`/tipo-material/all/${nombre}`)
-        if(respuesta.ok) {
+        if (respuesta.ok) {
             let tipoMateriales = await respuesta.json();
             console.log(tipoMateriales)
-            if(tipoMateriales && tipoMateriales[0].materiales.length == 0) {  //TipoMateriales me retorna un arreglo(con un unico elemento por eso el [0])
-                let response = await fetch(`/tipo-material/${tipoMateriales[0].idTipoMaterial}`,{
+            if (tipoMateriales && tipoMateriales[0].materiales.length == 0) {  //TipoMateriales me retorna un arreglo(con un unico elemento por eso el [0])
+                let response = await fetch(`/tipo-material/${tipoMateriales[0].idTipoMaterial}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 })
+                if (response.status == 401) {
+                    window.sessionStorage.clear();
+                    window.location = "/index.html";
+                }
             }
         }
     }
     async function loadMaterialesAdmin() {
         let respuesta = await fetch("/material");
-        if(respuesta.ok) {
+        if (respuesta.ok) {
             let json = await respuesta.json();
             materiales = json;
         }

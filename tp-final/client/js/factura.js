@@ -1,3 +1,4 @@
+'use strict';
 let detalles = [];
 let muros = [];
 let btn = document.querySelector("#btn");

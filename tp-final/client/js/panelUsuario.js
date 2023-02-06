@@ -1,4 +1,4 @@
-
+'use strict';
 let murosUsuario = [];
 let materiales = [];
 let cardItems = document.querySelector("#murosUsuario");

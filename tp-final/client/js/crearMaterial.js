@@ -1,3 +1,4 @@
+'use strict';
 let panelContenido = document.querySelector("#panelContenido");
 let btnGenerarMaterial = document.createElement("button");
 let crearMaterialUsuario = document.querySelector("#crearMaterial");
@@ -275,14 +276,19 @@ btnGenerarMaterial.addEventListener("click", async () => {
             // "resistenciaTermica": Number(resistencia),
 
         }
-        console.log(nuevoMaterial)
         let response = await fetch("/material", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+
             },
             body: JSON.stringify(nuevoMaterial)
         })
+        if(response.status == 401) {
+            window.sessionStorage.clear();
+            window.location = "/index.html";
+        }
         if (response.ok) {
             swal("Material creado con exito", "", "success");
         }
@@ -295,7 +301,6 @@ btnGenerarMaterial.addEventListener("click", async () => {
             },
             body: JSON.stringify(valorTipoMaterial)
         })
-
         if (respuesta.ok) {
             tipoMaterial = await respuesta.json();
             nuevoMaterial = {
@@ -312,10 +317,16 @@ btnGenerarMaterial.addEventListener("click", async () => {
             let response = await fetch("/material", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+
                 },
                 body: JSON.stringify(nuevoMaterial)
             })
+            if(response.status == 401) {
+                window.sessionStorage.clear();
+                window.location = "/index.html";
+            }
             if (response.ok) {
                 swal("Material creado con exito", "", "success");
             }

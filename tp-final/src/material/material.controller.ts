@@ -22,14 +22,17 @@ export class MaterialController {
     public getAllRelaciones(@Param("id") id: number): Promise<Material[]> {
         return this.materialService.getAllRelaciones(id)
     }
+    @UseGuards(JwtGuard)
     @Post()
     public addMaterial(@Body() material: MaterialDTO): Promise<Material> {
         return this.materialService.addMaterial(material);
     }
+    @UseGuards(JwtGuard)
     @Put(":id")
     public updateMaterial(@Param("id") id: number, @Body() material: MaterialDTO  ): Promise<boolean> {
         return this.materialService.updateMaterial(id,material);
     }
+    @UseGuards(JwtGuard)
     @Delete(":id")
     public deleteMaterial(@Param("id") id: number): Promise<Material> {
         return this.materialService.deleteMaterial(id);

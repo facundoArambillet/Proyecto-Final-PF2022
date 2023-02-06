@@ -1,6 +1,4 @@
-
-
-
+'use strict';
 function ocultar() {
     if (window.sessionStorage.getItem("loginOk") == "true") {
         let oculto = document.querySelectorAll(".login");

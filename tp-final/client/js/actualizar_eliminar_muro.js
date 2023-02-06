@@ -1,4 +1,4 @@
-
+'use strict';
 
 let muros = [];
 let container = document.querySelector("#panelContenido");
@@ -152,8 +152,15 @@ btnActualizarEliminar.addEventListener("click", () => {
                             if (btns[i].value == muros[i].idMuro) {
                                 let respuesta = await fetch(`/muro/${btns[i].value}`, {
                                     method: 'DELETE',
-                                    headers: { 'Content-Type': 'application/json' },
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+                                    },
                                 })
+                                if (respuesta.status == 401) {
+                                    window.sessionStorage.clear();
+                                    window.location = "/index.html";
+                                }
                                 if (respuesta.ok) {
                                     container.innerHTML = '';
                                     loadMurosAdmin();
@@ -186,7 +193,7 @@ btnActualizarEliminar.addEventListener("click", () => {
                     let response = await fetch(`/muro/relacion/id/${muros[i].idMuro}`)
                     if (response.ok) {
                         let json = await response.json();
-                        
+
                         let idsMateriales = [];
                         for (let j = 0; j < json.materiales.length; j++) {
                             idsMateriales.push(json.materiales[j].idMaterial)
@@ -211,6 +218,10 @@ btnActualizarEliminar.addEventListener("click", () => {
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(nuevoMuro)
                         })
+                        if (respuesta.status == 401) {
+                            window.sessionStorage.clear();
+                            window.location = "/index.html";
+                        }
                         if (respuesta.ok) {
                             swal("Muro actualizado con exito", "", "success");
                         }

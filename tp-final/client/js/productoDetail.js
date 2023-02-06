@@ -1,4 +1,4 @@
-
+'use strict';
 let params = [];
 let btnAgregar = document.querySelector("#btnCarritoAgregar");
 let muro, item;

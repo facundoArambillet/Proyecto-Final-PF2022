@@ -94,7 +94,7 @@ async function crearCardsMateriales() {
         optionNone.innerHTML = "None";
         selectMateriales.appendChild(optionNone);
 
-        crearOptions(i, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone);
+        await crearOptions(i, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone);
 
 
 
@@ -124,20 +124,19 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
         for (let i = 0; i < tipoMaterialJson.length; i++) {
             if (tipoMaterialJson[i] != undefined) {
                 let materiales = tipoMaterialJson[i].materiales;
-                console.log(materiales)
 
-                for(let j = 0; j < materiales.length; j++) {
+                for (let j = 0; j < materiales.length; j++) {
                     let option = document.createElement("option");
                     option.innerHTML = materiales[j].nombre;
                     option.id = `optionMaterial_${materiales[j].idMaterial}`;
                     option.value = materiales[j].idMaterial;
                     selectMateriales.appendChild(option);
-    
+
                     selectMateriales.addEventListener("change", () => {
                         if (option.selected) {
                             parrafoIndiceE.innerText = materiales[j].conductividadTermica;
                             parrafoLambda.innerText = materiales[j].espesor;
-                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica.substr(0,4);
+                            parrafoIndiceR.innerText = materiales[j].resistenciaTermica.substr(0, 4);
                             inputCantidad.value = 1;
                             inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
                                 if (inputCantidad.value <= 0) {
@@ -215,11 +214,11 @@ btnGenerar.addEventListener("click", async () => {
             },
             body: JSON.stringify(muro)
         })
-        if(respuesta.ok) {
+        if (respuesta.ok) {
             loadMurosUsuario();
             let murosGenerados = document.querySelector("#muroGenerado");
             murosGenerados.innerHTML = '';
-            if(murosGenerados == '') {
+            if (murosGenerados == '') {
                 crearCardMuros();
             }
         }
@@ -233,7 +232,7 @@ btnGenerar.addEventListener("click", async () => {
 async function crearCardMuros() {
     let muroGenerado = document.querySelector("#muroGenerado");
     let coeficiente = "";
-    for(let i = 0 ; i < muros.length; i++) {
+    for (let i = 0; i < muros.length; i++) {
         let divMuro = document.createElement("div");
         divMuro.classList.add("items");
         let parrafoMuro = document.createElement("p");
@@ -250,21 +249,16 @@ async function crearCardMuros() {
 
         btnBorrar.appendChild(imagenTarro);
 
-        if(muros[i].coeficienteDeTransmitancia < estandarCoeficiente) {
+        if (muros[i].coeficienteDeTransmitancia < estandarCoeficiente) {
             coeficiente = "Eficiente";
         }
         else {
             coeficiente = "Ineficiente";
         }
-        if(window.sessionStorage.idRol == "2") {
-            parrafoMuro.innerHTML = `Muro ${muros[i].nombre} tiene una transmitancia de : ${muros[i].coeficienteDeTransmitancia.substr(0, 4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muros[i].precio} mas IVA`
+        parrafoMuro.innerHTML = `${muros[i].nombre} tiene una transmitancia de : ${muros[i].coeficienteDeTransmitancia.substr(0, 4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muros[i].precio} mas IVA`
 
-        }
-        else {
-            parrafoMuro.innerHTML = `${muros[i].nombre} tiene una transmitancia de : ${muros[i].coeficienteDeTransmitancia.substr(0, 4)}, su transmitancia es ${coeficiente}, y su costo total es de: $ ${muros[i].precio} mas IVA`
 
-        }
-        
+
         parrafoMuro.appendChild(btnBorrar);
         divMuro.appendChild(parrafoMuro);
         muroGenerado.appendChild(divMuro);
@@ -295,7 +289,7 @@ async function borrarMuroGenerado(clase) {
                         if (response.ok) {
                             let divPadre = document.querySelector("#muroGenerado");
                             let items = document.querySelectorAll(".items");
-                            for(let p = 0; p < items.length; p++) {
+                            for (let p = 0; p < items.length; p++) {
                                 divPadre.removeChild(items[p]);
                             }
                             loadMurosUsuario();

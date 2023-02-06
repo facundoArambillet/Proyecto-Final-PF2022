@@ -215,7 +215,10 @@ btnActualizarEliminar.addEventListener("click", () => {
                         }
                         let respuesta = await fetch(`/muro/${muros[i].idMuro}`, {
                             method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: {
+                                'Content-Type': 'application/json',
+                                "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+                            },
                             body: JSON.stringify(nuevoMuro)
                         })
                         if (respuesta.status == 401) {

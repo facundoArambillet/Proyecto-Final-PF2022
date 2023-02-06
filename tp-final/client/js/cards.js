@@ -30,7 +30,7 @@ function crearCards() {
             divBody.appendChild(titulo);
             let parrafo = document.createElement("p");
             parrafo.classList.add("card-text");
-            parrafo.innerHTML = `${muros[i].descripcion.substr(0,30)}...`; // LOS PUNTOS SON PARA DAR LA SENSANCION DE CONTINUACION A LA DESCRIPCION DEL MURO
+            parrafo.innerHTML = `${muros[i].descripcion.substr(0,100)}...`; // LOS PUNTOS SON PARA DAR LA SENSANCION DE CONTINUACION A LA DESCRIPCION DEL MURO
             divBody.appendChild(parrafo);
             let boton = document.createElement("a");
             boton.setAttribute("href",`./productos.html?idMuro=${muros[i].idMuro}`);

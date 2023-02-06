@@ -189,7 +189,6 @@ btnActualizarEliminar.addEventListener("click", () => {
                         
                         let idsMateriales = [];
                         for (let j = 0; j < json.materiales.length; j++) {
-                            console.log(json.materiales[j])
                             idsMateriales.push(json.materiales[j].idMaterial)
                         }
 

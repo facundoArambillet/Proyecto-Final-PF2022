@@ -429,7 +429,7 @@ btnGenerar.addEventListener("click", async () => {
                 //let imgDesencriptada = window.atob(img.src); //ATOM ES UNA FUNCION DE JS PARA DESENCRIPTAR BASE64
                 let muro = {
                     "nombre": `${nombreMuro.value}`,
-                    "precio": total,
+                    "precio": String(total),
                     "stock": 1,
                     "imagen": url,
                     "descripcion": descripcionText,

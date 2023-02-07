@@ -3,6 +3,7 @@
 let muros = [];
 let container = document.querySelector("#panelContenido");
 let btnActualizarEliminar = document.querySelector("#actualizarEliminarMuro");
+
 btnActualizarEliminar.addEventListener("click", () => {
     function crearTabla() {
         let divContainer = document.createElement("div");
@@ -128,8 +129,6 @@ btnActualizarEliminar.addEventListener("click", () => {
         borrarMuro(".btnBorrar");
         actualizarMuro(".btnActualizar");
     }
-    let inputs = document.querySelectorAll("input");
-
 
 
     async function borrarMuro(clase) {

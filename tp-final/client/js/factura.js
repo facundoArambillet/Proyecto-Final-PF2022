@@ -6,8 +6,6 @@ let tabla = "";
 let total = 0;
 
 function loadProductos() {
-    console.log(muros)
-    console.log(detalles)
     for (let i = 0; i < muros.length; i++) {
         let precioUnitario = muros[i].precio;
         let totalProducto = precioUnitario * detalles[i].cantidad
@@ -15,8 +13,8 @@ function loadProductos() {
         tabla += `<tr>
         <td>${muros[i].nombre}</td>
         <td>${detalles[i].cantidad}</td>
-        <td>$ ${precioUnitario}</td>
-        <td>$ ${totalProducto}</td>
+        <td>$ ${precioUnitario.substr(0,6)}</td>
+        <td>$ ${totalProducto.toFixed(2)}</td>
         </tr>`
     }
     let tablaProductos = document.querySelector("#productos");
@@ -27,11 +25,11 @@ function loadProductos() {
     let valorIva = total * 0.21;
     let tablaTotal = document.querySelector("#total");
 
-    subtotal.innerText = `$ ${total}`;
+    subtotal.innerText = `$ ${total.toFixed(2)}`;
     descuento.innerText = "$ 0";
     subtotalDescuento.innerText = "$ 0";
-    iva.innerText = `$ ${valorIva}`;
-    tablaTotal.innerText = `$ ${total + valorIva}`;
+    iva.innerText = `$ ${valorIva.toFixed(2)}`;
+    tablaTotal.innerText = `$ ${(total + valorIva).toFixed(2)}`;
     tablaProductos.innerHTML = tabla;
 }
 
@@ -67,8 +65,6 @@ async function loadDetalle() {
 
         }
     }
-
-
     loadProductos();
     loadNombreCliente();
     window.print();

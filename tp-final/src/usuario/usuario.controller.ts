@@ -29,6 +29,7 @@ export class UsuarioController {
     public addUsuario(@Body() usuario: UsuarioDTO): Promise<Usuario> {
         return this.usuarioService.addUsuario(usuario);
     }
+    // ENDPOINT USADO PARA VERIFICAR LOS DATOS INGRESADOS Y EN CASO DE SER CORRECTOS DARLE UN JWT AL USUARIO
     @Post("login")
     public loginUsuario(@Body() usuario: UsuarioDTO) {
         return this.usuarioService.loginUsuario(usuario)

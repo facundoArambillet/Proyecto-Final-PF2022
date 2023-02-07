@@ -8,9 +8,7 @@ let muros = [];
 
 function crearCards() {
     if(muros) {
-        //console.log(muros.length)
         for(let i = 0; i < muros.length; i++) {
-          //  console.log(muros)
             let divCol = document.createElement("div");
             divCol.classList.add("col-md-4");
             let divCard = document.createElement("div");
@@ -48,7 +46,7 @@ function crearCards() {
 }
 
 async function loadMuros(){
-    let respuesta = await fetch(`/muro/all/${1}`);
+    let respuesta = await fetch(`/muro/all/${1}`);  // USO EL 1 PORQUE EL USUARIO ADMIN SIEMPRE VA A SER EL PRIMERO
     if(respuesta.ok) {
         let json = await respuesta.json();
         muros = json;

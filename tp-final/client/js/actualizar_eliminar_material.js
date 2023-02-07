@@ -154,11 +154,8 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
 
     async function borrarMaterial(clase) {
         let btns = document.querySelectorAll(clase);
-
         for (let i = 0; i < btns.length; i++) {
             btns[i].addEventListener("click", async () => {
-
-
                 swal({
                     title: "¿Estas seguro que desea eliminar este Material?",
                     text: "una vez eliminado, No podra recuperarse",
@@ -166,7 +163,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                     buttons: true,
                     dangerMode: true,
                 })
-                    .then(async (willDelete) => { //EL DE ACA ASYNC ES PARA EL AWAIT DE LA RESPUESTA DEL DELETE
+                    .then(async (willDelete) => { //EL ASYNC  DE ACA ES PARA EL AWAIT DE LA RESPUESTA DEL DELETE
                         if (willDelete) {
                             swal("Material borrado con exito!", {
                                 icon: "success",
@@ -188,6 +185,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                                 if (respuesta.ok) {
                                     let materialEliminado = await respuesta.json();
                                     if (materialEliminado) {
+                                        // FUNCION PARA BORRAR TIPO DE MATERIAL(EXPLICACION MAS ABAJO)
                                         eliminarTipoMaterial(materialEliminado.tipoMaterial.nombre)
                                         let panel = document.querySelector("#panelContenido");
                                         panel.innerHTML = "";
@@ -225,8 +223,6 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
                             }
                         })
                     if (response.ok) {
-
-                        let json = await response.json();
 
                         let nuevoNombre = document.querySelector(`#nombre_${materiales[i].idMaterial}`);
                         let nuevoPrecio = document.querySelector(`#precio_${materiales[i].idMaterial}`);
@@ -269,6 +265,7 @@ btnActualizarEliminarMaterial.addEventListener("click", () => {
             })
         }
     }
+    // FUNCION USADA PARA QUE CUANDO ELIMINAN UN MATERIAL Y ES EL ULTIMO DE UN TIPO DE MATERIAL DETERMINADO ELIMINE ESE TIPO
     async function eliminarTipoMaterial(nombre) {
         let respuesta = await fetch(`/tipo-material/all/${nombre}`)
         if (respuesta.ok) {

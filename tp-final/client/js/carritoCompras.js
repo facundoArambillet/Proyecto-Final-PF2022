@@ -5,9 +5,9 @@ let valorPrecioTotal = document.querySelector("#precioTotal");
 let total = document.querySelector("#total");
 let precioTotal = 0;
 let carrito, items;
+
 function crearCardsItems() {
     items = carrito;
-    console.log(items)
 
     if(items.length == 0) {
         let carrito = document.querySelector("#carrito");
@@ -88,7 +88,7 @@ function crearCardsItems() {
 
         cardItems.appendChild(divRow);
     }
-
+                                                    //to.Fixed(2) MUESTRA 2 DECIMALES DESPUES DE LA COMA
     valorPrecioTotal.innerText = `$ ${precioTotal.toFixed(2)}`;
     total.innerText = `$ ${(precioTotal * 1.21).toFixed(2)}`;
 
@@ -114,7 +114,7 @@ async function borrarCarrito(clase) {
                     buttons: true,
                     dangerMode: true,
                 })
-                    .then(async (willDelete) => { //EL DE ACA ASYNC ES PARA EL AWAIT DE LA RESPUESTA DEL DELETE
+                    .then(async (willDelete) => { //EL ASYNC DE ACA ES PARA EL AWAIT DE LA RESPUESTA DEL DELETE
                         if (willDelete) {
                             swal("Muro borrado de su carrito!", {
                                 icon: "success",
@@ -153,7 +153,7 @@ async function borrarCarrito(clase) {
         })
     }
 }
-
+// FUNCION CREADA PARA ACTUALIZAR LOS VALORES DEL PRECIO CUANDO CAMBIAN LA CANTIDAD EN EL INPUT
 function actualizarValores(clase) {
     let inputs = document.querySelectorAll(clase);
     let precios = document.querySelectorAll(".precios");
@@ -182,8 +182,10 @@ async function realizarCompra() {
     let idsMuros = [];
     let cantidadDescontada = false;
     let cantidadNegativa = false
-    for (let j = 0; j < items.length; j++) {                // VER COMO HACER PARA VERIFICAR QUE LA CANTIDAD NO SEA MAYOR
-        let muro = await fetch(`/muro/${items[j].muroIdMuro}`);        // AL STOCK EN TODOS LOS MUROS A LA VEZ ANTES DE HACER UN PUT
+    //CICLO QUE RECORRE TODOS LOS ITEMS DEL CARRITO DEL USUARIO PARA ASEGURARSE QUE LA CANTIDAD QUE INTRODUCE NO SEA MAYOR
+    // AL STOCK DISPONIBLE DE UN PRODUCTO(MURO)
+    for (let j = 0; j < items.length; j++) {                
+        let muro = await fetch(`/muro/${items[j].muroIdMuro}`); 
         let jsonMuro = await muro.json();
         let stock = jsonMuro.stock - inputs[j].value;
 
@@ -196,8 +198,6 @@ async function realizarCompra() {
     }
     else {
         for (let i = 0; i < items.length; i++) {
-            let muroRelaciones = await fetch(`/muro/relacion/id/${items[i].muroIdMuro}`)
-            let json = await muroRelaciones.json();
 
             items[i].cantidad = inputs[i].value;
 
@@ -213,7 +213,8 @@ async function realizarCompra() {
             let respuesta = await fetch(`/muro/stock/${items[i].muroIdMuro}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + window.sessionStorage.getItem("token")
                 },
                 body: JSON.stringify(stock)
             })

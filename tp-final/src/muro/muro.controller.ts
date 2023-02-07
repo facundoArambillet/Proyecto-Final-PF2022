@@ -41,6 +41,7 @@ export class MuroController {
         return this.muroService.updateMuro(id,muro);
     }
     @UseGuards(JwtGuard)
+    // ENDPOINT USADO PARA UPDATEAR UNICAMENTE EL STOCK
     @Put("/stock/:id")
     public updateCantidad(@Param("id") id: number, @Body() nuevaCantidad: number  ): Promise<boolean> {
         return this.muroService.updateCantidad(id,nuevaCantidad);

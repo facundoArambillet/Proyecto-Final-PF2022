@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { JwtGuard } from 'dist/usuario/jwt.guard';
+import { JwtGuard } from 'src/usuario/jwt.guard';
 import MuroDTO from './muro.dto';
 import { Muro } from './muro.entity';
 import { MuroService } from './muro.service';

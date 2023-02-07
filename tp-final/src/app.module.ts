@@ -25,7 +25,7 @@ import { DetalleFacturaModule } from './detalle_factura/detalleFactura.module';
         "password": "123456789",
         "database": "tpfinalpfs2022",
         "entities": [
-          "public/**/**.entity{.ts,.js}"
+          "dist/**/**.entity{.ts,.js}"  //PARA DEPLOYAR CAMBIAR EL DIST POR PUBLIC
         ],
         "synchronize": false
       }

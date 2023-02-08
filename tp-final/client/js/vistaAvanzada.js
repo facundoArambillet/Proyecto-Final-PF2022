@@ -71,7 +71,7 @@ async function crearCardsMateriales() {
         let inputCantidad = document.createElement("input");
         inputCantidad.type = "number";
         tdCantidad.appendChild(inputCantidad);
-        inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+        inputCantidad.addEventListener("change", () => {  //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
             if (inputCantidad.value < 0) {
                 inputCantidad.value = 1;
             }
@@ -83,7 +83,6 @@ async function crearCardsMateriales() {
         parrafoPrecio.innerHTML = "$ 0";
         tdPrecioMaterial.appendChild(parrafoPrecio);
 
-        // VER COMO HACER UNA FUNCION PARA CREAR LOS DROPDOWNS(SELECTS)
         tdMaterial = document.createElement("td");
         let selectMateriales = document.createElement("select");
         selectMateriales.classList.add("selects");
@@ -95,11 +94,8 @@ async function crearCardsMateriales() {
         optionNone.innerHTML = "None";
         selectMateriales.appendChild(optionNone);
 
+        // EL AWAIT ES PARA QUE NO ME TIRE ERROR AVECES AL CARGAR LOS SELECTS
         await crearOptions(i, selectMateriales, parrafoIndiceE, parrafoLambda, parrafoIndiceR, inputCantidad, parrafoPrecio, optionNone);
-
-
-
-
 
         tr.appendChild(tdMaterial);
         tr.appendChild(tdEspesor);
@@ -132,14 +128,14 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                     option.id = `optionMaterial_${materiales[j].idMaterial}`;
                     option.value = materiales[j].idMaterial;
                     selectMateriales.appendChild(option);
-
+                    // EVENTO QUE ME PERMITE CAMBIAR LOS VALORES DE LOS MATERIALES CUANDO SELECCIONAN OTRO OPTION
                     selectMateriales.addEventListener("change", () => {
                         if (option.selected) {
                             parrafoIndiceE.innerText = materiales[j].conductividadTermica;
                             parrafoLambda.innerText = materiales[j].espesor;
                             parrafoIndiceR.innerText = materiales[j].resistenciaTermica.substr(0, 4);
                             inputCantidad.value = 1;
-                            inputCantidad.addEventListener("change", () => {         //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
+                            inputCantidad.addEventListener("change", () => {   //CON ESTO HAGO QUE NO ME CARGUEN VALORES MENORES A 1
                                 if (inputCantidad.value <= 0) {
                                     inputCantidad.value = 1;
                                 }
@@ -150,7 +146,7 @@ async function crearOptions(id, selectMateriales, parrafoIndiceE, parrafoLambda,
                             parrafoIndiceE.innerText = "0";
                             parrafoLambda.innerText = "0";
                             parrafoIndiceR.innerText = "0";
-                            inputCantidad.innerText = "";
+                            inputCantidad.value = 0;
                             parrafoPrecio.innerText = "$ 0";
                         }
                     })
@@ -184,7 +180,8 @@ btnGenerar.addEventListener("click", async () => {
 
 
         for (let i = 0; i < selects.length; i++) {
-
+            // CICLO QUE RECORRE LOS OPTIONS DE CADA SELECT PARA MULTIPLICAR PRECIO Y CANTIDAD DE CADA UNO QUE ES SELECCIONADO
+            // CON LO CUAL SE CALCULA EL TOTAL
             for (let j = 0; j < selects[i].children.length; j++) {
                 if (selects[i].children[j].selected && selects[i].children[j].value != "None") {
 
@@ -193,6 +190,8 @@ btnGenerar.addEventListener("click", async () => {
                 }
 
             }
+            // CICLO QUE RECORRE LOS OPTIONS DEL PRIMER SELECT PARA SETEAR EL VALOR DEL OPTION SELECCIONADO 
+            // A LA VARIABLE nombreMuro
             for (let k = 0; k < selects[0].children.length; k++) {
                 if (selects[0].children[k].selected && selects[0].children[k].value != "None") {
                     nombreMuro = selects[0].children[k].innerText;
@@ -249,7 +248,8 @@ async function crearCardMuros() {
         imagenTarro.classList.add("bi-trash3-fill");
 
         btnBorrar.appendChild(imagenTarro);
-
+        //CONDICIONAL QUE SETEA LA VARIABLE "coeficiente" DEPENDIENDO SI EL COEFICIENTE DEL MURO GENERADO ES MAYOR O MENOR
+        // A LA CONSTANTE "estandarCoeficiente"
         if (muros[i].coeficienteDeTransmitancia < estandarCoeficiente) {
             coeficiente = "Eficiente";
         }
@@ -290,6 +290,8 @@ async function borrarMuroGenerado(clase) {
                         if (response.ok) {
                             let divPadre = document.querySelector("#muroGenerado");
                             let items = document.querySelectorAll(".items");
+                            // CICLO USADO PARA BORRAR TODO EL CONTENIDO DEL DIV PADRE Y VOLVERLO A CARGAR 
+                            // CUANDO SE ELIMINA UN MURO GENERADO
                             for (let p = 0; p < items.length; p++) {
                                 divPadre.removeChild(items[p]);
                             }

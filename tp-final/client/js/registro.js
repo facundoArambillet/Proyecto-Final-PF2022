@@ -11,10 +11,8 @@ async function registrar() {
     let validacionContrasenia = /[\w-.@]{8}/; // BUSCAR MEJOR PORQUE NO ME VALIDA EL PUNTO MAXIMO
 
     if (validacionEmail.test(inputEmail.value) && validacionContrasenia.test(inputContrasenia.value) && inputContrasenia.value.length < 20 && inputContrasenia.value === inputConfirmacion.value) {
-        let usuarioRepetido = await fetch(`/usuario/${inputEmail.value}`)
-
-        console.log(usuarioRepetido.ok)
-
+        // SE BUSCA SI EL EMAIL YA EXISTE EN LA BDD EN CUYO CASO VA A EL ELSE Y MUESTRO ERROR
+        let usuarioRepetido = await fetch(`/usuario/${inputEmail.value}`);
         if (!usuarioRepetido.ok) {
             let usuario = {
                 "nombre": inputEmail.value,
@@ -52,16 +50,14 @@ async function registrar() {
             }
         }
         else {
-
             swal("El email ya existe","","error");
         }
 
     }
+    // PARTE DE VALIDACIONES EN DONDE MUESTRO UN MENSAJE DETERMINADO PARA CADA UNA
     else if (!validacionEmail.test(inputEmail.value)) {
       await  swal("Email invalido",`El email debe tener el siguiente formato:
         nombre@(gmail/hotmail/etc).com`,"error");
-        // alert("Email invalido")
-
     }
     else if (!validacionContrasenia.test(inputContrasenia.value) || inputContrasenia.value.length > 20) {
         await swal("Formato de contraseña invalido","","error");
@@ -71,6 +67,7 @@ async function registrar() {
     }
 
 }
+
 btnRegistro.addEventListener("click", registrar); 
 window.onkeyup = function (event) { // FUNCION QUE SIRVE PARA REGISTRARTE APRETANDO ENTER
     if (event.keyCode == '13') {

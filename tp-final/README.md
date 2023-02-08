@@ -8,6 +8,6 @@
 - CSS
 - JavaScript
 - TypeScript
--NodeJS(NestJS)
+- NodeJS(NestJS)
 
 ## © 2023 Facundo Arambillet. All rights reserved.

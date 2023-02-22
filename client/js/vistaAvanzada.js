@@ -170,6 +170,7 @@ btnGenerar.addEventListener("click", async () => {
     if (!optionNone) {
         // let muroGenerado = document.querySelector("#muroGenerado");
         let idsMateriales = [];
+        let nombreMuro = "";
         let selects = document.querySelectorAll(".selects");
         let inputsCantidades = document.querySelectorAll(".cantidad");
         let parrafosPrecios = document.querySelectorAll(".precio");
@@ -210,7 +211,8 @@ btnGenerar.addEventListener("click", async () => {
         let respuesta = await fetch('/muro', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + window.sessionStorage.getItem("token")
             },
             body: JSON.stringify(muro)
         })

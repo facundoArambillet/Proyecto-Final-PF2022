@@ -287,7 +287,9 @@ async function borrarMuroGenerado(clase) {
                     if (willDelete) {
                         let response = await fetch(`/muro/${btns[i].value}`, {
                             method: 'DELETE',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers: { 'Content-Type': 'application/json',
+                                        "Authorization": "Bearer " + window.sessionStorage.getItem("token")
+                         },
                         })
                         if (response.ok) {
                             let divPadre = document.querySelector("#muroGenerado");

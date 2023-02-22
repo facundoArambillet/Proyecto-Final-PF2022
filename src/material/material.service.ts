@@ -50,6 +50,7 @@ export class MaterialService {
                     && materialDTO.espesor) {
                     let material = await this.materialRepository.save(new Material(materialDTO.nombre, materialDTO.cantidad, materialDTO.precio, materialDTO.conductividadTermica,
                         materialDTO.espesor, materialDTO.tipoMaterialIdTipoMaterial));
+                        material.calcularResistenciaTermica();
                     return material;
                 }
                 else {
@@ -76,8 +77,8 @@ export class MaterialService {
                     material.setCantidad(materialDTO.cantidad);
                     material.setPrecio(materialDTO.precio);
                     material.setConductividadTermica(materialDTO.conductividadTermica);
-                    material.calcularResistenciaTermica();
                     material.setEspesor(materialDTO.espesor);
+                    material.calcularResistenciaTermica();
                     material = await this.materialRepository.save(material);
                     return true
                 }

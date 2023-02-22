@@ -177,7 +177,6 @@ async function borrarMuro(clase) {
 }
 async function agregarCarrito(clase) {
     let btnsAgregar = document.querySelectorAll(clase);
-
     for (let i = 0; i < btnsAgregar.length; i++) {
         btnsAgregar[i].addEventListener("click", async () => {
             let inputCantidad = document.querySelector(`#cantidad_${btnsAgregar[i].value}`)
@@ -190,7 +189,8 @@ async function agregarCarrito(clase) {
             let response = await fetch(`muro/stock/${Number(btnsAgregar[i].value)}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + window.sessionStorage.getItem("token")
                 },
                 body: JSON.stringify(nuevaCantidad)
             })

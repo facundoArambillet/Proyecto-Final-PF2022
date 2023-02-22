@@ -142,7 +142,8 @@ async function borrarMuro(clase) {
                         if (btns[i].value == murosUsuario[i].idMuro) {
                             let respuesta = await fetch(`/muro/${murosUsuario[i].idMuro}`, {
                                 method: 'DELETE',
-                                headers: { 'Content-Type': 'application/json' },
+                                headers: { 'Content-Type': 'application/json',
+                                            "Authorization": "Bearer " + window.sessionStorage.getItem("token") },
                             })
 
 
